@@ -6,9 +6,13 @@ body {
 }
 
 header {
+  position: fixed; /* ← 追加：ヘッダーを上部に固定 */
+  top: 0;
+  width: 100%;
   background-color: #333;
   color: white;
   padding: 1rem;
+  z-index: 1000; /* ← 追加：上に表示するため */
 }
 
 nav {
@@ -28,6 +32,7 @@ nav a:hover {
 
 main {
   padding: 2rem;
+  margin-top: 70px; /* ← 追加：headerの高さ分だけ本文を下げる */
 }
 
 @media (max-width: 600px) {
