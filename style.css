@@ -34,6 +34,39 @@ main {
   padding: 2rem;
   margin-top: 70px; /* ← 追加：headerの高さ分だけ本文を下げる */
 }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 0.5rem;
+}
+
+ul li a {
+  font-weight: bold;
+  color: #0055aa;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  text-decoration: underline;
+}
+
+h2, h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* 見出しは左寄せ（インデントなし） */
+h1, h2, h3, h4, h5, h6 {
+  margin-left: 0;
+}
+
+/* 本文やリストはインデントをつける */
+p, ul, ol {
+  margin-left: 1.5rem;
+}
 
 /* PCではメニューは常に表示、ハンバーガー非表示 */
 .menu-toggle {
