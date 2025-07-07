@@ -35,6 +35,11 @@ main {
   margin-top: 70px; /* ← 追加：headerの高さ分だけ本文を下げる */
 }
 
+/* PCではメニューは常に表示、ハンバーガー非表示 */
+.menu-toggle {
+  display: none;
+}
+
 /* モバイル用：非表示からトグルで表示 */
 @media (max-width: 600px) {
   nav {
@@ -54,7 +59,3 @@ main {
   }
 }
 
-/* PCではメニューは常に表示、ハンバーガー非表示 */
-.menu-toggle {
-  display: none;
-}
