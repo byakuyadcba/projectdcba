@@ -35,8 +35,26 @@ main {
   margin-top: 70px; /* ← 追加：headerの高さ分だけ本文を下げる */
 }
 
+/* モバイル用：非表示からトグルで表示 */
 @media (max-width: 600px) {
   nav {
+    display: none;
     flex-direction: column;
   }
+
+  nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    color: white;
+    font-size: 1.5rem;
+  }
+}
+
+/* PCではメニューは常に表示、ハンバーガー非表示 */
+.menu-toggle {
+  display: none;
 }
