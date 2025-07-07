@@ -4,7 +4,7 @@
 GitHub Pages を用いてホスティングされています。
 
 ## 公開URL
-https://your-username.github.io/projectdcba/
+https://byakuyadcba.github.io/projectdcba/
 
 ## 技術スタック
 - HTML5 / CSS3
