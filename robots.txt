@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://project-dcba.com/sitemap.xml
