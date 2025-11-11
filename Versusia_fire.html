@@ -123,6 +123,15 @@
                 }
             }
         }
+    const iconLabel = {
+        summon: '召',
+        fc: 'FC',
+        ability: 'AB',
+        attack: 'ON',
+        offattack: 'OFF',
+        stamp: 'ST',
+        wait: '待',
+    };
     </script>
 </head>
 <body class="bg-lightBg text-dark">
@@ -403,7 +412,11 @@
                         } else if (action.abilities) {
                             content = `<span class="font-semibold text-lg">${action.abilities}</span>`;
                         }
-                        li.innerHTML = `<span class="action-icon ${action.iconClass}">${action.char === 'summon' || action.char === 'fc' || action.char === 'ability' ? action.char.toUpperCase().substring(0,2) : ''}</span> ${content}`;
+                        const label = iconLabel[action.char] ?? '';
+                        li.innerHTML = `
+                          <span class="action-icon ${action.iconClass}">${label}</span> ${content}
+                        `;
+
                         modalActionList.appendChild(li);
                     });
                 } else {
