@@ -172,7 +172,7 @@
         </section>
 
 
-        <!-- 編成情報セクション -->
+        <!-- 編成情報セクション （一時消去）
         <section class="mt-12 pt-8 border-t border-gray-300">
             <h2 class="text-3xl font-bold text-dark text-center mb-8">編成情報</h2>
             <div class="flex flex-wrap justify-center gap-4">
@@ -189,7 +189,7 @@
                     <p class="text-center text-dark font-semibold mt-2">召喚石編成</p>
                 </div>
             </div>
-        </section>
+        </section>-->
 
         <footer class="text-center mt-12 py-6 border-t border-gray-300">
             <p class="text-gray-600">Versasia Fire Action Chart</p>
@@ -274,6 +274,7 @@
                     { char: 'stamp', iconClass: 'icon-stamp', abilities: '火' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神, 式神（式神,式神)'},
+                    { char: 'wait', iconClass: 'icon-wait', abilities: '全員の予兆解除を待つ' },
                     { char: 'attack', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
             },
@@ -283,6 +284,7 @@
                 notes: "奥義OFF攻撃。 敵のHPが90%以下になるのを待つ / アビリティ使用なしorユエル2のみで攻撃",
                 actions: [
                      { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' },
+                     { char: 'wait', iconClass: 'icon-wait', abilities: 'HPが90%以下になるのを待つ' },
                      { char: 'offattack', iconClass: 'icon-offattack', abilities: '奥義OFF攻撃' }
                 ]
             },
@@ -317,7 +319,8 @@
                     { char: 'essel', iconClass: 'icon-essel', abilities: '4, 3, 1, 1' },
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '3' },
                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '3, 1' },
-                    { char: 'offattack', iconClass: 'icon-offattack', abilities: 'ゲージ50を見てから奥義OFF攻撃' }
+                    { char: 'wait', iconClass: 'icon-wait', abilities: 'ゲージが50以下になり、光るのを待つ' },
+                    { char: 'offattack', iconClass: 'icon-offattack', abilities: '奥義OFF攻撃' }
                 ]
             },
             9: {
@@ -327,6 +330,7 @@
                 actions: [
                     { char: 'stamp', iconClass: 'icon-stamp', abilities: 'ハイ' },
                     { char: 'ability', iconClass: 'icon-ability', text: '主人公以外: 全アビリティ使用' },
+                    { char: 'wait', iconClass: 'icon-wait', abilities: '全員のハイスタンプを待つ' },
                     { char: 'attack', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
             },
