@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ヴェルサシア火行動表<br>自我薄め</title>
+    <title>ヴェルサシア火行動表</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
         .icon-ability { background-color: #1eff00; } /* アビリティ */
         .icon-attack { background-color: #2a9d8f; } /* 攻撃 */
         .icon-offattack { background-color: #444444; } /* 奥義OFF攻撃 */
-        .icon-stamp { background-color: #ffffff; } /* スタンプ */
+        .icon-stamp {background-color: #6d52e6; background-color: #ffffff; } /* スタンプ */
         .icon-wait{ background-color: #000000; } /* 待機 */
     </style>
     <script>
@@ -291,7 +291,7 @@
             7: {
                 title: "7T",
                 premonition: "⚠️ 6回奥義予兆",
-                notes: 奥義ゲージが足りなければ何か召喚or合体,
+                notes: "奥義ゲージが足りなければ何か召喚or合体",
                 actions: [
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '2, 3' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '天地開闢' },
@@ -316,7 +316,7 @@
                 premonition: "⚠️ G50浄土予兆 出現時にハイスタンプを押すこと。",
                 notes: "主ガード、他のキャラは落とすので全ポチ。他の属性が突入してから攻撃",
                 actions: [
-                    { char: 'yuel', iconClass: 'icon-stamp', abilities: 'ハイ' },
+                    { char: 'stamp', iconClass: 'icon-stamp', abilities: 'ハイ' },
                     { char: 'ability', iconClass: 'icon-ability', text: '主人公以外: 全アビリティ使用' },
                     { char: 'atacck', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
