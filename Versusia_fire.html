@@ -261,6 +261,7 @@
                 actions: [
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神, 式神（式神,式神)'},
+                    { char: 'atacck', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
             },
             5: {
@@ -268,7 +269,8 @@
                 premonition: "CT予兆なし",
                 notes: "奥義OFF攻撃。 敵のHPが90%以下になるのを待つ / アビリティ使用なしorユエル2のみで攻撃",
                 actions: [
-                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' }
+                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' },
+                     { char: 'atacck', iconClass: 'icon-offattack', abilities: '奥義OFF攻撃' }
                 ]
             },
             6: {
@@ -278,18 +280,19 @@
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: '000表召喚' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
-                    { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' }
+                    { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' },
+                    { char: 'atacck', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
             },
             7: {
                 title: "7T",
                 premonition: "⚠️ 6回奥義予兆",
-                notes: null,
+                notes: 奥義ゲージが足りなければ何か召喚or合体,
                 actions: [
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '2, 3' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '天地開闢' },
-                    { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' },
-                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' }
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
+                    { char: 'atacck', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
             },
             8: {
@@ -297,9 +300,11 @@
                 premonition: "⚠️ FC、80ヒット予兆",
                 notes: "赤青どちらもG50待機。",
                 actions: [
+                    { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '4, 3, 1, 1' },
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '3' },
-                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '3, 1' }
+                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '3, 1' },
+                    { char: 'atacck', iconClass: 'icon-offattack', abilities: 'ゲージ50を見てから奥義OFF攻撃' }
                 ]
             },
             9: {
@@ -307,7 +312,8 @@
                 premonition: "⚠️ G50浄土予兆 出現時にハイスタンプを押すこと。",
                 notes: "主ガード、他のキャラは落とすので全ポチ。他の属性が突入してから攻撃",
                 actions: [
-                    { char: 'ability', iconClass: 'icon-ability', text: '主人公以外: 全アビリティ使用' }
+                    { char: 'ability', iconClass: 'icon-ability', text: '主人公以外: 全アビリティ使用' },
+                    { char: 'atacck', iconClass: 'icon-attack', abilities: '奥義ON攻撃' }
                 ]
             },
             10: {
