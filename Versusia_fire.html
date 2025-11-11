@@ -139,13 +139,13 @@
                 <button data-turn="1" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">1T</button>
                 <button data-turn="2" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">2T</button>
                 <button data-turn="3" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">3T</button>
-                <button data-turn="4" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">4T<br>（全属性試練解除後攻撃）</button>
-                <button data-turn="5" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">5T ⚠️</button>
-                <button data-turn="6" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">6T<br>（90%後攻撃）</button>
-                <button data-turn="7" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">7T ⚠️</button>
-                <button data-turn="8" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">8T ⚠️</button>
-                <button data-turn="9" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">9T ⚠️</button>
-                <button data-turn="10" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">10T ⚠️</button>
+                <button data-turn="4" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">4T<br>（全属性解除待機）</button>
+                <button data-turn="5" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">5T<br>（90%待機）</button>
+                <button data-turn="6" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">6T</button>
+                <button data-turn="7" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">7T</button>
+                <button data-turn="8" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">8T</button>
+                <button data-turn="9" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">9T</button>
+                <button data-turn="10" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">10T</button>
             </div>
         </section>
 
@@ -226,6 +226,7 @@
                 premonition: null,
                 notes: "サン召喚,アビリティ使用後、攻撃",
                 actions: [
+                    { char: 'summon', iconClass: 'icon-summon', text: 'サン召喚' },
                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '2, 1, 3' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '2, 3, 1, 1' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神, 式神' },
@@ -247,35 +248,27 @@
                 premonition: null,
                 notes: "アグニス召喚 エッセル1を使わない 奥義OFF攻撃（予兆解除)",
                 actions: [
-                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1' }
+                { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' }
                 ]
             },
             4: {
                 title: "4T",
-                premonition: null,
-                notes: "エッセル1 (1回目で破壊の試練解除)",
+                premonition: "⚠️ CT予兆",
+                notes: "弱体なら式神2回　Hit数なら式神4回 フルチェでHit数足りるはず",
                 actions: [
-                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' }
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: 'ミスト, 式神, 式神'},
                 ]
             },
             5: {
                 title: "5T",
-                premonition: "⚠️ CT予兆",
-                notes: "どちらも打つアビは変わらない",
+                premonition: "CT予兆なし",
+                notes: "90になるのを待つ / アビリティ使用なしで攻撃",
                 actions: [
-                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
-                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' },
-                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神' },
-                    { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '1, 3' }
+                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' }
                 ]
             },
             6: {
-                title: "6T",
-                premonition: "CT予兆なし",
-                notes: "90になるのを待つ / アビリティ使用なしで攻撃",
-                actions: []
-            },
-            7: {
                 title: "7T",
                 premonition: "⚠️ 9999万ダメ予兆",
                 notes: null,
@@ -287,7 +280,7 @@
                     { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' }
                 ]
             },
-            8: {
+            7: {
                 title: "8T",
                 premonition: "⚠️ 6回奥義予兆",
                 notes: null,
@@ -298,7 +291,7 @@
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' }
                 ]
             },
-            9: {
+            8: {
                 title: "9T",
                 premonition: "⚠️ FC、80ヒット予兆",
                 notes: "赤青どちらもG50待機。\n待機中、火傷が切れそうになったらユエル3。\nユエル3を打ったらユエル2。\nGenesisゲージが50になってから攻撃。",
