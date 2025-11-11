@@ -144,7 +144,7 @@
                 <button data-turn="6" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">6T</button>
                 <button data-turn="7" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">7T</button>
                 <button data-turn="8" class="turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg">8T　⚠️<br><small>G50待機</small></button>
-                <button data-turn="9" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">9T　⚠️<br><small>落とし</small></button>
+                <button data-turn="9" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">9T　⚠️<br><small>ハイスタンプ</small></button>
                 <button data-turn="10" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">10T</button>
                 <button data-turn="11" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">11T </button>
                 <button data-turn="12" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">12T　⚠️<br><small>光背解除</small></button>
@@ -223,7 +223,7 @@
             1: {
                 title: "1T",
                 premonition: null,
-                notes: "サン召喚,アビリティ使用後、攻撃",
+                notes: "試練3Tは動作が完全固定。ポチが多いのでどこかでスタンプを入れておくとよい",
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: 'サン召喚' },
                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '2, 1, 3' },
@@ -235,7 +235,7 @@
             2: {
                 title: "2T",
                 premonition: null,
-                notes: "アグニス召喚 攻撃",
+                notes: "この動きで2T目も奥義ゲージが溜まるはず",
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' },
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '3' },
@@ -245,7 +245,7 @@
             3: {
                 title: "3T",
                 premonition: null,
-                notes: "アグニス召喚 エッセル1を使わない 奥義OFF攻撃（予兆解除)",
+                notes: "エッセル1を使わない。アグニス召喚かつ奥義OFF攻撃で次に備える",
                 actions: [
                 { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' }
                 ]
@@ -253,7 +253,7 @@
             4: {
                 title: "4T",
                 premonition: "⚠️ CT予兆",
-                notes: "弱体なら式神2回　Hit数なら式神4回 フルチェでHit数足りるはず",
+                notes: "弱体なら式神2回、Hit数なら式神4回。フルチェでHit数足りるはず　全員の試練解除を待ってから攻撃",
                 actions: [
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神, 式神（式神,式神)'},
@@ -262,14 +262,14 @@
             5: {
                 title: "5T",
                 premonition: "CT予兆なし",
-                notes: "90になるのを待つ / アビリティ使用なしで攻撃",
+                notes: "HPが90%以下になるのを待つ / アビリティ使用なしorユエル2のみで攻撃",
                 actions: [
                      { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' }
                 ]
             },
             6: {
                 title: "6T",
-                premonition: "⚠️ 9999万ダメ予兆",
+                premonition: "⚠️ 9999万ダメ予兆　ユエル2が間に合って無ければここで。",
                 notes: null,
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: '000表召喚' },
@@ -301,7 +301,7 @@
             9: {
                 title: "9T",
                 premonition: "⚠️ G50浄土予兆",
-                notes: "他の属性が突入してから攻撃",
+                notes: "予兆出現時にハイスタンプを押すこと。他の属性が突入してから攻撃",
                 actions: [
                     { char: 'ability', iconClass: 'icon-ability', text: '主人公以外: 全アビリティ使用' }
                 ]
@@ -326,7 +326,7 @@
             12: {
                 title: "12T",
                 premonition: "⚠️ CT予兆",
-                notes: "最低限のアビリティを使って解除",
+                notes: "最低限のアビリティを使って解除、最悪トリゼロ裏を切ってでも必ず解除すること。",
                 actions: [
                     { char: 'ability', iconClass: 'icon-ability', text: '最低限のアビリティ使用' }
                 ]
