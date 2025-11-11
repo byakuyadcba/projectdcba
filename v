@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<!--https://yurugi1215-source.github.io/granblue/%E7%81%AB%E8%A1%8C%E5%8B%95%E8%A1%A8.html　様の承諾を得て改変および公開をしています。-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヴェルサシア火行動表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f0f4f8; 
+        }
+        
+        /* ターン選択ボタン */
+        .turn-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .turn-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .turn-button-danger {
+            background-color: #fff1f2;
+            border: 1px solid #EF476F;
+            color: #EF476F;
+        }
+        .turn-button-danger:hover {
+            background-color: #EF476F;
+            color: white;
+        }
+        .turn-button-caution {
+            background-color: #fffbeb;
+            border: 1px solid #FFD166;
+            color: #b48a28;
+        }
+        .turn-button-caution:hover {
+            background-color: #FFD166;
+            color: #073B4C;
+        }
+
+        /* モーダル（ポップアップ） */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+        }
+        .modal-active .modal-content {
+            transform: translateY(0);
+        }
+
+        /* アクションリスト (モーダル内) */
+        .action-list li {
+            position: relative;
+            padding-left: 44px; /* アイコン分のスペースを確保 */
+            margin-bottom: 12px;
+            min-height: 32px; /* アイコンの高さに合わせる */
+            display: flex;
+            align-items: center;
+        }
+
+        /* アイコンの基本スタイル */
+        .action-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(0,0,0,0.1); /* 境界線 */
+        }
+        
+        /* --- 画像アイコン --- */
+        .icon-shujinkou { 
+            background-image: url('https://prd-game-a-granbluefantasy.akamaized.net/assets/img_mid/sp/assets/leader/talk/311303_sw_0_01.png'); 
+        }
+        .icon-yuel { 
+            background-image: url('https://prd-game-a1-granbluefantasy.akamaized.net/assets/img_mid/sp/assets/npc/s/3040580000_01.jpg'); 
+        }
+        .icon-essel { 
+            background-image: url('https://prd-game-a1-granbluefantasy.akamaized.net/assets/img_mid/sp/assets/npc/s/3040039000_04.jpg'); 
+        }
+        .icon-savilbara { 
+            background-image: url('https://prd-game-a1-granbluefantasy.akamaized.net/assets/img_mid/sp/assets/npc/s/3040490000_01.jpg'); 
+        }
+
+        /* --- イニシャルアイコン --- */
+        .icon-summon { background-color: #555; } /* 召喚 */
+        .icon-fc { background-color: #F78C6B; } /* FC */
+        .icon-ability { background-color: #9a9a9a; } /* アビリティ */
+        .icon-attack { background-color: #2a9d8f; } /* 攻撃 */
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#118AB2',
+                        secondary: '#06D6A0',
+                        accent: '#FFD166',
+                        danger: '#EF476F', 
+                        dark: '#073B4C',
+                        lightBg: '#f0f4f8',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-lightBg text-dark">
+
+    <!-- コンテナ -->
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">ヴェルサシア火行動表</h1>
+        </header>
+
+        <!-- 固定ムーブセクション (1-10T) -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-dark text-center mb-8">固定ムーブ (1-10T)</h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+                <!-- ターンボタンがここに動的に挿入されます -->
+                <button data-turn="1" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">1T</button>
+                <button data-turn="2" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">2T</button>
+                <button data-turn="3" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">3T</button>
+                <button data-turn="4" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">4T</button>
+                <button data-turn="5" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">5T ⚠️</button>
+                <button data-turn="6" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">6T</button>
+                <button data-turn="7" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">7T ⚠️</button>
+                <button data-turn="8" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">8T ⚠️</button>
+                <button data-turn="9" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">9T ⚠️</button>
+                <button data-turn="10" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">10T ⚠️</button>
+            </div>
+        </section>
+
+        <!-- アドリブフェーズセクション (11T~) -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-dark text-center mb-8">アドリブフェーズ (11T~)</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                <button data-turn="11" class="turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg">11T ⚠️</button>
+                <button data-turn="12" class="turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg">12T ⚠️</button>
+                <button data-turn="13" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">13T ⚠️</button>
+                <button data-turn="14" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">14T~</button>
+            </div>
+        </section>
+
+
+        <!-- 編成情報セクション -->
+        <section class="mt-12 pt-8 border-t border-gray-300">
+            <h2 class="text-3xl font-bold text-dark text-center mb-8">編成情報</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="w-full md:w-1/2 lg:w-1/3 p-2">
+                    <img src="https://i.imgur.com/F0oDrY6.png" alt="キャラ編成" class="rounded-lg shadow-lg w-full h-auto" onerror="this.alt='画像1の読み込みに失敗しました。'; this.style.border='2px dashed #FF6B6B'; this.style.padding='1rem';">
+                    <p class="text-center text-dark font-semibold mt-2">キャラ編成</p>
+                </div>
+                <div class="w-full md:w-1/2 lg:w-1/3 p-2">
+                    <img src="https://i.imgur.com/YYJrDnI.png" alt="武器編成" class="rounded-lg shadow-lg w-full h-auto" onerror="this.alt='画像2の読み込みに失敗しました。'; this.style.border='2px dashed #FF6B6B'; this.style.padding='1rem';">
+                    <p class="text-center text-dark font-semibold mt-2">武器編成</p>
+                </div>
+                <div class="w-full md:w-1/2 lg:w-1/3 p-2">
+                    <img src="https://i.imgur.com/4QZ1FAf.png" alt="召喚石編成" class="rounded-lg shadow-lg w-full h-auto" onerror="this.alt='画像3の読み込みに失敗しました。'; this.style.border='2px dashed #FF6B6B'; this.style.padding='1rem';">
+                    <p class="text-center text-dark font-semibold mt-2">召喚石編成</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-600">Versasia Fire Action Chart</p>
+        </footer>
+
+    </div>
+    <!-- /コンテナ -->
+
+
+    <!-- モーダル（ポップアップ） -->
+    <div id="turn-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <!-- オーバーレイ -->
+        <div class="modal-overlay fixed inset-0 bg-black opacity-50" data-close-modal></div>
+        
+        <!-- コンテンツ -->
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto z-10 p-6 relative">
+            
+            <!-- 閉じるボタン -->
+            <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-700" data-close-modal>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <!-- モーダルヘッダー -->
+            <h3 id="modal-turn-title" class="text-3xl font-bold text-primary mb-2"></h3>
+            <p id="modal-premonition" class="text-xl font-semibold text-danger mb-4"></p>
+            
+            <!-- モーダルボディ -->
+            <div>
+                <h4 class="text-xl font-bold text-dark mb-3">使用アビリティ</h4>
+                <ul id="modal-action-list" class="action-list list-none space-y-2">
+                    <!-- アクションがここに動的に挿入されます -->
+                </ul>
+                <p id="modal-notes" class="text-gray-600 mt-4 text-sm bg-gray-100 p-3 rounded-md"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // ターンごとのデータ
+        // アイコンクラス: icon-shujinkou, icon-yuel, icon-essel, icon-savilbara, icon-summon, icon-fc, icon-ability
+        const turnData = {
+            1: {
+                title: "1T",
+                premonition: null,
+                notes: "アビリティ使用後、攻撃",
+                actions: [
+                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '2, 1, 3' },
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '2, 3, 1, 1' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神, 式神' },
+                    { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '1, 3' }
+                ]
+            },
+            2: {
+                title: "2T",
+                premonition: null,
+                notes: "アグニス召喚 (ゲージ石と合体はダメ)",
+                actions: [
+                    { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '天地開闢' },
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' }
+                ]
+            },
+            3: {
+                title: "3T",
+                premonition: null,
+                notes: "エッセル1を使わない",
+                actions: [
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1' }
+                ]
+            },
+            4: {
+                title: "4T",
+                premonition: null,
+                notes: "エッセル1 (1回目で破壊の試練解除)",
+                actions: [
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' }
+                ]
+            },
+            5: {
+                title: "5T",
+                premonition: "⚠️ CT予兆",
+                notes: "どちらも打つアビは変わらない",
+                actions: [
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
+                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '2' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神' },
+                    { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '1, 3' }
+                ]
+            },
+            6: {
+                title: "6T",
+                premonition: "CT予兆なし",
+                notes: "90になるのを待つ / アビリティ使用なしで攻撃",
+                actions: []
+            },
+            7: {
+                title: "7T",
+                premonition: "⚠️ 9999万ダメ予兆",
+                notes: null,
+                actions: [
+                    { char: 'summon', iconClass: 'icon-summon', text: '000表召喚' },
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
+                    { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '3' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '式神, ディスペル' },
+                    { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' }
+                ]
+            },
+            8: {
+                title: "8T",
+                premonition: "⚠️ 6回奥義予兆",
+                notes: null,
+                actions: [
+                    { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '天地開闢' },
+                    { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '2' },
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' }
+                ]
+            },
+            9: {
+                title: "9T",
+                premonition: "⚠️ FC、80ヒット予兆",
+                notes: "赤青どちらもG50待機。\n待機中、火傷が切れそうになったらユエル3。\nユエル3を打ったらユエル2。\nGenesisゲージが50になってから攻撃。",
+                actions: [
+                    { char: 'essel', iconClass: 'icon-essel', abilities: '4, 3, 1, 1' },
+                    { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '3' },
+                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '3 (火傷切れそうなら)' },
+                    { char: 'yuel', iconClass: 'icon-yuel', abilities: '2 (ユエル3使用後)' }
+                ]
+            },
+            10: {
+                title: "10T",
+                premonition: "⚠️ G50浄土予兆",
+                notes: "他の属性が突入してから攻撃",
+                actions: [
+                    { char: 'ability', iconClass: 'icon-ability', text: '主人公以外: 全アビリティ使用' }
+                ]
+            },
+            11: {
+                title: "11T",
+                premonition: "⚠️ 課題（四王天など）",
+                notes: "基本: 課題を見つつアビ最小限で攻撃。\n※注意: 特にTA3回課題が来た場合は、主人公1のみ使用して攻撃（よくあるミス）",
+                actions: [
+                    { char: 'ability', iconClass: 'icon-ability', text: '状況に応じてアビリティ使用' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回課題時)' }
+                ]
+            },
+            12: {
+                title: "12T",
+                premonition: "⚠️ 課題（四王天など）",
+                notes: "基本: 課題を見つつアビ最小限で攻撃",
+                actions: [
+                    { char: 'ability', iconClass: 'icon-ability', text: '状況に応じてアビリティ使用' }
+                ]
+            },
+            13: {
+                title: "13T",
+                premonition: "⚠️ CT予兆",
+                notes: "最低限のアビリティを使って解除",
+                actions: [
+                    { char: 'ability', iconClass: 'icon-ability', text: '最低限のアビリティ使用' }
+                ]
+            },
+            14: {
+                title: "14T~",
+                premonition: "アドリブ",
+                notes: "最重要注意点: 「もし次のTにTA3回課題を提示してきたら解除できるかどうかを考える」。\nこれ以外は意外となんとかなる。",
+                actions: [
+                    { char: 'ability', iconClass: 'icon-ability', text: '状況に応じて判断' }
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('turn-modal');
+            const turnButtons = document.querySelectorAll('.turn-button');
+            const closeButtons = document.querySelectorAll('[data-close-modal]');
+
+            const modalTitle = document.getElementById('modal-turn-title');
+            const modalPremonition = document.getElementById('modal-premonition');
+            const modalNotes = document.getElementById('modal-notes');
+            const modalActionList = document.getElementById('modal-action-list');
+
+            const openModal = (turnId) => {
+                const data = turnData[turnId];
+                if (!data) return;
+
+                // データをモーダルに設定
+                modalTitle.textContent = data.title;
+                
+                if (data.premonition) {
+                    modalPremonition.textContent = data.premonition;
+                    modalPremonition.classList.remove('hidden');
+                } else {
+                    modalPremonition.textContent = '';
+                    modalPremonition.classList.add('hidden');
+                }
+
+                if (data.notes) {
+                    // \n を <br> に変換して改行を反映
+                    modalNotes.innerHTML = data.notes.replace(/\n/g, '<br>');
+                    modalNotes.classList.remove('hidden');
+                } else {
+                    modalNotes.textContent = '';
+                    modalNotes.classList.add('hidden');
+                }
+
+                // アクションリストを生成
+                modalActionList.innerHTML = '';
+                if (data.actions.length > 0) {
+                    data.actions.forEach(action => {
+                        const li = document.createElement('li');
+                        let content = '';
+                        // text があればそちらを優先、なければ abilities を表示
+                        if (action.text) {
+                            content = action.text;
+                        } else if (action.abilities) {
+                            content = `<span class="font-semibold text-lg">${action.abilities}</span>`;
+                        }
+                        li.innerHTML = `<span class="action-icon ${action.iconClass}">${action.char === 'summon' || action.char === 'fc' || action.char === 'ability' ? action.char.toUpperCase().substring(0,2) : ''}</span> ${content}`;
+                        modalActionList.appendChild(li);
+                    });
+                } else {
+                    modalActionList.innerHTML = '<li>特になし</li>';
+                }
+
+                // モーダルを表示
+                modal.classList.remove('hidden');
+                modal.classList.add('modal-active');
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('modal-active');
+            };
+
+            // ターンボタンのイベントリスナー
+            turnButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const turnId = button.dataset.turn;
+                    openModal(turnId);
+                });
+            });
+
+            // 閉じるボタンのイベントリスナー
+            closeButtons.forEach(button => {
+                button.addEventListener('click', closeModal);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
