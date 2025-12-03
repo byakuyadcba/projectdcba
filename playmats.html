@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -7,14 +7,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <style>
-    .toc { background:#f8f8f8; padding:1em; border-radius:8px; margin:1.5em 0; }
-    .toc h2 { margin:0 0 .5em; font-size:1.1rem; }
-    .toc ul { columns: 2; gap: 2rem; padding-left: 1.2em; }
-    .toc li { margin: .25em 0; }
-    .product { margin:2em 0; border-bottom:1px solid #ddd; padding-bottom:1.5em; }
-    .product img { max-width:100%; height:auto; display:block; margin:.5em 0; }
-    .backtop { margin-top:.5em; font-size:.9rem; }
-    @media (max-width: 640px){ .toc ul { columns:1; } }
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #4b5563;
+      --accent: #4f46e5;
+      --accent-soft: #eef2ff;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter','Noto Sans JP',system-ui,sans-serif; }
+    header { background: #0f172a; color: #fff; padding: 12px 0; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
+    header nav { max-width: 1100px; margin: 0 auto; display: flex; gap: 16px; padding: 0 16px; flex-wrap: wrap; align-items: center; }
+    header nav a { color: #e2e8f0; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; }
+    header nav a[aria-current="page"], header nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+    h1 { font-size: clamp(1.8rem, 2.4vw, 2.4rem); margin-bottom: 12px; }
+    h2 { margin: 28px 0 12px; font-size: 1.4rem; }
+    p { line-height: 1.7; color: var(--muted); }
+
+    .lead { background: linear-gradient(120deg, #eef2ff, #e0f2fe); border: 1px solid #dfe7ff; padding: 20px; border-radius: 16px; box-shadow: var(--shadow); margin-bottom: 20px; }
+
+    .toc { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
+    .toc h2 { margin: 0 0 8px; font-size: 1.1rem; }
+    .toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 8px 18px; }
+    .toc a { text-decoration: none; color: var(--text); font-weight: 600; padding: 8px 10px; border-radius: 10px; background: var(--accent-soft); display: inline-block; }
+    .toc a:hover { background: #dfe4ff; color: #111827; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 18px; }
+    .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,0.12); }
+    .thumb { aspect-ratio: 4 / 3; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .card-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .card-title { font-size: 1.1rem; margin: 0; color: var(--text); }
+    .card-desc { margin: 0; color: var(--muted); line-height: 1.6; }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: .8rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(79,70,229,0.18); }
+    .card-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn { border: none; cursor: pointer; padding: 10px 14px; border-radius: 12px; font-weight: 700; text-decoration: none; text-align: center; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #4338ca; }
+    .btn-ghost { background: #f8fafc; color: var(--text); border: 1px solid var(--border); }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 50; }
+    .modal.is-open { display: flex; }
+    .modal-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(2px); }
+    .modal-body { position: relative; z-index: 1; background: #fff; max-width: 760px; width: min(760px, 92vw); border-radius: 18px; box-shadow: 0 24px 64px rgba(0,0,0,0.25); overflow: hidden; }
+    .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 0; }
+    .modal-img { background-size: cover; background-position: center; min-height: 220px; }
+    .modal-content { padding: 20px 22px; }
+    .modal-content h3 { margin: 0 0 6px; font-size: 1.3rem; }
+    .modal-content p { margin: 0 0 10px; }
+    .modal-points { margin: 12px 0; padding-left: 18px; color: var(--text); }
+    .modal-close { position: absolute; top: 12px; right: 12px; background: #0f172a; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 18px; }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+    footer { text-align: center; padding: 28px 0; color: var(--muted); }
+
+    @media (max-width: 640px) {
+      header nav { justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -28,119 +82,163 @@
   </header>
 
   <main id="top">
-    <h1>東方プレイマット紹介</h1>
+    <div class="lead">
+      <h1>東方プレイマット紹介</h1>
+      <p>
+        <strong>東方プレイマット</strong>は、カードゲームの対戦を快適にするだけでなく、デスクマットやコレクションアイテムとしても人気の高いグッズです。
+        当サークルでは描き下ろしイラストを採用し、実用性と美しさを両立した<strong>オリジナルプレイマット</strong>を制作しています。
+      </p>
+      <p>
+        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
+      </p>
+    </div>
 
-    <p>
-      <strong>東方プレイマット</strong>は、カードゲームの対戦を快適にするだけでなく、
-      デスクマットやコレクションアイテムとしても人気の高いグッズです。
-      当サークルでは描き下ろしイラストを採用し、
-      実用性と美しさを両立した<strong>オリジナルプレイマット</strong>を制作しています。
-    </p>
-
-    <p>
-      イベント頒布に加えて
-      <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer">BOOTH通販</a>でも販売中。
-      イベント会場では持参していない商品も、通販ではご用意しています。
-    </p>
-
-    <!-- 目次 -->
     <div class="toc" aria-labelledby="toc-title">
       <h2 id="toc-title">目次</h2>
-      <ul>
-        <li><a href="#allchara">デフォルメオールキャラ プレイマット</a></li>
-        <li><a href="#koishi">古明地こいし プレイマット</a></li>
-        <li><a href="#sanae">東風谷早苗 プレイマット</a></li>
-        <li><a href="#hifuu">秘封倶楽部 プレイマット</a></li>
-        <li><a href="#koumakan">紅魔館 プレイマット</a></li>
-        <li><a href="#kaikidan">怪綺談 プレイマット</a></li>
-      </ul>
+      <ul id="toc-list"></ul>
     </div>
 
     <h2>ラインナップ</h2>
-
- <!-- デフォルメオールキャラプレイマット -->
-<section class="product" id="allchara">
-  <h3>デフォルメオールキャラ プレイマット</h3>
-  <img src="images/allchara_playmat.jpg" alt="デフォルメオールキャラ プレイマット">
-  <p>
-    Project-D.C.B.A と Production.NS のコラボにより、
-    歴代の人気キャラクターをまとめてプレイマット化しました！
-    博麗霊夢、霧雨魔理沙、東風谷早苗などを一堂に集結させた、
-    贅沢で豪華な一枚です。
-  </p>
-  <p><a href="https://p-dcba.booth.pm/items/ALLCHARA" target="_blank" rel="noopener noreferrer">▶ BOOTHで詳しく見る</a></p>
-  <p class="backtop"><a href="#top">▲ ページ上部へ戻る</a></p>
-</section>
-
-<!-- 古明地こいし -->
-<section class="product" id="koishi">
-  <h3>古明地こいし プレイマット</h3>
-  <img src="images/koishi_playmat.jpg" alt="古明地こいし プレイマット">
-  <p>
-    「カワイイ × ゴシック」がテーマ！
-    キャラクターの可愛さとダークな雰囲気を両立させた、
-    古明地こいしファン必見のプレイマットです。
-  </p>
-  <p><a href="https://p-dcba.booth.pm/items/KOISHI" target="_blank" rel="noopener noreferrer">▶ BOOTHで詳しく見る</a></p>
-  <p class="backtop"><a href="#top">▲ ページ上部へ戻る</a></p>
-</section>
-
-<!-- 東風谷早苗 -->
-<section class="product" id="sanae">
-  <h3>東風谷早苗 プレイマット</h3>
-  <img src="images/sanae_playmat.jpg" alt="東風谷早苗 プレイマット">
-  <p>
-    小道具にもこだわった『東方風神録』仕様！
-    早苗さん推しの方はもちろん、作品推しの方にもおすすめの
-    東風谷早苗プレイマットです。
-  </p>
-  <p><a href="https://p-dcba.booth.pm/items/SANAE" target="_blank" rel="noopener noreferrer">▶ BOOTHで詳しく見る</a></p>
-  <p class="backtop"><a href="#top">▲ ページ上部へ戻る</a></p>
-</section>
-
-<!-- 秘封倶楽部 -->
-<section class="product" id="hifuu">
-  <h3>秘封倶楽部 プレイマット</h3>
-  <img src="images/hifuu_playmat.jpg" alt="秘封倶楽部 プレイマット">
-  <p>
-    蓮子＆メリーのおしゃれなイメージをそのまま落とし込んだ一枚。
-    シックで雰囲気あるデザインが魅力の秘封倶楽部プレイマットです。
-  </p>
-  <p><a href="https://p-dcba.booth.pm/items/HIFUU" target="_blank" rel="noopener noreferrer">▶ BOOTHで詳しく見る</a></p>
-  <p class="backtop"><a href="#top">▲ ページ上部へ戻る</a></p>
-</section>
-
-<!-- 紅魔館プレイマット -->
-<section class="product" id="koumakan">
-  <h3>紅魔館 プレイマット</h3>
-  <img src="images/koumakan_playmat.jpg" alt="紅魔館 プレイマット">
-  <p>
-    紅魔館の賑やかな日常を、1コマ漫画のように切り取ったプレイマット。
-    レミリアやフランドールなど人気キャラが勢揃いの楽しい一枚です。
-    ※台パンは禁止です！
-  </p>
-  <p><a href="https://p-dcba.booth.pm/items/KOUMAKAN" target="_blank" rel="noopener noreferrer">▶ BOOTHで詳しく見る</a></p>
-  <p class="backtop"><a href="#top">▲ ページ上部へ戻る</a></p>
-</section>
-
-<!-- 怪綺談プレイマット -->
-<section class="product" id="kaikidan">
-  <h3>怪綺談 プレイマット</h3>
-  <img src="images/kaikidan_playmat.jpg" alt="怪綺談 プレイマット">
-  <p>
-    東方旧作をモチーフにした意外性ある一枚！
-    代表最推しのユキ＆マイをセンターに配置しつつ、
-    他のキャラもしっかり目立つ豪華仕様。
-    怪綺談ファン必見のプレイマットです。
-  </p>
-  <p><a href="https://p-dcba.booth.pm/items/KAIKIDAN" target="_blank" rel="noopener noreferrer">▶ BOOTHで詳しく見る</a></p>
-  <p class="backtop"><a href="#top">▲ ページ上部へ戻る</a></p>
-</section>
-
+    <div class="product-grid" id="product-grid"></div>
   </main>
+
+  <div id="product-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-overlay" data-close></div>
+    <div class="modal-body">
+      <button class="modal-close" data-close aria-label="閉じる">×</button>
+      <div class="modal-grid">
+        <div id="modal-image" class="modal-img"></div>
+        <div class="modal-content">
+          <h3 id="modal-title"></h3>
+          <p id="modal-desc"></p>
+          <ul id="modal-points" class="modal-points"></ul>
+          <div class="modal-actions">
+            <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer">BOOTHで詳しく見る</a>
+            <a href="#top" class="btn btn-ghost">トップへ戻る</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <p>&copy; Project-D.C.B.A</p>
   </footer>
+
+  <script>
+    const placeholderImage = 'images/items/TH54PM.png';
+    const products = [
+      {
+        id: 'allchara',
+        title: 'デフォルメオールキャラ プレイマット',
+        desc: 'Project-D.C.B.A と Production.NS のコラボで、歴代の人気キャラをぎゅっと集めた贅沢な一枚。',
+        points: ['霊夢・魔理沙・早苗など主要キャラ総出演', 'イベント＆BOOTH通販で展開中'],
+        link: 'https://p-dcba.booth.pm/items/ALLCHARA',
+      },
+      {
+        id: 'koishi',
+        title: '古明地こいし プレイマット',
+        desc: '「カワイイ × ゴシック」がテーマ。可愛さとダークさを両立した、こいしファン必見のデザイン。',
+        points: ['ゴシック寄りの色使いで雰囲気重視', 'カードもデスクも映えるビジュアル'],
+        link: 'https://p-dcba.booth.pm/items/KOISHI',
+      },
+      {
+        id: 'sanae',
+        title: '東風谷早苗 プレイマット',
+        desc: '小道具にもこだわった『東方風神録』仕様。作品推しにもおすすめの早苗さんマット。',
+        points: ['風神録モチーフの演出', 'イベント・通販どちらでも入手可能'],
+        link: 'https://p-dcba.booth.pm/items/SANAE',
+      },
+      {
+        id: 'hifuu',
+        title: '秘封倶楽部 プレイマット',
+        desc: '蓮子とメリーの雰囲気をそのまま落とし込んだシックなデザイン。',
+        points: ['落ち着いた配色で大人っぽい仕上がり', '秘封ファン向けの定番アイテム'],
+        link: 'https://p-dcba.booth.pm/items/HIFUU',
+      },
+      {
+        id: 'koumakan',
+        title: '紅魔館 プレイマット',
+        desc: '紅魔館の日常を1コマ漫画風に切り取った賑やかな一枚。レミリアやフランドールが勢揃い。',
+        points: ['コミカルなレイアウトで楽しい雰囲気', '※台パンは禁止！'],
+        link: 'https://p-dcba.booth.pm/items/KOUMAKAN',
+      },
+      {
+        id: 'kaikidan',
+        title: '怪綺談 プレイマット',
+        desc: '東方旧作モチーフの意外性あるデザイン。代表推しのユキ＆マイを中心に据えた豪華仕様。',
+        points: ['旧作キャラをしっかりフィーチャー', 'コレクターにもおすすめ'],
+        link: 'https://p-dcba.booth.pm/items/KAIKIDAN',
+      },
+    ].map((item) => ({ ...item, image: placeholderImage }));
+
+    const tocList = document.getElementById('toc-list');
+    const productGrid = document.getElementById('product-grid');
+    const modal = document.getElementById('product-modal');
+    const modalImg = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalPoints = document.getElementById('modal-points');
+    const modalLink = document.getElementById('modal-link');
+
+    const buildCard = (item) => {
+      const card = document.createElement('article');
+      card.className = 'product-card';
+      card.id = item.id;
+      card.innerHTML = `
+        <div class="thumb" style="background-image:url('${item.image}')"></div>
+        <div class="card-body">
+          <h3 class="card-title">${item.title}</h3>
+          <p class="card-desc">${item.desc}</p>
+          <div class="tags"><span class="tag">プレイマット</span></div>
+          <div class="card-actions">
+            <button class="btn btn-primary" data-id="${item.id}">詳細をみる</button>
+            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer">BOOTH</a>
+          </div>
+        </div>
+      `;
+      card.querySelector('button').addEventListener('click', () => openModal(item.id));
+      return card;
+    };
+
+    const render = () => {
+      tocList.innerHTML = '';
+      productGrid.innerHTML = '';
+      products.forEach((item) => {
+        const tocItem = document.createElement('li');
+        tocItem.innerHTML = `<a href="${'#' + item.id}">${item.title}</a>`;
+        tocList.appendChild(tocItem);
+
+        productGrid.appendChild(buildCard(item));
+      });
+    };
+
+    const openModal = (id) => {
+      const item = products.find((p) => p.id === id);
+      if (!item) return;
+      modalTitle.textContent = item.title;
+      modalDesc.textContent = item.desc;
+      modalPoints.innerHTML = '';
+      item.points.forEach((p) => {
+        const li = document.createElement('li');
+        li.textContent = p;
+        modalPoints.appendChild(li);
+      });
+      modalImg.style.backgroundImage = `url('${item.image}')`;
+      modalLink.href = item.link;
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closeModal));
+    document.addEventListener('keyup', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    render();
+  </script>
 </body>
 </html>
