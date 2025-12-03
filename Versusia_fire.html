@@ -122,15 +122,6 @@
                 }
             }
         }
-    const iconLabel = {
-        summon: '召',
-        fc: 'FC',
-        ability: 'AB',
-        attack: 'ON',
-        offattack: 'OFF',
-        stamp: 'ST',
-        wait: '待',
-    };
     </script>
 </head>
 <body class="bg-lightBg text-dark">
@@ -145,33 +136,13 @@
         <!-- 固定ムーブセクション (1-12T) -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-dark text-center mb-8">光背解除まで(1-12T)</h2>
-            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
-                <!-- ターンボタンがここに動的に挿入されます -->
-                <button data-turn="1" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">1T</button>
-                <button data-turn="2" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">2T</button>
-                <button data-turn="3" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">3T</button>
-                <button data-turn="4" class="turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg">4T　⚠️<br><small>解除待機</small></button>
-                <button data-turn="5" class="turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg">5T　⚠️<br><small>90%待機</small></button>
-                <button data-turn="6" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">6T</button>
-                <button data-turn="7" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">7T</button>
-                <button data-turn="8" class="turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg">8T　⚠️<br><small>G50待機</small></button>
-                <button data-turn="9" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">9T　⚠️<br><small>スタンプ</small></button>
-                <button data-turn="10" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">10T</button>
-                <button data-turn="11" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">11T </button>
-                <button data-turn="12" class="turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary">12T　⚠️<br><small>光背解除</small></button>
-            </div>
+            <div id="fixed-turns" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-w-4xl mx-auto"></div>
         </section>
 
         <!-- アドリブフェーズセクション (13T~) -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-dark text-center mb-8">アドリブ早見表　未完成</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
-                <button data-turn="13" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">四天王</button>
-                <button data-turn="13" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">忉利天⚠️</button>
-                <button data-turn="13" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">夜摩天</button>
-                <button data-turn="13" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">兜率天</button>
-                <button data-turn="13" class="turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg">化楽天</button>
-            </div>
+            <div id="adlib-turns" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto"></div>
         </section>
 
 
@@ -242,6 +213,42 @@
 
 
     <script>
+        // アイコンのラベル
+        const iconLabel = {
+            summon: '召',
+            fc: 'FC',
+            ability: 'AB',
+            attack: 'ON',
+            offattack: 'OFF',
+            stamp: 'ST',
+            wait: '待',
+        };
+
+        // ボタン表示用データ
+        const turnButtons = {
+            fixed: [
+                { turn: '1', label: '1T' },
+                { turn: '2', label: '2T' },
+                { turn: '3', label: '3T' },
+                { turn: '4', label: '4T', variant: 'caution', sub: '解除待機' },
+                { turn: '5', label: '5T', variant: 'caution', sub: '90%待機' },
+                { turn: '6', label: '6T' },
+                { turn: '7', label: '7T' },
+                { turn: '8', label: '8T', variant: 'caution', sub: 'G50待機' },
+                { turn: '9', label: '9T', variant: 'danger', sub: 'スタンプ' },
+                { turn: '10', label: '10T' },
+                { turn: '11', label: '11T' },
+                { turn: '12', label: '12T', variant: 'caution', sub: '光背解除' },
+            ],
+            adlib: [
+                { turn: '13', label: '四天王', variant: 'danger' },
+                { turn: '13', label: '忉利天', variant: 'danger' },
+                { turn: '13', label: '夜摩天', variant: 'danger' },
+                { turn: '13', label: '兜率天', variant: 'danger' },
+                { turn: '13', label: '化楽天', variant: 'danger' },
+            ],
+        };
+
         // ターンごとのデータ
         // アイコンクラス: icon-shujinkou, icon-yuel, icon-essel, icon-savilbara, icon-summon, icon-fc, icon-ability
         const turnData = {
@@ -386,8 +393,36 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
+            const variantClassMap = {
+                default: 'turn-button bg-white shadow-md rounded-lg p-4 font-bold text-lg text-primary',
+                caution: 'turn-button turn-button-caution shadow-md rounded-lg p-4 font-bold text-lg',
+                danger: 'turn-button turn-button-danger shadow-md rounded-lg p-4 font-bold text-lg',
+            };
+
+            const buildLabel = ({ label, sub }) => {
+                if (!sub) return label;
+                return `${label} &#9888;<br><small>${sub}</small>`;
+            };
+
+            const renderButtons = (items, containerId) => {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = '';
+                items.forEach((item) => {
+                    const button = document.createElement('button');
+                    button.dataset.turn = item.turn;
+                    button.className = variantClassMap[item.variant] ?? variantClassMap.default;
+                    button.innerHTML = buildLabel(item);
+                    container.appendChild(button);
+                });
+            };
+
+            // グリッドのボタンをデータから生成
+            renderButtons(turnButtons.fixed, 'fixed-turns');
+            renderButtons(turnButtons.adlib, 'adlib-turns');
+
             const modal = document.getElementById('turn-modal');
-            const turnButtons = document.querySelectorAll('.turn-button');
+            const turnButtonElements = document.querySelectorAll('.turn-button');
             const closeButtons = document.querySelectorAll('[data-close-modal]');
 
             const modalTitle = document.getElementById('modal-turn-title');
@@ -453,7 +488,7 @@
             };
 
             // ターンボタンのイベントリスナー
-            turnButtons.forEach(button => {
+            turnButtonElements.forEach(button => {
                 button.addEventListener('click', () => {
                     const turnId = button.dataset.turn;
                     openModal(turnId);
