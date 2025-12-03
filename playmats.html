@@ -40,7 +40,7 @@
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 18px; }
     .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease; }
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,0.12); }
-    .thumb { aspect-ratio: 4 / 3; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .thumb { aspect-ratio: 4 / 3; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0f172a; }
     .card-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 10px; }
     .card-title { font-size: 1.1rem; margin: 0; color: var(--text); }
     .card-desc { margin: 0; color: var(--muted); line-height: 1.6; }
@@ -58,7 +58,7 @@
     .modal-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(2px); }
     .modal-body { position: relative; z-index: 1; background: #fff; max-width: 760px; width: min(760px, 92vw); border-radius: 18px; box-shadow: 0 24px 64px rgba(0,0,0,0.25); overflow: hidden; }
     .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 0; }
-    .modal-img { background-size: cover; background-position: center; min-height: 220px; }
+    .modal-img { background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0f172a; min-height: 220px; }
     .modal-content { padding: 20px 22px; }
     .modal-content h3 { margin: 0 0 6px; font-size: 1.3rem; }
     .modal-content p { margin: 0 0 10px; }
