@@ -397,6 +397,66 @@ a {
   cursor: pointer;
 }
 
+#product-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+#product-modal.is-open {
+  display: flex;
+}
+
+#product-modal .modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 28, 45, 0.56);
+}
+
+#product-modal .modal-body {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 26px 68px rgba(0, 0, 0, 0.28);
+  width: min(760px, 92vw);
+  overflow: hidden;
+}
+
+#product-modal .modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+#product-modal .modal-img {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 240px;
+  background-color: #132744;
+}
+
+#product-modal .modal-content {
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+#product-modal .modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  background: #20395d;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
 .page-playmats footer {
   text-align: center;
   padding: 1.8rem 0 0.7rem;
