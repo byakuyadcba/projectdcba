@@ -31,21 +31,6 @@ body.page-home {
   --bg-2: #e8f1ff;
 }
 
-body.page-about {
-  --bg-1: #f8f3e8;
-  --bg-2: #efe3cc;
-  --accent: #845b30;
-  --accent-soft: #f4ead8;
-  --text: #2f2115;
-  --muted: #5a4738;
-  --header: #3a2a1d;
-  --border: #dfccb4;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 42%),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 0 2px, rgba(239, 227, 204, 0.16) 2px 4px),
-    linear-gradient(160deg, var(--bg-1), var(--bg-2));
-}
-
 header {
   position: fixed;
   top: 0;
@@ -55,10 +40,6 @@ header {
   color: #fff;
   z-index: 1000;
   box-shadow: 0 8px 24px rgba(14, 20, 30, 0.25);
-}
-
-body.page-about header {
-  background: rgba(58, 42, 29, 0.95);
 }
 
 #nav {
@@ -195,11 +176,230 @@ a {
   margin-bottom: 0;
 }
 
-body.page-about h1,
-body.page-about h2,
-body.page-about h3 {
+.page-playmats h1,
+.page-playmats h2,
+.page-playmats h3,
+.page-playmats .card-title,
+.page-playmats .modal-content h3 {
   font-family: 'Shippori Mincho B1', 'Noto Serif JP', serif;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+}
+
+.page-playmats .lead {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.96), rgba(233, 240, 252, 0.96));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  margin-bottom: 1.1rem;
+}
+
+.page-playmats .toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1rem 1.2rem;
+}
+
+.page-playmats .toc h2 {
+  margin: 0 0 0.7rem;
+}
+
+.page-playmats .toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.6rem 1rem;
+}
+
+.page-playmats .toc a {
+  display: inline-block;
+  width: 100%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+}
+
+.page-playmats .toc a:hover {
+  background: #dfe9fa;
+}
+
+.page-playmats .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.page-playmats .product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.page-playmats .product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(24, 37, 58, 0.18);
+}
+
+.page-playmats .thumb {
+  aspect-ratio: 4 / 3;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #132744;
+}
+
+.page-playmats .card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.page-playmats .card-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.page-playmats .card-desc {
+  margin: 0;
+}
+
+.page-playmats .tags {
+  display: flex;
+}
+
+.page-playmats .tag {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid #c9daef;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.24rem 0.6rem;
+}
+
+.page-playmats .card-actions,
+.page-playmats .modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.page-playmats .btn {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.page-playmats .btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.page-playmats .btn-primary:hover {
+  background: #173f76;
+}
+
+.page-playmats .btn-ghost {
+  background: #f7fbff;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.page-playmats .modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.page-playmats .modal.is-open {
+  display: flex;
+}
+
+.page-playmats .modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 28, 45, 0.56);
+}
+
+.page-playmats .modal-body {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 26px 68px rgba(0, 0, 0, 0.28);
+  width: min(760px, 92vw);
+  overflow: hidden;
+}
+
+.page-playmats .modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.page-playmats .modal-img {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 240px;
+  background-color: #132744;
+}
+
+.page-playmats .modal-content {
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.page-playmats .modal-content h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.25rem;
+}
+
+.page-playmats .modal-content p {
+  margin: 0 0 0.6rem;
+}
+
+.page-playmats .modal-points {
+  margin: 0.7rem 0;
+  padding-left: 1.1rem;
+}
+
+.page-playmats .modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  background: #20395d;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.page-playmats footer {
+  text-align: center;
+  padding: 1.8rem 0 0.7rem;
 }
 
 .menu-toggle {
@@ -242,5 +442,10 @@ body.page-about h3 {
 
   .cta-btn {
     text-align: center;
+  }
+
+  .page-playmats .btn {
+    text-align: center;
+    width: 100%;
   }
 }
