@@ -176,13 +176,13 @@
   </footer>
 
   <script>
-    const placeholderImage = 'images/items/TH54PM.png';
     const products = [
       {
         id: 'allchara',
         title: 'デフォルメオールキャラ プレイマット',
         desc: 'Project-D.C.B.A と Production.NS のコラボで、歴代の人気キャラをぎゅっと集めた贅沢な一枚。',
         points: ['霊夢・魔理沙・早苗など主要キャラ総出演', 'イベント＆BOOTH通販で展開中'],
+        image: 'images/items/TH54PM.png',
         link: 'https://p-dcba.booth.pm/items/7303390',
       },
       {
@@ -190,6 +190,7 @@
         title: '古明地こいし プレイマット',
         desc: '「カワイイ × ゴシック」がテーマ。可愛さとダークさを両立した、こいしファン必見のデザイン。',
         points: ['ゴシック寄りの色使いで雰囲気重視', 'カードもデスクも映えるビジュアル'],
+        image: 'images/items/TH55PM.png',
         link: 'https://p-dcba.booth.pm/items/7812241',
       },
       {
@@ -197,6 +198,7 @@
         title: '東風谷早苗 プレイマット',
         desc: '小道具にもこだわった『東方風神録』仕様。作品推しにもおすすめの早苗さんマット。',
         points: ['風神録モチーフの演出', 'イベント・通販どちらでも入手可能'],
+        image: 'images/items/TH53PM.png',
         link: 'https://p-dcba.booth.pm/items/7303179',
       },
       {
@@ -204,13 +206,15 @@
         title: '秘封倶楽部 プレイマット',
         desc: '蓮子とメリーの雰囲気をそのまま落とし込んだシックなデザイン。',
         points: ['落ち着いた配色で大人っぽい仕上がり', '秘封ファン向けの定番アイテム'],
-        link: 'https://p-dcba.booth.pm/items/HIFUU',
+        image: 'images/items/TH56PM.png',
+        link: 'https://p-dcba.booth.pm/items',
       },
       {
         id: 'koumakan',
         title: '紅魔館 プレイマット',
         desc: '紅魔館の日常を1コマ漫画風に切り取った賑やかな一枚。レミリアやフランドールが勢揃い。',
         points: ['コミカルなレイアウトで楽しい雰囲気', '※台パンは禁止！'],
+        image: 'images/items/TH32PM.png',
         link: 'https://p-dcba.booth.pm/items/5786490',
       },
       {
@@ -218,9 +222,10 @@
         title: '怪綺談 プレイマット',
         desc: '東方旧作モチーフの意外性あるデザイン。代表推しのユキ＆マイを中心に据えた豪華仕様。',
         points: ['旧作キャラをしっかりフィーチャー', 'コレクターにもおすすめ'],
+        image: 'images/items/TH30PM.png',
         link: 'https://p-dcba.booth.pm/items/5786502',
       },
-    ].map((item) => ({ ...item, image: placeholderImage }));
+    ];
 
     const tocList = document.getElementById('toc-list');
     const productGrid = document.getElementById('product-grid');
