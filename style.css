@@ -7,6 +7,12 @@ body {
   color: #333;
 }
 
+/* ホーム専用の薄い青グラデーション */
+body.page-home {
+  background-color: #f6fbff;
+  background-image: linear-gradient(180deg, #f7fbff 0%, #eef6ff 100%);
+}
+
 header {
   position: fixed; /* ← 追加：ヘッダーを上部に固定 */
   top: 0;
