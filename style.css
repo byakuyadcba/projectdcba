@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700&family=Shippori+Mincho+B1:wght@600;700&display=swap');
+
 body {
   margin: 0;
   font-family: sans-serif;
@@ -110,6 +112,41 @@ h1, h2, h3, h4, h5, h6 {
 /* 本文やリストはインデントをつける */
 p, ul, ol {
   margin-left: 1.5rem;
+}
+
+/* サークル紹介ページ専用テーマ */
+body.page-about {
+  --about-bg-1: #f8f3e8;
+  --about-bg-2: #efe3cc;
+  --about-accent: #845b30;
+  --about-head: #2f2115;
+  background-color: var(--about-bg-1);
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 40%),
+    radial-gradient(circle at 85% 16%, rgba(196, 160, 115, 0.2) 0%, rgba(196, 160, 115, 0) 42%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.18) 0 2px, rgba(239, 227, 204, 0.18) 2px 4px),
+    linear-gradient(160deg, var(--about-bg-1), var(--about-bg-2));
+  font-family: 'M PLUS 1p', 'Noto Sans JP', sans-serif;
+}
+
+body.page-about h1,
+body.page-about h2,
+body.page-about h3 {
+  font-family: 'Shippori Mincho B1', 'Noto Serif JP', serif;
+  letter-spacing: 0.04em;
+  color: var(--about-head);
+}
+
+body.page-about main {
+  max-width: 980px;
+}
+
+body.page-about ul li a {
+  color: var(--about-accent);
+}
+
+body.page-about ul li a:hover {
+  color: #5d3e1f;
 }
 
 /* PCではメニューは常に表示、ハンバーガー非表示 */

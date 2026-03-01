@@ -14,56 +14,87 @@
   <meta name="description" content="Project-D.C.B.Aが制作する東方プレイマットを紹介。霊夢・魔理沙・こいし・早苗・秘封倶楽部・紅魔館・怪綺談など東方Projectキャラクターをモチーフにした描き下ろしデザインを通販（BOOTH）で入手できます。">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500;700&family=M+PLUS+1p:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f8fb;
+      --bg: #f5efe7;
       --card: #ffffff;
-      --text: #1f2933;
-      --muted: #4b5563;
-      --accent: #4f46e5;
-      --accent-soft: #eef2ff;
-      --border: #e5e7eb;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --text: #251a13;
+      --muted: #4f3f35;
+      --accent: #a03f1f;
+      --accent-soft: #f8e8dd;
+      --border: #e8d7c8;
+      --shadow: 0 12px 30px rgba(43, 24, 10, 0.13);
     }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter','Noto Sans JP',system-ui,sans-serif; }
-    header { background: #0f172a; color: #fff; padding: 12px 0; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
+    body {
+      background:
+        radial-gradient(circle at 88% 8%, rgba(167, 124, 63, 0.2) 0%, rgba(167, 124, 63, 0) 38%),
+        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0) 44%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.2) 0 1px, rgba(245,239,231,0.3) 1px 3px),
+        linear-gradient(155deg, #f9f1e8, #f2e7da 46%, #efe1d0);
+      color: var(--text);
+      font-family: 'M PLUS 1p', 'Noto Sans JP', sans-serif;
+    }
+    header { background: #3f2917; color: #fff; padding: 12px 0; box-shadow: 0 8px 24px rgba(27,16,8,0.25); }
     .top-nav { max-width: 1100px; margin: 0 auto; display: flex; gap: 16px; padding: 0 16px; flex-wrap: wrap; align-items: center; }
     .nav-links { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; display: inline-block; }
-    .nav-links a[aria-current="page"], .nav-links a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .nav-links a { color: #f5e9d9; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; display: inline-block; }
+    .nav-links a[aria-current="page"], .nav-links a:hover { background: rgba(255,255,255,0.16); color: #fff; }
     .menu-toggle { display: none; background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.22); padding: 8px 12px; border-radius: 10px; font-size: 16px; cursor: pointer; }
     main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
-    h1 { font-size: clamp(1.8rem, 2.4vw, 2.4rem); margin-bottom: 12px; }
-    h2 { margin: 28px 0 12px; font-size: 1.4rem; }
+    h1, h2, .card-title, .modal-content h3 {
+      font-family: 'Kaisei Tokumin', 'Noto Serif JP', serif;
+      letter-spacing: 0.03em;
+    }
+    h1 { font-size: clamp(1.8rem, 2.4vw, 2.4rem); margin-bottom: 12px; color: #2f2016; }
+    h2 { margin: 28px 0 12px; font-size: 1.4rem; color: #3b2819; }
     p { line-height: 1.7; color: var(--muted); }
 
-    .lead { background: linear-gradient(120deg, #eef2ff, #e0f2fe); border: 1px solid #dfe7ff; padding: 20px; border-radius: 16px; box-shadow: var(--shadow); margin-bottom: 20px; }
+    .lead {
+      background: linear-gradient(125deg, rgba(255, 251, 244, 0.95), rgba(244, 228, 209, 0.95));
+      border: 1px solid #e6d2bb;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
 
-    .toc { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
+    .toc { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
     .toc h2 { margin: 0 0 8px; font-size: 1.1rem; }
     .toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 8px 18px; }
     .toc a { text-decoration: none; color: var(--text); font-weight: 600; padding: 8px 10px; border-radius: 10px; background: var(--accent-soft); display: inline-block; }
-    .toc a:hover { background: #dfe4ff; color: #111827; }
+    .toc a:hover { background: #f2d9c9; color: #2f1b12; }
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 18px; }
-    .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease; }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,0.12); }
-    .thumb { aspect-ratio: 4 / 3; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0f172a; }
+    .product-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(253,246,237,0.95));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(74, 45, 26, 0.2); }
+    .thumb { aspect-ratio: 4 / 3; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #2d1f17; }
     .card-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 10px; }
     .card-title { font-size: 1.1rem; margin: 0; color: var(--text); }
     .card-desc { margin: 0; color: var(--muted); line-height: 1.6; }
     .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .tag { background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: .8rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(79,70,229,0.18); }
+    .tag { background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: .8rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(160,63,31,0.24); }
     .card-actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn { border: none; cursor: pointer; padding: 10px 14px; border-radius: 12px; font-weight: 700; text-decoration: none; text-align: center; }
     .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #4338ca; }
+    .btn-primary:hover { background: #7d3119; }
     .btn-ghost { background: #f8fafc; color: var(--text); border: 1px solid var(--border); }
 
     /* Modal */
     .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 50; }
     .modal.is-open { display: flex; }
-    .modal-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(2px); }
+    .modal-overlay { position: absolute; inset: 0; background: rgba(35, 24, 16, 0.55); backdrop-filter: blur(2px); }
     .modal-body { position: relative; z-index: 1; background: #fff; max-width: 760px; width: min(760px, 92vw); border-radius: 18px; box-shadow: 0 24px 64px rgba(0,0,0,0.25); overflow: hidden; }
     .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 0; }
     .modal-img { background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0f172a; min-height: 220px; }
