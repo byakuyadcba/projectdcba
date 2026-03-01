@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>サークルについて</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47G7WG9C27"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-47G7WG9C27');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Project-D.C.B.Aは、東方Projectを中心とした同人グッズ（プレイマット・スリーブなど）を制作・頒布するサークルです。">
   <link rel="stylesheet" href="style.css">
@@ -13,10 +21,11 @@
       <nav id="nav">
       <a href="index.html">ホーム</a>
       <a href="about.html">サークルについて</a>
-      <a href="https://p-dcba.booth.pm/items">BOOTH</a>
-      <a href="https://x.com/project_DCBA">X（旧Twitter）</a>
-      <a href="https://www.instagram.com/project_dcba">Instagram</a>
-      <a href="https://forms.gle/zytJ4RqhBvsedCmd9">お問い合わせ</a>
+      <a href="playmats.html">プレイマット紹介</a>
+      <a href="https://p-dcba.booth.pm/items" data-track="nav_booth">BOOTH</a>
+      <a href="https://x.com/project_DCBA" data-track="nav_x">X（旧Twitter）</a>
+      <a href="https://www.instagram.com/project_dcba" data-track="nav_instagram">Instagram</a>
+      <a href="https://forms.gle/zytJ4RqhBvsedCmd9" data-track="nav_contact">お問い合わせ</a>
       
     </nav>
   </header>
@@ -39,17 +48,18 @@
           <h2>頒布アイテムの入手方法</h2>
 <ul>
   <li><strong>同人誌即売会：</strong>日本各地の同人誌即売会に参加しています。<br>
-        詳細はサークルの<a href="https://x.com/project_DCBA">X</a> で告知しています。</li>
-  <li><strong>BOOTH：</strong><a href="https://p-dcba.booth.pm/items">BOOTH</a>からイベントに参加できない人も！</li>
+        詳細はサークルの<a href="https://x.com/project_DCBA" data-track="about_x">X</a> で告知しています。</li>
+  <li><strong>BOOTH：</strong><a href="https://p-dcba.booth.pm/items" data-track="about_booth">BOOTH</a>からイベントに参加できない人も！</li>
     <li><strong>委託先様：</strong>通販だったり実店舗だったりに置いてあります！<br>
-     ・<a href="https://www.melonbooks.co.jp/circle/index.php?circle_id=24737">メロンブックス様</a><br>
-     ・<a href="https://shop.akbh.jp/collections/vendors?q=Project-D.C.B.A&view=ls">Akiba-Hobby様</a><br>
-     ・<a href="https://www.akibaoo.com/">あきばお～こく様</a><br>
-     ・<a href="https://www.grep-tsuhan.net/">Grep様</a><br>
+     ・<a href="https://www.melonbooks.co.jp/circle/index.php?circle_id=24737" data-track="about_melonbooks">メロンブックス様</a><br>
+     ・<a href="https://shop.akbh.jp/collections/vendors?q=Project-D.C.B.A&view=ls" data-track="about_akbh">Akiba-Hobby様</a><br>
+     ・<a href="https://www.akibaoo.com/" data-track="about_akibao">あきばお～こく様</a><br>
+     ・<a href="https://www.grep-tsuhan.net/" data-track="about_grep">Grep様</a><br>
     </li>
 </ul>
 
   </main>
+<script src="analytics.js"></script>
 <script src="menu.js"></script>
 </body>
 </html>

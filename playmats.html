@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>東方プレイマット紹介 | Project-D.C.B.A</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47G7WG9C27"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-47G7WG9C27');
+  </script>
   <meta name="description" content="Project-D.C.B.Aが制作する東方プレイマットを紹介。霊夢・魔理沙・こいし・早苗・秘封倶楽部・紅魔館・怪綺談など東方Projectキャラクターをモチーフにした描き下ろしデザインを通販（BOOTH）で入手できます。">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
@@ -85,7 +93,7 @@
         <a href="index.html">ホーム</a>
         <a href="about.html">サークルについて</a>
         <a href="playmats.html" aria-current="page">プレイマット紹介</a>
-        <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer">BOOTH通販</a>
+        <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer" data-track="playmats_nav_booth">BOOTH通販</a>
       </div>
     </nav>
   </header>
@@ -98,7 +106,7 @@
         当サークルでは描き下ろしイラストを採用し、実用性と美しさを両立した<strong>オリジナルプレイマット</strong>を制作しています。
       </p>
       <p>
-        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
+        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer" data-track="playmats_lead_booth">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
       </p>
     </div>
 
@@ -189,6 +197,14 @@
     const modalDesc = document.getElementById('modal-desc');
     const modalPoints = document.getElementById('modal-points');
     const modalLink = document.getElementById('modal-link');
+    const trackModalOpen = (id) => {
+      if (typeof window.trackEvent === 'function') {
+        window.trackEvent('modal_open', {
+          event_category: 'engagement',
+          event_label: `playmat_${id}`,
+        });
+      }
+    };
 
     const buildCard = (item) => {
       const card = document.createElement('article');
@@ -202,7 +218,7 @@
           <div class="tags"><span class="tag">プレイマット</span></div>
           <div class="card-actions">
             <button class="btn btn-primary" data-id="${item.id}">詳細をみる</button>
-            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer">BOOTH</a>
+            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer" data-track="playmats_card_booth_${item.id}">BOOTH</a>
           </div>
         </div>
       `;
@@ -235,8 +251,10 @@
       });
       modalImg.style.backgroundImage = `url('${item.image}')`;
       modalLink.href = item.link;
+      modalLink.dataset.track = `playmats_modal_booth_${item.id}`;
       modal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      trackModalOpen(item.id);
     };
 
     const closeModal = () => {
@@ -257,5 +275,6 @@
       menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
   </script>
+  <script src="analytics.js"></script>
 </body>
 </html>
