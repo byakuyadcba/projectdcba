@@ -37,18 +37,18 @@
       color: var(--text);
       font-family: 'M PLUS 1p', 'Noto Sans JP', sans-serif;
     }
-    header { background: #3f2917; color: #fff; padding: 12px 0; box-shadow: 0 8px 24px rgba(27,16,8,0.25); }
-    .top-nav { max-width: 1100px; margin: 0 auto; display: flex; gap: 16px; padding: 0 16px; flex-wrap: wrap; align-items: center; }
+    header { background: #1f2a3b; color: #fff; padding: 12px 0; box-shadow: 0 8px 24px rgba(14,20,30,0.28); }
+    .top-nav { max-width: 1080px; margin: 0 auto; display: flex; gap: 16px; padding: 0 16px; flex-wrap: wrap; align-items: center; }
     .nav-links { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .nav-links a { color: #f5e9d9; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; display: inline-block; }
-    .nav-links a[aria-current="page"], .nav-links a:hover { background: rgba(255,255,255,0.16); color: #fff; }
+    .nav-links a { color: #f4f8ff; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 999px; display: inline-block; }
+    .nav-links a[aria-current="page"], .nav-links a:hover { background: rgba(255,255,255,0.18); color: #fff; }
     .menu-toggle { display: none; background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.22); padding: 8px 12px; border-radius: 10px; font-size: 16px; cursor: pointer; }
-    main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+    main { max-width: 1080px; margin: 0 auto; margin-top: 72px; padding: 34px 16px 64px; }
     h1, h2, .card-title, .modal-content h3 {
       font-family: 'Kaisei Tokumin', 'Noto Serif JP', serif;
       letter-spacing: 0.03em;
     }
-    h1 { font-size: clamp(1.8rem, 2.4vw, 2.4rem); margin-bottom: 12px; color: #2f2016; }
+    h1 { font-size: clamp(1.8rem, 2.4vw, 2.4rem); margin-bottom: 12px; color: #2f2016; text-align: center; }
     h2 { margin: 28px 0 12px; font-size: 1.4rem; color: #3b2819; }
     p { line-height: 1.7; color: var(--muted); }
 
@@ -56,12 +56,13 @@
       background: linear-gradient(125deg, rgba(255, 251, 244, 0.95), rgba(244, 228, 209, 0.95));
       border: 1px solid #e6d2bb;
       padding: 20px;
-      border-radius: 16px;
+      border-radius: 18px;
       box-shadow: var(--shadow);
       margin-bottom: 20px;
+      animation: fade-up .45s ease both;
     }
 
-    .toc { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
+    .toc { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); animation: fade-up .45s ease .08s both; }
     .toc h2 { margin: 0 0 8px; font-size: 1.1rem; }
     .toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 8px 18px; }
     .toc a { text-decoration: none; color: var(--text); font-weight: 600; padding: 8px 10px; border-radius: 10px; background: var(--accent-soft); display: inline-block; }
@@ -77,6 +78,7 @@
       display: flex;
       flex-direction: column;
       transition: transform .18s ease, box-shadow .18s ease;
+      animation: fade-up .45s ease both;
     }
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(74, 45, 26, 0.2); }
     .thumb { aspect-ratio: 4 / 3; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #2d1f17; }
@@ -107,12 +109,18 @@
 
     footer { text-align: center; padding: 28px 0; color: var(--muted); }
 
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 640px) {
       .top-nav { justify-content: space-between; }
       .nav-links { width: 100%; flex-direction: column; align-items: flex-start; display: none; }
       .nav-links.is-open { display: flex; }
       .nav-links a { width: 100%; }
       .menu-toggle { display: inline-block; }
+      main { margin-top: 86px; }
     }
   </style>
 </head>
