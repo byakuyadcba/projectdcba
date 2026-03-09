@@ -1,92 +1,30 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>東方プレイマット紹介 | Project-D.C.B.A</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47G7WG9C27"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-47G7WG9C27');
+  </script>
   <meta name="description" content="Project-D.C.B.Aが制作する東方プレイマットを紹介。霊夢・魔理沙・こいし・早苗・秘封倶楽部・紅魔館・怪綺談など東方Projectキャラクターをモチーフにした描き下ろしデザインを通販（BOOTH）で入手できます。">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <style>
-    :root {
-      --bg: #f7f8fb;
-      --card: #ffffff;
-      --text: #1f2933;
-      --muted: #4b5563;
-      --accent: #4f46e5;
-      --accent-soft: #eef2ff;
-      --border: #e5e7eb;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter','Noto Sans JP',system-ui,sans-serif; }
-    header { background: #0f172a; color: #fff; padding: 12px 0; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
-    .top-nav { max-width: 1100px; margin: 0 auto; display: flex; gap: 16px; padding: 0 16px; flex-wrap: wrap; align-items: center; }
-    .nav-links { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; display: inline-block; }
-    .nav-links a[aria-current="page"], .nav-links a:hover { background: rgba(255,255,255,0.12); color: #fff; }
-    .menu-toggle { display: none; background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.22); padding: 8px 12px; border-radius: 10px; font-size: 16px; cursor: pointer; }
-    main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
-    h1 { font-size: clamp(1.8rem, 2.4vw, 2.4rem); margin-bottom: 12px; }
-    h2 { margin: 28px 0 12px; font-size: 1.4rem; }
-    p { line-height: 1.7; color: var(--muted); }
-
-    .lead { background: linear-gradient(120deg, #eef2ff, #e0f2fe); border: 1px solid #dfe7ff; padding: 20px; border-radius: 16px; box-shadow: var(--shadow); margin-bottom: 20px; }
-
-    .toc { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
-    .toc h2 { margin: 0 0 8px; font-size: 1.1rem; }
-    .toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 8px 18px; }
-    .toc a { text-decoration: none; color: var(--text); font-weight: 600; padding: 8px 10px; border-radius: 10px; background: var(--accent-soft); display: inline-block; }
-    .toc a:hover { background: #dfe4ff; color: #111827; }
-
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 18px; }
-    .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease; }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,0.12); }
-    .thumb { aspect-ratio: 4 / 3; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0f172a; }
-    .card-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 10px; }
-    .card-title { font-size: 1.1rem; margin: 0; color: var(--text); }
-    .card-desc { margin: 0; color: var(--muted); line-height: 1.6; }
-    .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .tag { background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: .8rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(79,70,229,0.18); }
-    .card-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn { border: none; cursor: pointer; padding: 10px 14px; border-radius: 12px; font-weight: 700; text-decoration: none; text-align: center; }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #4338ca; }
-    .btn-ghost { background: #f8fafc; color: var(--text); border: 1px solid var(--border); }
-
-    /* Modal */
-    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 50; }
-    .modal.is-open { display: flex; }
-    .modal-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(2px); }
-    .modal-body { position: relative; z-index: 1; background: #fff; max-width: 760px; width: min(760px, 92vw); border-radius: 18px; box-shadow: 0 24px 64px rgba(0,0,0,0.25); overflow: hidden; }
-    .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 0; }
-    .modal-img { background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0f172a; min-height: 220px; }
-    .modal-content { padding: 20px 22px; }
-    .modal-content h3 { margin: 0 0 6px; font-size: 1.3rem; }
-    .modal-content p { margin: 0 0 10px; }
-    .modal-points { margin: 12px 0; padding-left: 18px; color: var(--text); }
-    .modal-close { position: absolute; top: 12px; right: 12px; background: #0f172a; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 18px; }
-    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-
-    footer { text-align: center; padding: 28px 0; color: var(--muted); }
-
-    @media (max-width: 640px) {
-      .top-nav { justify-content: space-between; }
-      .nav-links { width: 100%; flex-direction: column; align-items: flex-start; display: none; }
-      .nav-links.is-open { display: flex; }
-      .nav-links a { width: 100%; }
-      .menu-toggle { display: inline-block; }
-    }
-  </style>
 </head>
-<body>
+<body class="page-playmats">
   <header>
-    <nav class="top-nav">
-      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links">☰ メニュー</button>
-      <div id="nav-links" class="nav-links">
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <nav id="nav">
         <a href="index.html">ホーム</a>
         <a href="about.html">サークルについて</a>
         <a href="playmats.html" aria-current="page">プレイマット紹介</a>
-        <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer">BOOTH通販</a>
-      </div>
+        <a href="https://p-dcba.booth.pm/items" data-track="playmats_nav_booth">BOOTH通販</a>
+        <a href="https://x.com/project_DCBA" data-track="playmats_nav_x">X（旧Twitter）</a>
+        <a href="https://www.instagram.com/project_dcba" data-track="playmats_nav_instagram">Instagram</a>
     </nav>
   </header>
 
@@ -98,7 +36,7 @@
         当サークルでは描き下ろしイラストを採用し、実用性と美しさを両立した<strong>オリジナルプレイマット</strong>を制作しています。
       </p>
       <p>
-        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
+        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer" data-track="playmats_lead_booth">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
       </p>
     </div>
 
@@ -123,7 +61,7 @@
           <ul id="modal-points" class="modal-points"></ul>
           <div class="modal-actions">
             <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer">BOOTHで詳しく見る</a>
-            <a href="#top" class="btn btn-ghost">トップへ戻る</a>
+            <a href="#top" class="btn btn-ghost" data-close>トップへ戻る</a>
           </div>
         </div>
       </div>
@@ -135,51 +73,56 @@
   </footer>
 
   <script>
-    const placeholderImage = 'images/items/TH54PM.png';
     const products = [
       {
         id: 'allchara',
         title: 'デフォルメオールキャラ プレイマット',
         desc: 'Project-D.C.B.A と Production.NS のコラボで、歴代の人気キャラをぎゅっと集めた贅沢な一枚。',
         points: ['霊夢・魔理沙・早苗など主要キャラ総出演', 'イベント＆BOOTH通販で展開中'],
-        link: 'https://p-dcba.booth.pm/items/ALLCHARA',
+        image: 'images/items/TH54PM.png',
+        link: 'https://p-dcba.booth.pm/items/7303390',
       },
       {
         id: 'koishi',
         title: '古明地こいし プレイマット',
         desc: '「カワイイ × ゴシック」がテーマ。可愛さとダークさを両立した、こいしファン必見のデザイン。',
         points: ['ゴシック寄りの色使いで雰囲気重視', 'カードもデスクも映えるビジュアル'],
-        link: 'https://p-dcba.booth.pm/items/KOISHI',
+        image: 'images/items/TH55PM.png',
+        link: 'https://p-dcba.booth.pm/items/7812241',
       },
       {
         id: 'sanae',
         title: '東風谷早苗 プレイマット',
         desc: '小道具にもこだわった『東方風神録』仕様。作品推しにもおすすめの早苗さんマット。',
         points: ['風神録モチーフの演出', 'イベント・通販どちらでも入手可能'],
-        link: 'https://p-dcba.booth.pm/items/SANAE',
+        image: 'images/items/TH53PM.png',
+        link: 'https://p-dcba.booth.pm/items/7303179',
       },
       {
         id: 'hifuu',
-        title: '秘封倶楽部 プレイマット',
-        desc: '蓮子とメリーの雰囲気をそのまま落とし込んだシックなデザイン。',
-        points: ['落ち着いた配色で大人っぽい仕上がり', '秘封ファン向けの定番アイテム'],
-        link: 'https://p-dcba.booth.pm/items/HIFUU',
+        title: '十六夜咲夜 プレイマット',
+        desc: '咲夜の世界。冷たい静けさ、鋭い気配、そして止まる秒針。東方Project「十六夜咲夜」を、“時間”が支配するイメージ強めに落とし込んだプレイマットです。卓に敷いた瞬間、プレイ空間が一段引き締まる。そんな一枚を狙いました。',
+        points: ['冷たい静けさと鋭い気配を表現', '時間支配のイメージを強く反映'],
+        image: 'images/items/TH56PM.png',
+        link: 'https://p-dcba.booth.pm/items/7812334',
       },
       {
         id: 'koumakan',
         title: '紅魔館 プレイマット',
         desc: '紅魔館の日常を1コマ漫画風に切り取った賑やかな一枚。レミリアやフランドールが勢揃い。',
         points: ['コミカルなレイアウトで楽しい雰囲気', '※台パンは禁止！'],
-        link: 'https://p-dcba.booth.pm/items/KOUMAKAN',
+        image: 'images/items/TH32PM.png',
+        link: 'https://p-dcba.booth.pm/items/5786490',
       },
       {
         id: 'kaikidan',
         title: '怪綺談 プレイマット',
         desc: '東方旧作モチーフの意外性あるデザイン。代表推しのユキ＆マイを中心に据えた豪華仕様。',
         points: ['旧作キャラをしっかりフィーチャー', 'コレクターにもおすすめ'],
-        link: 'https://p-dcba.booth.pm/items/KAIKIDAN',
+        image: 'images/items/TH30PM.png',
+        link: 'https://p-dcba.booth.pm/items/5786502',
       },
-    ].map((item) => ({ ...item, image: placeholderImage }));
+    ];
 
     const tocList = document.getElementById('toc-list');
     const productGrid = document.getElementById('product-grid');
@@ -189,6 +132,14 @@
     const modalDesc = document.getElementById('modal-desc');
     const modalPoints = document.getElementById('modal-points');
     const modalLink = document.getElementById('modal-link');
+    const trackModalOpen = (id) => {
+      if (typeof window.trackEvent === 'function') {
+        window.trackEvent('modal_open', {
+          event_category: 'engagement',
+          event_label: `playmat_${id}`,
+        });
+      }
+    };
 
     const buildCard = (item) => {
       const card = document.createElement('article');
@@ -202,7 +153,7 @@
           <div class="tags"><span class="tag">プレイマット</span></div>
           <div class="card-actions">
             <button class="btn btn-primary" data-id="${item.id}">詳細をみる</button>
-            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer">BOOTH</a>
+            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer" data-track="playmats_card_booth_${item.id}">BOOTH</a>
           </div>
         </div>
       `;
@@ -235,8 +186,10 @@
       });
       modalImg.style.backgroundImage = `url('${item.image}')`;
       modalLink.href = item.link;
+      modalLink.dataset.track = `playmats_modal_booth_${item.id}`;
       modal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      trackModalOpen(item.id);
     };
 
     const closeModal = () => {
@@ -249,13 +202,8 @@
 
     render();
 
-    // スマホ用メニュートグル
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.getElementById('nav-links');
-    menuToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('is-open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
   </script>
+  <script src="analytics.js"></script>
+  <script src="menu.js"></script>
 </body>
 </html>
