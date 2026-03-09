@@ -17,20 +17,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500;700&family=M+PLUS+1p:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'M PLUS 1p', 'Noto Sans JP', sans-serif;
-            color: #2a1d16;
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+            color: #3b1b14;
             background:
-                radial-gradient(circle at 82% 10%, rgba(199, 147, 68, 0.22) 0%, rgba(199, 147, 68, 0) 36%),
-                radial-gradient(circle at 10% 8%, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0) 42%),
-                repeating-linear-gradient(0deg, rgba(255,255,255,0.18) 0 1px, rgba(240,233,221,0.28) 1px 3px),
-                linear-gradient(170deg, #f6efe4, #eee2cf 44%, #e8d9c2); 
+                radial-gradient(circle at 18% 10%, rgba(255, 173, 120, 0.28) 0%, rgba(255, 173, 120, 0) 34%),
+                radial-gradient(circle at 84% 8%, rgba(255, 107, 74, 0.22) 0%, rgba(255, 107, 74, 0) 38%),
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.14) 0 1px, rgba(255, 232, 214, 0.34) 1px 3px),
+                linear-gradient(168deg, #fff4ea 0%, #ffe4d1 44%, #ffcfae 100%);
         }
         h1, h2, h3 {
-            font-family: 'Kaisei Tokumin', 'Noto Serif JP', serif;
-            letter-spacing: 0.03em;
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+            letter-spacing: 0.01em;
         }
         
         /* ターン選択ボタン */
@@ -43,21 +43,21 @@
             box-shadow: 0 12px 24px rgba(63, 37, 20, 0.2);
         }
         .turn-button-danger {
-            background-color: #fff1ed;
-            border: 1px solid #B13A1B;
-            color: #B13A1B;
+            background-color: #fff0ea;
+            border: 1px solid #c2410c;
+            color: #9a3412;
         }
         .turn-button-danger:hover {
-            background-color: #B13A1B;
+            background-color: #c2410c;
             color: white;
         }
         .turn-button-caution {
-            background-color: #fdf6ea;
-            border: 1px solid #A4772A;
-            color: #7d5921;
+            background-color: #fff8ec;
+            border: 1px solid #d97706;
+            color: #9a3412;
         }
         .turn-button-caution:hover {
-            background-color: #A4772A;
+            background-color: #d97706;
             color: #fff;
         }
 
@@ -132,12 +132,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#6E2B1A',
-                        secondary: '#2D6A53',
-                        accent: '#C69745',
-                        danger: '#B13A1B', 
-                        dark: '#2A1D16',
-                        lightBg: '#f6efe4',
+                        primary: '#8f1d14',
+                        secondary: '#b45309',
+                        accent: '#ea580c',
+                        danger: '#c81e1e', 
+                        dark: '#3b1b14',
+                        lightBg: '#fff4ea',
                     }
                 }
             }
@@ -163,6 +163,11 @@
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-dark text-center mb-8">13T~アドリブ早見表</h2>
             <div id="adlib-turns" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto"></div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-dark text-center mb-8">G100～</h2>
+            <div id="g100-turns" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto"></div>
         </section>
 
 
@@ -205,7 +210,7 @@
 
 
     <!-- モーダル（ポップアップ） -->
-    <div id="turn-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div id="turn-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-turn-title" aria-describedby="modal-notes" aria-hidden="true">
         <!-- オーバーレイ -->
         <div class="modal-overlay fixed inset-0 bg-black opacity-50" data-close-modal></div>
         
@@ -213,7 +218,7 @@
         <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto z-10 p-6 relative">
             
             <!-- 閉じるボタン -->
-            <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-700" data-close-modal>
+            <button type="button" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700" data-close-modal aria-label="モーダルを閉じる">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
@@ -267,6 +272,13 @@
                 { turn: '13', label: '夜摩天', variant: 'danger' },
                 { turn: '13', label: '兜率天', variant: 'danger' },
                 { turn: '13', label: '化楽天', variant: 'danger' },
+            ],
+            g100: [
+                { turn: '100', label: '四天王', variant: 'danger' },
+                { turn: '100', label: '忉利天', variant: 'danger' },
+                { turn: '100', label: '夜摩天', variant: 'danger' },
+                { turn: '100', label: '兜率天', variant: 'danger' },
+                { turn: '100', label: '化楽天', variant: 'danger' },
             ],
         };
 
@@ -386,7 +398,7 @@
                     { char: 'summon', iconClass: 'icon-summon', text: 'サン召喚(,行動回数要求時),アグニス召喚（それ以外）' },
                     { char: 'attack', iconClass: 'icon-attack', abilities: '奥義ON攻撃' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回要求時)' },
-                    { char: 'offattack', iconClass: 'icon-attack', abilities: '奥義OFF攻撃（TA3回時)' },
+                    { char: 'offattack', iconClass: 'icon-offattack', abilities: '奥義OFF攻撃（TA3回時)' },
                 ]
             },
             11: {
@@ -397,7 +409,7 @@
                     { char: 'ability', iconClass: 'icon-ability', text: '状況に応じてアビリティ使用' },
                     { char: 'attack', iconClass: 'icon-attack', abilities: '奥義ON攻撃' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回時)' },
-                    { char: 'offattack', iconClass: 'icon-attack', abilities: '奥義OFF攻撃（TA3回時)' },
+                    { char: 'offattack', iconClass: 'icon-offattack', abilities: '奥義OFF攻撃（TA3回時)' },
                 ]
             },
             12: {
@@ -412,6 +424,15 @@
             },
             13: {
                 title: "13T~",
+                premonition: "アドリブ",
+                notes: "最重要注意点: 「もし次のTにTA3回課題を提示してきたら解除できるかどうかを考える」。\nG100まで結構動けるので,無理な予兆が来るまで",
+                actions: [
+                    { char: 'stamp', iconClass: 'icon-stamp', abilities: 'ハイ' },
+                    { char: 'ability', iconClass: 'icon-ability', text: '状況に応じて判断' }
+                ]
+            },
+            100: {
+                title: "G100～",
                 premonition: "アドリブ",
                 notes: "最重要注意点: 「もし次のTにTA3回課題を提示してきたら解除できるかどうかを考える」。\nG100まで結構動けるので,無理な予兆が来るまで",
                 actions: [
@@ -449,10 +470,13 @@
             // グリッドのボタンをデータから生成
             renderButtons(turnButtons.fixed, 'fixed-turns');
             renderButtons(turnButtons.adlib, 'adlib-turns');
+            renderButtons(turnButtons.g100, 'g100-turns');
 
             const modal = document.getElementById('turn-modal');
             const turnButtonElements = document.querySelectorAll('.turn-button');
             const closeButtons = document.querySelectorAll('[data-close-modal]');
+            const modalCloseButton = modal.querySelector('button[data-close-modal]');
+            let lastFocusedElement = null;
 
             const modalTitle = document.getElementById('modal-turn-title');
             const modalPremonition = document.getElementById('modal-premonition');
@@ -462,6 +486,7 @@
             const openModal = (turnId) => {
                 const data = turnData[turnId];
                 if (!data) return;
+                lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
                 // データをモーダルに設定
                 modalTitle.textContent = data.title;
@@ -509,11 +534,19 @@
                 // モーダルを表示
                 modal.classList.remove('hidden');
                 modal.classList.add('modal-active');
+                modal.setAttribute('aria-hidden', 'false');
+                if (modalCloseButton) {
+                    modalCloseButton.focus();
+                }
             };
 
             const closeModal = () => {
                 modal.classList.add('hidden');
                 modal.classList.remove('modal-active');
+                modal.setAttribute('aria-hidden', 'true');
+                if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                    lastFocusedElement.focus();
+                }
             };
 
             // ターンボタンのイベントリスナー
@@ -527,6 +560,12 @@
             // 閉じるボタンのイベントリスナー
             closeButtons.forEach(button => {
                 button.addEventListener('click', closeModal);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
             });
         });
     </script>
