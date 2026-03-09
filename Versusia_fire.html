@@ -255,7 +255,7 @@
             1: {
                 title: "1T",
                 premonition: null,
-                notes: "奥義ON確認。スタンプを入れておくとよい",
+                notes: "奥義ON確認。スタンプを入れておくとよい\n破壊武器4凸以上ならエッセル1を1回に",
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: 'サン召喚' },
                     { char: 'yuel', iconClass: 'icon-yuel', abilities: '2, 1, 3' },
@@ -269,7 +269,7 @@
             2: {
                 title: "2T",
                 premonition: null,
-                notes: "この動きで2T目も奥義ゲージが溜まるはず",
+                notes: "この動きで2T目も奥義ゲージが溜まるはず。\n破壊武器4凸以上ならエッセル1を1回に",
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: 'アグニス召喚' },
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '3' },
@@ -289,7 +289,7 @@
             4: {
                 title: "4T",
                 premonition: "⚠️ CT予兆 全員の試練解除を待ってから攻撃。",
-                notes: "弱体なら式神2回、Hit数なら式神4回。\n奥義ON確認。フルチェで足りるはず。",
+                notes: "弱体なら式神2回、Hit数なら式神4回（破壊武器4凸以上なら3回)。\n奥義ON確認。フルチェで足りるはず。",
                 actions: [
                     { char: 'stamp', iconClass: 'icon-stamp', abilities: '火' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
@@ -311,7 +311,7 @@
             6: {
                 title: "6T",
                 premonition: "⚠️ 9999万ダメ予兆",
-                notes: "絶対奥義ON確認。ユエル2が間に合って無ければここで。",
+                notes: "奥義ON確認。ユエル2が間に合って無ければここで。",
                 actions: [
                     { char: 'summon', iconClass: 'icon-summon', text: '000表召喚' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '1, 1' },
@@ -322,7 +322,7 @@
             7: {
                 title: "7T",
                 premonition: "⚠️ 6回奥義予兆",
-                notes: "奥義ゲージが足りなければ何か召喚or合体",
+                notes: "奥義ゲージが足りなければ何か召喚or合体\n 間に合わなかった場合70待機して青アビ赤奥義6回を8T目に置き換え",
                 actions: [
                     { char: 'savilbara', iconClass: 'icon-savilbara', abilities: '2, 3' },
                     { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '天地開闢' },
@@ -333,7 +333,7 @@
             8: {
                 title: "8T",
                 premonition: "⚠️ FC、80ヒット予兆",
-                notes: "赤青どちらもG50待機。慣れたらもう少し動けるらしい",
+                notes: "赤青どちらもG50待機。慣れたらもう少し動けるらしい\n ユエル1,3,攻撃は火傷の残時間を見ながら維持。",
                 actions: [
                     { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' },
                     { char: 'essel', iconClass: 'icon-essel', abilities: '4, 3, 1, 1' },
@@ -360,9 +360,11 @@
                 premonition: "⚠️ 課題（四王天など）",
                 notes: "フロント総入れ替わり。　基本は主以外全ポチ、フルチェ＆課題を意識しながらアビを回す\n※注意: TA3回課題が来た場合は、主人公1を押す、さと3は押さない。奥義OFF攻撃",
                 actions: [
+                    { char: 'fc', iconClass: 'icon-fc', text: 'FC発動' },
                     { char: 'ability', iconClass: 'icon-ability', text: '主以外全ポチ（TA3回ならさと3は押さない）' },
+                    { char: 'summon', iconClass: 'icon-summon', text: 'サン召喚(,行動回数要求時),アグニス召喚（それ以外）' },
                     { char: 'attack', iconClass: 'icon-attack', abilities: '奥義ON攻撃' },
-                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回,行動回数要求時)' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回要求時)' },
                     { char: 'offattack', iconClass: 'icon-attack', abilities: '奥義OFF攻撃（TA3回時)' },
                 ]
             },
@@ -373,17 +375,18 @@
                 actions: [
                     { char: 'ability', iconClass: 'icon-ability', text: '状況に応じてアビリティ使用' },
                     { char: 'attack', iconClass: 'icon-attack', abilities: '奥義ON攻撃' },
-                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回,行動回数要求時)' },
+                    { char: 'shujinkou', iconClass: 'icon-shujinkou', abilities: '1 (TA3回時)' },
                     { char: 'offattack', iconClass: 'icon-attack', abilities: '奥義OFF攻撃（TA3回時)' },
                 ]
             },
             12: {
                 title: "12T",
                 premonition: "⚠️ CT予兆",
-                notes: "最低限のアビリティを使って解除。\n最悪トリゼロ裏を切ってでも必ず解除すること。",
+                notes: "最低限のアビリティを使って解除。\nトリゼロ裏温存できると嬉しいけど無理するほどではない。切ってでも必ず解除すること。",
                 actions: [
                     { char: 'ability', iconClass: 'icon-ability', text: '最低限のアビリティ使用' },
-                    { char: 'summon', iconClass: 'icon-summon', text: '000裏召喚（予兆解除不可時)' }
+                    { char: 'summon', iconClass: 'icon-summon', text: '000裏召喚（予兆解除不可時)' },
+                    { char: 'stamp', iconClass: 'icon-stamp', abilities: '火' }
                 ]
             },
             13: {
