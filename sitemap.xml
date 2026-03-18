@@ -13,4 +13,10 @@
     <changefreq>monthly</changefreq>
   </url>
 
+  <url>
+    <loc>https://project-dcba.com/playmats.html</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
 </urlset>

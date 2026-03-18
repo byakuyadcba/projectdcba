@@ -1,7 +1,16 @@
 const menuToggle = document.getElementById("menu-toggle");
-if (menuToggle) {
+const nav = document.getElementById("nav");
+
+if (menuToggle && nav) {
+  const setExpanded = (isExpanded) => {
+    menuToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+  };
+
+  setExpanded(nav.classList.contains("active"));
+
   menuToggle.addEventListener("click", function () {
-    const nav = document.getElementById("nav");
-    nav.classList.toggle("active");
+    const nextExpanded = menuToggle.getAttribute("aria-expanded") !== "true";
+    nav.classList.toggle("active", nextExpanded);
+    setExpanded(nextExpanded);
   });
 }
