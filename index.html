@@ -36,14 +36,13 @@
 
   <main>
     <section class="content-block home-hero" aria-labelledby="home-title">
-      <p class="home-eyebrow">東方同人サークル Project-D.C.B.A</p>
-      <h1 id="home-title">東方カードサプライ制作サークル Project-D.C.B.A</h1>
-      <p class="home-lead">東方Project中心のプレイマット・カードサプライを制作している同人サークルです。</p>
-      <p class="home-sublead">初めての方にも分かりやすいように、代表作をスライドでまとめて掲載しています。</p>
+      <p class="home-eyebrow">東方同人サークル</p>
+      <h1 id="home-title">Project-D.C.B.A</h1>
+      <p class="home-lead">東方Project中心のプレイマット・カードサプライを制作・頒布しています。</p>
     </section>
 
     <section class="content-block item-slideshow home-showcase" aria-labelledby="showcase-title">
-      <h2 id="showcase-title">代表作スライドショー</h2>
+      <h2 id="showcase-title">ピックアップ作品</h2>
       <div class="item-slideshow__viewport" id="item-slideshow" data-interval="5200">
         <img class="item-slide is-active" src="images/items/TH54PM.png" alt="デフォルメオールキャラ プレイマット" loading="lazy">
         <img class="item-slide" src="images/items/TH54PM.png" alt="" loading="lazy" aria-hidden="true">
@@ -51,7 +50,7 @@
         <button type="button" class="item-slide-nav next" data-direction="next" aria-label="次の作品を表示">&#8250;</button>
       </div>
       <p class="item-slideshow__meta" id="item-slideshow-meta" aria-live="polite"></p>
-      <p class="home-showcase-text">東方Project中心のプレイマットを、代表作だけに絞って掲載しています。</p>
+      <p class="home-showcase-text">代表作を中心に掲載しています。気になる作品はBOOTHや一覧ページからご覧ください。</p>
       <div class="home-showcase-actions">
         <a class="cta-btn primary" href="https://p-dcba.booth.pm/items" data-track="home_showcase_booth">BOOTHを見る</a>
         <a class="cta-btn secondary" href="playmats.html" data-track="home_showcase_playmats">プレイマット一覧を見る</a>
@@ -59,7 +58,7 @@
     </section>
 
     <section class="content-block home-style" aria-labelledby="style-title">
-      <h2 id="style-title">作風と活動スタイル</h2>
+      <h2 id="style-title">作風と活動</h2>
       <ul class="home-feature-list">
         <li>東方Project中心のプレイマット・カードサプライを制作しています。</li>
         <li>描き下ろしイラストを軸に、使いやすさと見た目の両立を大切にしています。</li>
@@ -70,11 +69,13 @@
     <section class="content-block home-about" aria-labelledby="about-short-title">
       <h2 id="about-short-title">サークル紹介</h2>
       <p>サークルの歩みや活動背景、頒布先の詳細はサークル紹介ページにまとめています。</p>
-      <a class="cta-btn secondary" href="about.html" data-track="home_about_link">サークル紹介を見る</a>
+      <div class="home-about-action">
+        <a class="cta-btn secondary" href="about.html" data-track="home_about_link">サークル紹介を見る</a>
+      </div>
     </section>
 
     <section class="update-log home-updates" aria-label="最近のお知らせ">
-      <h2>最近のお知らせ</h2>
+      <h2>お知らせ</h2>
       <ul>
         <li><strong>2026-03-18</strong> トップページを再構成し、作品導線を整理しました。</li>
         <li><strong>2026-02-20</strong> プレイマット紹介ページを更新しました。</li>
@@ -112,7 +113,7 @@
 
       function updateMeta() {
         if (!meta) return;
-        meta.textContent = `${currentIndex + 1} / ${FEATURED_IMAGES.length} - ${FEATURED_IMAGES[currentIndex].alt}`;
+        meta.textContent = `${FEATURED_IMAGES[currentIndex].alt} (${currentIndex + 1}/${FEATURED_IMAGES.length})`;
       }
 
       function nextIndex(direction) {
