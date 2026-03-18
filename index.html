@@ -44,6 +44,17 @@
       <a class="cta-btn secondary" href="https://x.com/project_DCBA" data-track="top_cta_event">最新情報をXで確認する</a>
     </section>
 
+    <section class="content-block item-slideshow" aria-label="Item slideshow">
+      <h2>Item Slideshow</h2>
+      <div class="item-slideshow__viewport" id="item-slideshow" data-interval="4500">
+        <img class="item-slide is-active" src="images/items/test.png" alt="Item image" loading="lazy">
+        <img class="item-slide" src="images/items/test.png" alt="" loading="lazy" aria-hidden="true">
+        <button type="button" class="item-slide-nav prev" data-direction="prev" aria-label="Show previous image">&#8249;</button>
+        <button type="button" class="item-slide-nav next" data-direction="next" aria-label="Show next image">&#8250;</button>
+      </div>
+      <p class="item-slideshow__meta" id="item-slideshow-meta" aria-live="polite"></p>
+    </section>
+
     <section class="update-log" aria-label="更新履歴">
       <h2>更新履歴</h2>
       <ul>
@@ -79,5 +90,113 @@
  </main>
   <script src="analytics.js"></script>
   <script src="menu.js"></script>
+  <script>
+    (() => {
+      // Edit this list only when adding or removing slideshow images.
+      const ITEM_IMAGES = [
+        "images/items/test.png",
+        "images/items/TH20AK.png",
+        "images/items/TH21AK.png",
+        "images/items/TH22AK.png",
+        "images/items/TH23AK.png",
+        "images/items/TH2AK.png",
+        "images/items/TH30PM.png",
+        "images/items/TH32PM.png",
+        "images/items/TH42PM.png",
+        "images/items/TH44AK.png",
+        "images/items/TH45AK.png",
+        "images/items/TH46AK.png",
+        "images/items/TH47AK.png",
+        "images/items/TH48AK.png",
+        "images/items/TH49AK.png",
+        "images/items/TH4AK.png",
+        "images/items/TH50AK.png",
+        "images/items/TH53PM.png",
+        "images/items/TH54PM.png",
+        "images/items/TH55PM.png",
+        "images/items/TH56PM.png"
+      ];
+
+      const root = document.getElementById("item-slideshow");
+      if (!root || ITEM_IMAGES.length === 0) return;
+
+      const layers = root.querySelectorAll(".item-slide");
+      if (layers.length < 2) return;
+
+      const meta = document.getElementById("item-slideshow-meta");
+      const prevButton = root.querySelector('[data-direction="prev"]');
+      const nextButton = root.querySelector('[data-direction="next"]');
+      const intervalMs = Math.max(2000, Number(root.dataset.interval) || 4500);
+
+      let activeLayerIndex = 0;
+      let currentIndex = Math.floor(Math.random() * ITEM_IMAGES.length);
+      let timerId;
+
+      function updateMeta() {
+        if (!meta) return;
+        const fileName = ITEM_IMAGES[currentIndex].split("/").pop();
+        meta.textContent = `${currentIndex + 1} / ${ITEM_IMAGES.length} - ${fileName}`;
+      }
+
+      function nextRandomIndex() {
+        if (ITEM_IMAGES.length <= 1) return 0;
+        let nextIndex = currentIndex;
+        while (nextIndex === currentIndex) {
+          nextIndex = Math.floor(Math.random() * ITEM_IMAGES.length);
+        }
+        return nextIndex;
+      }
+
+      function nextSequentialIndex(direction) {
+        const delta = direction === "prev" ? -1 : 1;
+        return (currentIndex + delta + ITEM_IMAGES.length) % ITEM_IMAGES.length;
+      }
+
+      function show(nextIndex) {
+        const newLayerIndex = 1 - activeLayerIndex;
+        const activeLayer = layers[activeLayerIndex];
+        const newLayer = layers[newLayerIndex];
+
+        newLayer.src = ITEM_IMAGES[nextIndex];
+        newLayer.alt = `Item image ${nextIndex + 1}`;
+
+        requestAnimationFrame(() => {
+          activeLayer.classList.remove("is-active");
+          newLayer.classList.add("is-active");
+          activeLayerIndex = newLayerIndex;
+          currentIndex = nextIndex;
+          updateMeta();
+        });
+      }
+
+      function restartTimer() {
+        window.clearInterval(timerId);
+        timerId = window.setInterval(() => {
+          show(nextRandomIndex());
+        }, intervalMs);
+      }
+
+      show(currentIndex);
+      restartTimer();
+
+      prevButton?.addEventListener("click", () => {
+        show(nextSequentialIndex("prev"));
+        restartTimer();
+      });
+
+      nextButton?.addEventListener("click", () => {
+        show(nextSequentialIndex("next"));
+        restartTimer();
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          window.clearInterval(timerId);
+          return;
+        }
+        restartTimer();
+      });
+    })();
+  </script>
 </body>
 </html>
