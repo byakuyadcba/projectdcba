@@ -99,6 +99,118 @@ p {
   text-align: center;
 }
 
+.page-home main {
+  display: grid;
+  gap: 1rem;
+}
+
+.page-home .content-block,
+.page-home .update-log {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.home-hero {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(232, 241, 255, 0.95));
+}
+
+.home-eyebrow {
+  margin: 0;
+  text-align: center;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #2f5c96;
+}
+
+.home-hero h1 {
+  margin: 0.5rem 0 0.7rem;
+  text-align: center;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+}
+
+.home-lead,
+.home-sublead {
+  text-align: center;
+}
+
+.home-hero .quick-cta {
+  margin-bottom: 0;
+}
+
+.section-intro {
+  margin-top: 0;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.featured-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fcfdff;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(24, 37, 58, 0.12);
+}
+
+.featured-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #132744;
+  padding: 0.45rem;
+  display: block;
+}
+
+.featured-card-body {
+  padding: 0.85rem 0.9rem 1rem;
+}
+
+.featured-card-body h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+}
+
+.featured-card-body p {
+  margin: 0 0 0.7rem;
+  font-size: 0.92rem;
+}
+
+.featured-cta {
+  font-size: 0.88rem;
+}
+
+.home-inline-link {
+  margin: 0.8rem 0 0;
+}
+
+.home-feature-list {
+  margin: 0.7rem 0 0;
+}
+
+.home-feature-list li {
+  margin-bottom: 0.5rem;
+}
+
+.home-purchase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.75rem;
+}
+
+.home-note {
+  margin-top: 0.7rem;
+  font-size: 0.92rem;
+}
+
+.home-about .cta-btn {
+  margin-top: 0.35rem;
+}
+
 ul,
 ol {
   margin: 0.8rem 0;
@@ -585,6 +697,29 @@ a {
 
   .cta-btn {
     text-align: center;
+  }
+
+  .page-home main {
+    gap: 0.85rem;
+  }
+
+  .home-hero {
+    padding: 1rem;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(1.45rem, 6vw, 1.85rem);
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .featured-cta,
+  .home-purchase-actions .cta-btn,
+  .home-about .cta-btn {
+    width: 100%;
   }
 
   .item-slideshow {
