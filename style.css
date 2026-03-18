@@ -224,6 +224,8 @@ img {
 }
 
 .home-about-action .cta-btn {
+  text-align: center;
+  max-width: 100%;
   min-width: 220px;
 }
 
