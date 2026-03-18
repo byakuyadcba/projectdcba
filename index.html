@@ -131,6 +131,8 @@
       let activeLayerIndex = 0;
       let currentIndex = Math.floor(Math.random() * ITEM_IMAGES.length);
       let timerId;
+      let transitionToken = 0;
+      const imageReadyCache = new Map();
 
       function updateMeta() {
         if (!meta) return;
@@ -152,15 +154,46 @@
         return (currentIndex + delta + ITEM_IMAGES.length) % ITEM_IMAGES.length;
       }
 
-      function show(nextIndex) {
+      function waitForImage(src) {
+        if (imageReadyCache.has(src)) return imageReadyCache.get(src);
+
+        const readyPromise = new Promise((resolve) => {
+          const loader = new Image();
+          loader.onload = () => resolve(true);
+          loader.onerror = () => resolve(false);
+          loader.src = src;
+
+          if (loader.complete && loader.naturalWidth > 0) {
+            resolve(true);
+          }
+        });
+
+        imageReadyCache.set(src, readyPromise);
+        return readyPromise;
+      }
+
+      async function show(nextIndex) {
+        if (nextIndex === currentIndex) {
+          updateMeta();
+          return;
+        }
+
+        const token = ++transitionToken;
+        const nextSrc = ITEM_IMAGES[nextIndex];
+        const isReady = await waitForImage(nextSrc);
+        if (!isReady || token !== transitionToken) return;
+
         const newLayerIndex = 1 - activeLayerIndex;
         const activeLayer = layers[activeLayerIndex];
         const newLayer = layers[newLayerIndex];
 
-        newLayer.src = ITEM_IMAGES[nextIndex];
+        newLayer.src = nextSrc;
         newLayer.alt = `Item image ${nextIndex + 1}`;
+        newLayer.removeAttribute("aria-hidden");
+        activeLayer.setAttribute("aria-hidden", "true");
 
         requestAnimationFrame(() => {
+          if (token !== transitionToken) return;
           activeLayer.classList.remove("is-active");
           newLayer.classList.add("is-active");
           activeLayerIndex = newLayerIndex;
@@ -176,7 +209,17 @@
         }, intervalMs);
       }
 
-      show(currentIndex);
+      // Keep both layers on the same first image so no stale frame appears.
+      const initialSrc = ITEM_IMAGES[currentIndex];
+      layers[0].src = initialSrc;
+      layers[1].src = initialSrc;
+      layers[0].alt = `Item image ${currentIndex + 1}`;
+      layers[1].alt = "";
+      layers[0].classList.add("is-active");
+      layers[0].removeAttribute("aria-hidden");
+      layers[1].classList.remove("is-active");
+      layers[1].setAttribute("aria-hidden", "true");
+      updateMeta();
       restartTimer();
 
       prevButton?.addEventListener("click", () => {
