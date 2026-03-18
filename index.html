@@ -39,43 +39,23 @@
       <p class="home-eyebrow">東方同人サークル Project-D.C.B.A</p>
       <h1 id="home-title">東方カードサプライ制作サークル Project-D.C.B.A</h1>
       <p class="home-lead">東方Project中心のプレイマット・カードサプライを制作している同人サークルです。</p>
-      <p class="home-sublead">初めての方にも分かりやすいように、代表作と購入方法をまとめて掲載しています。</p>
-      <div class="quick-cta" aria-label="トップ導線">
-        <a class="cta-btn primary" href="https://p-dcba.booth.pm/items" data-track="home_hero_booth">BOOTHを見る</a>
-        <a class="cta-btn secondary" href="playmats.html" data-track="home_hero_playmats">プレイマット一覧を見る</a>
-      </div>
+      <p class="home-sublead">初めての方にも分かりやすいように、代表作をスライドでまとめて掲載しています。</p>
     </section>
 
-    <section class="content-block home-featured" aria-labelledby="featured-title">
-      <h2 id="featured-title">新作・代表作ピックアップ</h2>
-      <p class="section-intro">気になる作品から、まずは雰囲気をご覧ください。</p>
-      <div class="featured-grid">
-        <article class="featured-card">
-          <img src="images/items/TH54PM.png" alt="デフォルメオールキャラ プレイマット" loading="lazy">
-          <div class="featured-card-body">
-            <h3>デフォルメオールキャラ プレイマット</h3>
-            <p>歴代の人気キャラをぎゅっと集めた、にぎやかな一枚です。</p>
-            <a class="cta-btn secondary featured-cta" href="https://p-dcba.booth.pm/items/7303390" data-track="home_featured_booth_allchara">BOOTHで見る</a>
-          </div>
-        </article>
-        <article class="featured-card">
-          <img src="images/items/TH55PM.png" alt="古明地こいし プレイマット" loading="lazy">
-          <div class="featured-card-body">
-            <h3>古明地こいし プレイマット</h3>
-            <p>かわいさとゴシック感を両立した、印象の強いデザインです。</p>
-            <a class="cta-btn secondary featured-cta" href="https://p-dcba.booth.pm/items/7812241" data-track="home_featured_booth_koishi">BOOTHで見る</a>
-          </div>
-        </article>
-        <article class="featured-card">
-          <img src="images/items/TH56PM.png" alt="十六夜咲夜 プレイマット" loading="lazy">
-          <div class="featured-card-body">
-            <h3>十六夜咲夜 プレイマット</h3>
-            <p>静けさと緊張感をテーマに、卓上の空気が締まる一枚です。</p>
-            <a class="cta-btn secondary featured-cta" href="https://p-dcba.booth.pm/items/7812334" data-track="home_featured_booth_sakuya">BOOTHで見る</a>
-          </div>
-        </article>
+    <section class="content-block item-slideshow home-showcase" aria-labelledby="showcase-title">
+      <h2 id="showcase-title">代表作スライドショー</h2>
+      <div class="item-slideshow__viewport" id="item-slideshow" data-interval="5200">
+        <img class="item-slide is-active" src="images/items/TH54PM.png" alt="デフォルメオールキャラ プレイマット" loading="lazy">
+        <img class="item-slide" src="images/items/TH54PM.png" alt="" loading="lazy" aria-hidden="true">
+        <button type="button" class="item-slide-nav prev" data-direction="prev" aria-label="前の作品を表示">&#8249;</button>
+        <button type="button" class="item-slide-nav next" data-direction="next" aria-label="次の作品を表示">&#8250;</button>
       </div>
-      <p class="home-inline-link"><a href="playmats.html" data-track="home_featured_more">プレイマット紹介ページで作品一覧を見る</a></p>
+      <p class="item-slideshow__meta" id="item-slideshow-meta" aria-live="polite"></p>
+      <p class="home-showcase-text">東方Project中心のプレイマットを、代表作だけに絞って掲載しています。</p>
+      <div class="home-showcase-actions">
+        <a class="cta-btn primary" href="https://p-dcba.booth.pm/items" data-track="home_showcase_booth">BOOTHを見る</a>
+        <a class="cta-btn secondary" href="playmats.html" data-track="home_showcase_playmats">プレイマット一覧を見る</a>
+      </div>
     </section>
 
     <section class="content-block home-style" aria-labelledby="style-title">
@@ -85,16 +65,6 @@
         <li>描き下ろしイラストを軸に、使いやすさと見た目の両立を大切にしています。</li>
         <li>イベント頒布と通販の両方で、手に取りやすい形を目指して活動しています。</li>
       </ul>
-    </section>
-
-    <section class="content-block home-purchase" aria-labelledby="purchase-title">
-      <h2 id="purchase-title">購入方法</h2>
-      <p>通販はBOOTHで、イベント情報はX（旧Twitter）でご案内しています。</p>
-      <div class="home-purchase-actions">
-        <a class="cta-btn primary" href="https://p-dcba.booth.pm/items" data-track="home_purchase_booth">新作をBOOTHで見る</a>
-        <a class="cta-btn secondary" href="playmats.html" data-track="home_purchase_playmats">作品一覧を見る</a>
-      </div>
-      <p class="home-note">イベント参加予定や頒布情報は <a href="https://x.com/project_DCBA" data-track="home_purchase_x">X（旧Twitter）</a> で更新しています。</p>
     </section>
 
     <section class="content-block home-about" aria-labelledby="about-short-title">
@@ -113,5 +83,127 @@
   </main>
   <script src="analytics.js"></script>
   <script src="menu.js"></script>
+  <script>
+    (() => {
+      const FEATURED_IMAGES = [
+        { src: "images/items/TH54PM.png", alt: "デフォルメオールキャラ プレイマット" },
+        { src: "images/items/TH55PM.png", alt: "古明地こいし プレイマット" },
+        { src: "images/items/TH56PM.png", alt: "十六夜咲夜 プレイマット" },
+        { src: "images/items/TH53PM.png", alt: "東風谷早苗 プレイマット" },
+        { src: "images/items/TH32PM.png", alt: "紅魔館 プレイマット" }
+      ];
+
+      const root = document.getElementById("item-slideshow");
+      if (!root || FEATURED_IMAGES.length === 0) return;
+
+      const layers = root.querySelectorAll(".item-slide");
+      if (layers.length < 2) return;
+
+      const meta = document.getElementById("item-slideshow-meta");
+      const prevButton = root.querySelector('[data-direction="prev"]');
+      const nextButton = root.querySelector('[data-direction="next"]');
+      const intervalMs = Math.max(2500, Number(root.dataset.interval) || 5200);
+      const imageReadyCache = new Map();
+
+      let activeLayerIndex = 0;
+      let currentIndex = 0;
+      let timerId;
+      let transitionToken = 0;
+
+      function updateMeta() {
+        if (!meta) return;
+        meta.textContent = `${currentIndex + 1} / ${FEATURED_IMAGES.length} - ${FEATURED_IMAGES[currentIndex].alt}`;
+      }
+
+      function nextIndex(direction) {
+        const delta = direction === "prev" ? -1 : 1;
+        return (currentIndex + delta + FEATURED_IMAGES.length) % FEATURED_IMAGES.length;
+      }
+
+      function waitForImage(src) {
+        if (imageReadyCache.has(src)) return imageReadyCache.get(src);
+
+        const readyPromise = new Promise((resolve) => {
+          const loader = new Image();
+          loader.onload = () => resolve(true);
+          loader.onerror = () => resolve(false);
+          loader.src = src;
+          if (loader.complete && loader.naturalWidth > 0) {
+            resolve(true);
+          }
+        });
+
+        imageReadyCache.set(src, readyPromise);
+        return readyPromise;
+      }
+
+      async function show(targetIndex) {
+        if (targetIndex === currentIndex) {
+          updateMeta();
+          return;
+        }
+
+        const token = ++transitionToken;
+        const item = FEATURED_IMAGES[targetIndex];
+        const isReady = await waitForImage(item.src);
+        if (!isReady || token !== transitionToken) return;
+
+        const newLayerIndex = 1 - activeLayerIndex;
+        const activeLayer = layers[activeLayerIndex];
+        const newLayer = layers[newLayerIndex];
+
+        newLayer.src = item.src;
+        newLayer.alt = item.alt;
+        newLayer.removeAttribute("aria-hidden");
+        activeLayer.setAttribute("aria-hidden", "true");
+
+        requestAnimationFrame(() => {
+          if (token !== transitionToken) return;
+          activeLayer.classList.remove("is-active");
+          newLayer.classList.add("is-active");
+          activeLayerIndex = newLayerIndex;
+          currentIndex = targetIndex;
+          updateMeta();
+        });
+      }
+
+      function restartTimer() {
+        window.clearInterval(timerId);
+        timerId = window.setInterval(() => {
+          show(nextIndex("next"));
+        }, intervalMs);
+      }
+
+      const firstItem = FEATURED_IMAGES[0];
+      layers[0].src = firstItem.src;
+      layers[1].src = firstItem.src;
+      layers[0].alt = firstItem.alt;
+      layers[1].alt = "";
+      layers[0].classList.add("is-active");
+      layers[0].removeAttribute("aria-hidden");
+      layers[1].classList.remove("is-active");
+      layers[1].setAttribute("aria-hidden", "true");
+      updateMeta();
+      restartTimer();
+
+      prevButton?.addEventListener("click", () => {
+        show(nextIndex("prev"));
+        restartTimer();
+      });
+
+      nextButton?.addEventListener("click", () => {
+        show(nextIndex("next"));
+        restartTimer();
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          window.clearInterval(timerId);
+          return;
+        }
+        restartTimer();
+      });
+    })();
+  </script>
 </body>
 </html>
