@@ -136,8 +136,7 @@
 
       function updateMeta() {
         if (!meta) return;
-        const fileName = ITEM_IMAGES[currentIndex].split("/").pop();
-        meta.textContent = `${currentIndex + 1} / ${ITEM_IMAGES.length} - ${fileName}`;
+        meta.textContent = `${currentIndex + 1} / ${ITEM_IMAGES.length}`;
       }
 
       function nextRandomIndex() {
