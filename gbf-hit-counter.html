@@ -267,7 +267,24 @@
     }
 
     .special-row {
-      grid-template-columns: 30px minmax(0, 1.1fr) minmax(120px, 0.8fr) minmax(88px, 0.6fr);
+      grid-template-columns: 30px minmax(0, 1.1fr) minmax(120px, 0.8fr) minmax(88px, 0.6fr) minmax(86px, 0.5fr);
+    }
+
+    .ability-row {
+      grid-template-columns: 30px minmax(0, 1.3fr) minmax(88px, 0.7fr) minmax(86px, 0.5fr);
+    }
+
+    .mini-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .mini-toggle input {
+      margin: 0;
     }
 
     .row-name {
@@ -332,12 +349,16 @@
       }
 
       .toggle-row,
+      .ability-row,
       .special-row {
         grid-template-columns: 30px minmax(0, 1fr);
       }
 
       .toggle-row .row-hit,
+      .ability-row .row-hit,
+      .ability-row .row-once,
       .special-row .row-hit,
+      .special-row .row-once,
       .special-row .row-condition {
         grid-column: 2;
       }
@@ -408,14 +429,15 @@
           echoCount: 0,
           ougiHit: 1,
           ougiCount: 1,
+          ougiRecast: false,
           abilities: [
-            { name: "アビ1", hit: 0, enabled: false },
-            { name: "アビ2", hit: 0, enabled: false },
-            { name: "アビ3", hit: 0, enabled: false }
+            { name: "アビ1", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ2", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false, oncePerTurn: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
           ]
         },
         {
@@ -426,14 +448,15 @@
           echoCount: 0,
           ougiHit: 1,
           ougiCount: 1,
+          ougiRecast: false,
           abilities: [
-            { name: "アビ1", hit: 0, enabled: false },
-            { name: "アビ2", hit: 0, enabled: false },
-            { name: "アビ3", hit: 0, enabled: false }
+            { name: "アビ1", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ2", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false, oncePerTurn: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
           ]
         },
         {
@@ -444,14 +467,16 @@
           echoCount: 0,
           ougiHit: 1,
           ougiCount: 1,
+          ougiRecast: false,
           abilities: [
-            { name: "アビ1", hit: 0, enabled: false },
-            { name: "アビ2", hit: 0, enabled: false },
-            { name: "アビ3", hit: 0, enabled: false }
+            { name: "アビ1", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ2", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+            { name: "晩蝉", condition: "OC時", hit: 10, enabled: true, oncePerTurn: false },
+            { name: "アトゥム", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
           ]
         },
         {
@@ -462,14 +487,15 @@
           echoCount: 0,
           ougiHit: 1,
           ougiCount: 1,
+          ougiRecast: false,
           abilities: [
-            { name: "アビ1", hit: 0, enabled: false },
-            { name: "アビ2", hit: 0, enabled: false },
-            { name: "アビ3", hit: 0, enabled: false }
+            { name: "アビ1", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ2", hit: 0, enabled: false, oncePerTurn: false },
+            { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false, oncePerTurn: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
           ]
         }
       ],
@@ -531,15 +557,18 @@
     }
 
     function calculateMainAction(member) {
+      const echoMultiplier = 1 + normalizeNumber(member.echoCount);
+
       if (isNormalAttack(member.action)) {
         return normalizeNumber(member.baseHit)
           * multiAttackCount[member.action]
           * normalizeNumber(member.actionCount)
-          * (1 + normalizeNumber(member.echoCount));
+          * echoMultiplier;
       }
 
       if (member.action === "奥義") {
-        return normalizeNumber(member.ougiHit) * normalizeNumber(member.ougiCount || 1);
+        const ougiCount = normalizeNumber(member.ougiCount ?? 1) || 1;
+        return normalizeNumber(member.ougiHit) * ougiCount * echoMultiplier;
       }
 
       return 0;
@@ -562,15 +591,48 @@
     }
 
     function calculateMember(member) {
-      const main = calculateMainAction(member);
-      const abilities = member.abilities
-        .filter((ability) => ability.enabled)
-        .reduce((sum, ability) => sum + normalizeNumber(ability.hit), 0);
-      const specials = member.specials
-        .filter((special) => canAddSpecial(member, special))
-        .reduce((sum, special) => sum + normalizeNumber(special.hit), 0);
+      const isOugiRecastActive = member.action === "奥義" && member.ougiRecast;
+      const recastMultiplier = isOugiRecastActive ? 2 : 1;
+      let recastTargetHits = calculateMainAction(member);
+      let oncePerTurnHits = 0;
+      let abilityContribution = 0;
+      let specialContribution = 0;
 
-      return { main, abilities, specials, total: main + abilities + specials };
+      member.abilities
+        .filter((ability) => ability.enabled)
+        .forEach((ability) => {
+          const hits = normalizeNumber(ability.hit);
+          if (ability.oncePerTurn) {
+            oncePerTurnHits += hits;
+            abilityContribution += hits;
+          } else {
+            recastTargetHits += hits;
+            abilityContribution += hits * recastMultiplier;
+          }
+        });
+
+      member.specials
+        .filter((special) => canAddSpecial(member, special))
+        .forEach((special) => {
+          const hits = normalizeNumber(special.hit);
+          if (special.oncePerTurn) {
+            oncePerTurnHits += hits;
+            specialContribution += hits;
+          } else {
+            recastTargetHits += hits;
+            specialContribution += hits * recastMultiplier;
+          }
+        });
+
+      const main = calculateMainAction(member) * recastMultiplier;
+      const total = recastTargetHits * recastMultiplier + oncePerTurnHits;
+
+      return {
+        main,
+        abilities: abilityContribution,
+        specials: specialContribution,
+        total
+      };
     }
 
     function calculateToggleRows(rows) {
@@ -607,14 +669,23 @@
                 <input type="number" inputmode="numeric" min="0" step="1" value="${member.actionCount}" data-path="members.${memberIndex}.actionCount">
               </label>
               <label class="field">
-                <span>追撃種類数</span>
+                <span>追撃種類数（通常/奥義）</span>
                 <input type="number" inputmode="numeric" min="0" step="1" value="${member.echoCount}" data-path="members.${memberIndex}.echoCount">
               </label>
               <label class="field">
                 <span>奥義ヒット数</span>
                 <input type="number" inputmode="numeric" min="0" step="1" value="${member.ougiHit}" data-path="members.${memberIndex}.ougiHit">
               </label>
+              <label class="field">
+                <span>奥義回数</span>
+                <input type="number" inputmode="numeric" min="0" step="1" value="${member.ougiCount}" data-path="members.${memberIndex}.ougiCount">
+              </label>
+              <label class="mini-toggle">
+                <input type="checkbox" ${member.ougiRecast ? "checked" : ""} data-path="members.${memberIndex}.ougiRecast">
+                <span>奥義再発動</span>
+              </label>
             </div>
+            <p class="note">追撃数は通常攻撃・奥義の両方に適用します。奥義再発動は行動種別が奥義の場合のみ有効です。</p>
 
             <section class="section">
               <div class="section-head">
@@ -622,7 +693,7 @@
                 <div class="section-total"><span data-ability-total="${memberIndex}">0</span> hits</div>
               </div>
               ${member.abilities.map((ability, abilityIndex) => `
-                <label class="toggle-row">
+                <label class="toggle-row ability-row">
                   <input type="checkbox" ${ability.enabled ? "checked" : ""} data-path="members.${memberIndex}.abilities.${abilityIndex}.enabled">
                   <span class="row-name">
                     <span class="small-label">アビリティ名</span>
@@ -631,6 +702,10 @@
                   <span class="row-hit">
                     <span class="small-label">ヒット数</span>
                     <input type="number" inputmode="numeric" min="0" step="1" value="${ability.hit}" data-path="members.${memberIndex}.abilities.${abilityIndex}.hit">
+                  </span>
+                  <span class="row-once mini-toggle">
+                    <input type="checkbox" ${ability.oncePerTurn ? "checked" : ""} data-path="members.${memberIndex}.abilities.${abilityIndex}.oncePerTurn">
+                    <span>ターン1</span>
                   </span>
                 </label>
               `).join("")}
@@ -657,6 +732,10 @@
                   <span class="row-hit">
                     <span class="small-label">ヒット数</span>
                     <input type="number" inputmode="numeric" min="0" step="1" value="${special.hit}" data-path="members.${memberIndex}.specials.${specialIndex}.hit">
+                  </span>
+                  <span class="row-once mini-toggle">
+                    <input type="checkbox" ${special.oncePerTurn ? "checked" : ""} data-path="members.${memberIndex}.specials.${specialIndex}.oncePerTurn">
+                    <span>ターン1</span>
                   </span>
                 </label>
               `).join("")}
