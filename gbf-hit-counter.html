@@ -270,10 +270,6 @@
       grid-template-columns: 30px minmax(0, 1.1fr) minmax(120px, 0.8fr) minmax(88px, 0.6fr) minmax(86px, 0.5fr);
     }
 
-    .ability-row {
-      grid-template-columns: 30px minmax(0, 1.3fr) minmax(88px, 0.7fr) minmax(86px, 0.5fr);
-    }
-
     .mini-toggle {
       display: inline-flex;
       align-items: center;
@@ -349,14 +345,11 @@
       }
 
       .toggle-row,
-      .ability-row,
       .special-row {
         grid-template-columns: 30px minmax(0, 1fr);
       }
 
       .toggle-row .row-hit,
-      .ability-row .row-hit,
-      .ability-row .row-once,
       .special-row .row-hit,
       .special-row .row-once,
       .special-row .row-condition {
@@ -411,9 +404,14 @@
         </article>
       </section>
 
-      <p class="note">
-        このツールはヒット数の簡易確認用です。ゲーム内仕様を完全再現するものではないため、特殊な追撃、追加行動、自動発動アビリティ、召喚効果、ターン終了時ダメージなどは必要に応じて手動で補正してください。
-      </p>
+      <div class="section">
+        <p class="note">
+          補足: 追撃数は、通常攻撃・奥義の両方に適用します。例: 追撃数2の場合、本体1hit + 追撃2hit = 合計3hitとして扱います。
+        </p>
+        <p class="note">
+          このツールはヒット数の簡易確認用です。ゲーム内仕様を完全再現するものではないため、特殊な追撃、追加行動、自動発動アビリティ、召喚効果、ターン終了時ダメージなどは必要に応じて手動で補正してください。
+        </p>
+      </div>
     </div>
   </main>
 
@@ -424,17 +422,14 @@
         {
           name: "主人公",
           action: "奥義",
-          baseHit: 1,
-          actionCount: 1,
+          mainHit: 1,
           echoCount: 0,
-          ougiHit: 1,
-          ougiCount: 1,
           ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 14, enabled: false, oncePerTurn: false },
-            { name: "アビ2", hit: 3, enabled: false, oncePerTurn: false },
-            { name: "アビ2", hit: 3, enabled: false, oncePerTurn: false },
-            { name: "アビ2", hit: 3, enabled: false, oncePerTurn: false }
+            { name: "アビ1", hit: 14, enabled: false },
+            { name: "アビ2", hit: 3, enabled: false },
+            { name: "アビ2", hit: 3, enabled: false },
+            { name: "アビ2", hit: 3, enabled: false }
           ],
           specials: [
             { name: "晩蝉：OC時10hit", condition: "手動", hit: 10, enabled: true, oncePerTurn: true },
@@ -444,15 +439,12 @@
         {
           name: "さと",
           action: "奥義",
-          baseHit: 1,
-          actionCount: 1,
+          mainHit: 1,
           echoCount: 0,
-          ougiHit: 1,
-          ougiCount: 1,
           ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 6, enabled: false, oncePerTurn: false },
-            { name: "アビ2", hit: 4, enabled: false, oncePerTurn: false }
+            { name: "アビ1", hit: 6, enabled: false },
+            { name: "アビ2", hit: 4, enabled: false }
           ],
           specials: [
             { name: "火燐灯：奥義時6hit", condition: "奥義時", hit: 6, enabled: true, oncePerTurn: false },
@@ -463,15 +455,12 @@
         {
           name: "サンチラ",
           action: "奥義",
-          baseHit: 1,
-          actionCount: 1,
+          mainHit: 1,
           echoCount: 0,
-          ougiHit: 1,
-          ougiCount: 1,
           ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 1, enabled: true, oncePerTurn: false },
-            { name: "アビ1", hit: 1, enabled: true, oncePerTurn: false }
+            { name: "アビ1", hit: 1, enabled: true },
+            { name: "アビ1", hit: 1, enabled: true }
           ],
           specials: [
             { name: "サポアビ：奥義時12hitアビ", condition: "奥義時", hit: 12, enabled: true, oncePerTurn: false },
@@ -481,14 +470,11 @@
         {
           name: "アトゥム（起動後）",
           action: "奥義",
-          baseHit: 1,
-          actionCount: 1,
+          mainHit: 1,
           echoCount: 0,
-          ougiHit: 1,
-          ougiCount: 1,
-          ougiRecast: false,
+          ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 1, enabled: false, oncePerTurn: false },
+            { name: "アビ1", hit: 1, enabled: false },
           ],
           specials: [
             { name: "サポアビ：奥義時10hitアビ", condition: "奥義時", hit: 10, enabled: true, oncePerTurn: false },
@@ -555,17 +541,14 @@
 
     function calculateMainAction(member) {
       const echoMultiplier = 1 + normalizeNumber(member.echoCount);
+      const mainHit = normalizeNumber(member.mainHit);
 
       if (isNormalAttack(member.action)) {
-        return normalizeNumber(member.baseHit)
-          * multiAttackCount[member.action]
-          * normalizeNumber(member.actionCount)
-          * echoMultiplier;
+        return mainHit * multiAttackCount[member.action] * echoMultiplier;
       }
 
       if (member.action === "奥義") {
-        const ougiCount = normalizeNumber(member.ougiCount ?? 1) || 1;
-        return normalizeNumber(member.ougiHit) * ougiCount * echoMultiplier;
+        return mainHit * echoMultiplier;
       }
 
       return 0;
@@ -591,21 +574,15 @@
       const isOugiRecastActive = member.action === "奥義" && member.ougiRecast;
       const recastMultiplier = isOugiRecastActive ? 2 : 1;
       let recastTargetHits = calculateMainAction(member);
-      let oncePerTurnHits = 0;
-      let abilityContribution = 0;
+      let nonRecastHits = 0;
+      let abilityHits = 0;
       let specialContribution = 0;
 
       member.abilities
         .filter((ability) => ability.enabled)
         .forEach((ability) => {
           const hits = normalizeNumber(ability.hit);
-          if (ability.oncePerTurn) {
-            oncePerTurnHits += hits;
-            abilityContribution += hits;
-          } else {
-            recastTargetHits += hits;
-            abilityContribution += hits * recastMultiplier;
-          }
+          abilityHits += hits;
         });
 
       member.specials
@@ -613,7 +590,7 @@
         .forEach((special) => {
           const hits = normalizeNumber(special.hit);
           if (special.oncePerTurn) {
-            oncePerTurnHits += hits;
+            nonRecastHits += hits;
             specialContribution += hits;
           } else {
             recastTargetHits += hits;
@@ -622,11 +599,11 @@
         });
 
       const main = calculateMainAction(member) * recastMultiplier;
-      const total = recastTargetHits * recastMultiplier + oncePerTurnHits;
+      const total = recastTargetHits * recastMultiplier + nonRecastHits + abilityHits;
 
       return {
         main,
-        abilities: abilityContribution,
+        abilities: abilityHits,
         specials: specialContribution,
         total
       };
@@ -658,31 +635,18 @@
                 </select>
               </label>
               <label class="field">
-                <span>基礎ヒット数</span>
-                <input type="number" inputmode="numeric" min="0" step="1" value="${member.baseHit}" data-path="members.${memberIndex}.baseHit">
+                <span>分割数</span>
+                <input type="number" inputmode="numeric" min="0" step="1" value="${member.mainHit}" data-path="members.${memberIndex}.mainHit">
               </label>
               <label class="field">
-                <span>行動回数</span>
-                <input type="number" inputmode="numeric" min="0" step="1" value="${member.actionCount}" data-path="members.${memberIndex}.actionCount">
-              </label>
-              <label class="field">
-                <span>追撃種類数（通常/奥義）</span>
+                <span>追撃数</span>
                 <input type="number" inputmode="numeric" min="0" step="1" value="${member.echoCount}" data-path="members.${memberIndex}.echoCount">
-              </label>
-              <label class="field">
-                <span>奥義ヒット数</span>
-                <input type="number" inputmode="numeric" min="0" step="1" value="${member.ougiHit}" data-path="members.${memberIndex}.ougiHit">
-              </label>
-              <label class="field">
-                <span>奥義回数</span>
-                <input type="number" inputmode="numeric" min="0" step="1" value="${member.ougiCount}" data-path="members.${memberIndex}.ougiCount">
               </label>
               <label class="mini-toggle">
                 <input type="checkbox" ${member.ougiRecast ? "checked" : ""} data-path="members.${memberIndex}.ougiRecast">
                 <span>奥義再発動</span>
               </label>
             </div>
-            <p class="note">追撃数は通常攻撃・奥義の両方に適用します。奥義再発動は行動種別が奥義の場合のみ有効です。</p>
 
             <section class="section">
               <div class="section-head">
@@ -690,7 +654,7 @@
                 <div class="section-total"><span data-ability-total="${memberIndex}">0</span> hits</div>
               </div>
               ${member.abilities.map((ability, abilityIndex) => `
-                <label class="toggle-row ability-row">
+                <label class="toggle-row">
                   <input type="checkbox" ${ability.enabled ? "checked" : ""} data-path="members.${memberIndex}.abilities.${abilityIndex}.enabled">
                   <span class="row-name">
                     <span class="small-label">アビリティ名</span>
@@ -699,10 +663,6 @@
                   <span class="row-hit">
                     <span class="small-label">ヒット数</span>
                     <input type="number" inputmode="numeric" min="0" step="1" value="${ability.hit}" data-path="members.${memberIndex}.abilities.${abilityIndex}.hit">
-                  </span>
-                  <span class="row-once mini-toggle">
-                    <input type="checkbox" ${ability.oncePerTurn ? "checked" : ""} data-path="members.${memberIndex}.abilities.${abilityIndex}.oncePerTurn">
-                    <span>ターン1</span>
                   </span>
                 </label>
               `).join("")}
