@@ -83,17 +83,12 @@
       backdrop-filter: blur(10px);
     }
 
-    .summary-inner {
-      display: grid;
-      gap: 10px;
-      width: min(1180px, 100%);
-      margin: 0 auto;
-    }
-
     .summary-main {
       display: grid;
       grid-template-columns: 1fr;
       gap: 8px;
+      width: min(1180px, 100%);
+      margin: 0 auto;
       padding: 14px;
       border-radius: 10px;
       background: var(--panel);
@@ -103,64 +98,21 @@
     .summary-numbers {
       display: flex;
       align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
+    .summary-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
     .total {
-      font-size: clamp(32px, 9vw, 52px);
+      font-size: clamp(34px, 10vw, 56px);
       font-weight: 800;
       line-height: 1;
       letter-spacing: 0;
-    }
-
-    .target-readout {
-      color: var(--muted);
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .judge-line {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .judge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 36px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      color: #fff;
-      background: var(--ng);
-    }
-
-    .judge.is-ok {
-      background: var(--ok);
-    }
-
-    .diff {
-      color: var(--ng);
-    }
-
-    .diff.is-ok {
-      color: var(--ok);
-    }
-
-    .target-field {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 150px;
-      align-items: end;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 10px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
     }
 
     label.field span,
@@ -350,11 +302,6 @@
         padding: 14px 20px;
       }
 
-      .summary-inner {
-        grid-template-columns: 1.5fr 1fr;
-        align-items: stretch;
-      }
-
       .member-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -381,10 +328,6 @@
         flex-basis: 100%;
       }
 
-      .target-field {
-        grid-template-columns: 1fr;
-      }
-
       .toggle-row,
       .special-row {
         grid-template-columns: 30px minmax(0, 1fr);
@@ -402,21 +345,11 @@
 <body>
   <main class="app">
     <section class="summary" aria-live="polite">
-      <div class="summary-inner">
-        <div class="summary-main">
-          <div class="summary-numbers">
-            <div class="total"><span id="totalHits">0</span> hits</div>
-            <div class="target-readout">目標 <span id="targetReadout">66</span> hits</div>
-          </div>
-          <div class="judge-line">
-            <span id="judgeLabel" class="judge">未達</span>
-            <span id="diffLabel" class="diff">不足 66 hits</span>
-          </div>
+      <div class="summary-main">
+        <div class="summary-label">現在</div>
+        <div class="summary-numbers">
+          <div class="total"><span id="totalHits">0</span> hits</div>
         </div>
-        <label class="target-field field">
-          <span>目標ヒット数</span>
-          <input id="targetHits" type="number" inputmode="numeric" min="0" step="1">
-        </label>
       </div>
     </section>
 
@@ -458,7 +391,6 @@
 
   <script>
     const defaultPreset = {
-      targetHits: 120,
       members: [
         {
           name: "主人公",
@@ -510,7 +442,7 @@
           ]
         },
         {
-          name: "アトゥム",
+          name: "アトゥム（起動後）",
           action: "奥義",
           mainHit: 1,
           echoCount: 0,
@@ -548,11 +480,7 @@
     const state = JSON.parse(JSON.stringify(defaultPreset));
 
     const el = {
-      targetHits: document.getElementById("targetHits"),
-      targetReadout: document.getElementById("targetReadout"),
       totalHits: document.getElementById("totalHits"),
-      judgeLabel: document.getElementById("judgeLabel"),
-      diffLabel: document.getElementById("diffLabel"),
       members: document.getElementById("members"),
       summons: document.getElementById("summons"),
       adjustments: document.getElementById("adjustments"),
@@ -785,16 +713,11 @@
     }
 
     function calculateAndRender() {
-      state.targetHits = normalizeNumber(el.targetHits.value);
-      el.targetHits.value = state.targetHits;
-
       const memberTotals = state.members.map(calculateMember);
       const memberSum = memberTotals.reduce((sum, member) => sum + member.total, 0);
       const summonTotal = calculateToggleRows(state.summons);
       const adjustmentTotal = calculateToggleRows(state.adjustments);
       const total = memberSum + summonTotal + adjustmentTotal;
-      const diff = total - state.targetHits;
-      const reached = diff >= 0;
 
       memberTotals.forEach((member, index) => {
         document.querySelector(`[data-member-total="${index}"]`).textContent = member.total;
@@ -805,15 +728,9 @@
       el.summonTotal.textContent = summonTotal;
       el.adjustmentTotal.textContent = adjustmentTotal;
       el.totalHits.textContent = total;
-      el.targetReadout.textContent = state.targetHits;
-      el.judgeLabel.textContent = reached ? "達成" : "未達";
-      el.judgeLabel.classList.toggle("is-ok", reached);
-      el.diffLabel.textContent = reached ? `余剰 +${diff} hits` : `不足 ${Math.abs(diff)} hits`;
-      el.diffLabel.classList.toggle("is-ok", reached);
     }
 
     function init() {
-      el.targetHits.value = state.targetHits;
       renderMembers();
       renderToggleList(el.summons, state.summons, "summons");
       renderToggleList(el.adjustments, state.adjustments, "adjustments");
