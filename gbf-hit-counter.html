@@ -467,13 +467,14 @@
           echoCount: 0,
           ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 14, enabled: false },
-            { name: "アビ2", hit: 3, enabled: false },
-            { name: "アビ2", hit: 3, enabled: false },
-            { name: "アビ2", hit: 3, enabled: false }
+            { name: "1アビ（概算）", hit: 14, enabled: false },
+            { name: "蛟", hit: 3, enabled: false },
+            { name: "蛟×2", hit: 6, enabled: false },
+            { name: "蛟×4", hit: 12, enabled: false }
           ],
           specials: [
             { name: "晩蝉：OC時10hit", condition: "手動", hit: 10, enabled: true, oncePerTurn: true },
+            { name: "1アビ:奥義時1hit", condition: "手動", hit: 1, enabled: false, oncePerTurn: true },
             { name: "アトゥム：奥義時1hitアビ", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false }
           ]
         },
@@ -484,8 +485,8 @@
           echoCount: 0,
           ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 6, enabled: false },
-            { name: "アビ2", hit: 4, enabled: false }
+            { name: "1アビ", hit: 6, enabled: false },
+            { name: "4-1アビ", hit: 4, enabled: false }
           ],
           specials: [
             { name: "火燐灯：奥義時6hit", condition: "奥義時", hit: 6, enabled: true, oncePerTurn: false },
@@ -500,8 +501,8 @@
           echoCount: 0,
           ougiRecast: true,
           abilities: [
-            { name: "アビ1", hit: 1, enabled: true },
-            { name: "アビ1", hit: 1, enabled: true }
+            { name: "1アビ", hit: 1, enabled: true },
+            { name: "1アビ", hit: 1, enabled: true }
           ],
           specials: [
             { name: "サポアビ：奥義時12hitアビ", condition: "奥義時", hit: 12, enabled: true, oncePerTurn: false },
@@ -515,7 +516,7 @@
           echoCount: 0,
           ougiRecast: false,
           abilities: [
-            { name: "アビ1", hit: 1, enabled: false },
+            { name: "1アビ", hit: 1, enabled: false },
           ],
           specials: [
             { name: "サポアビ：奥義時10hitアビ", condition: "奥義時", hit: 10, enabled: true, oncePerTurn: false },
