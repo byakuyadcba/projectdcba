@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>火属性ヒット数簡易計算ツール</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --panel-soft: #f1f4f8;
+      --text: #18202b;
+      --muted: #647184;
+      --line: #d8dee8;
+      --accent: #d7472f;
+      --accent-dark: #a92f20;
+      --ok: #157a4a;
+      --ng: #b3261e;
+      --focus: #246bfe;
+      --shadow: 0 8px 24px rgba(22, 33, 50, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 3px solid rgba(36, 107, 254, 0.18);
+      border-color: var(--focus);
+    }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      min-height: 22px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .app {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .summary {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: 0 -14px 16px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(216, 222, 232, 0.88);
+      background: rgba(246, 247, 249, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .summary-inner {
+      display: grid;
+      gap: 10px;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .summary-main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .summary-numbers {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .total {
+      font-size: clamp(32px, 9vw, 52px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .target-readout {
+      color: var(--muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .judge-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .judge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--ng);
+    }
+
+    .judge.is-ok {
+      background: var(--ok);
+    }
+
+    .diff {
+      color: var(--ng);
+    }
+
+    .diff.is-ok {
+      color: var(--ok);
+    }
+
+    .target-field {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 150px;
+      align-items: end;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    label.field span,
+    .group-title,
+    .small-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .member-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fff7f5;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .member-total {
+      flex: 0 0 auto;
+      color: var(--accent-dark);
+      font-size: 18px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      display: grid;
+      gap: 16px;
+      padding: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .section {
+      display: grid;
+      gap: 10px;
+      padding-top: 2px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .section-total {
+      color: var(--muted);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .toggle-row {
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1.3fr) minmax(88px, 0.7fr);
+      gap: 8px;
+      align-items: center;
+      min-height: 56px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel-soft);
+    }
+
+    .special-row {
+      grid-template-columns: 30px minmax(0, 1.1fr) minmax(120px, 0.8fr) minmax(88px, 0.6fr);
+    }
+
+    .row-name {
+      min-width: 0;
+    }
+
+    .row-name input {
+      background: #fff;
+    }
+
+    .row-hit {
+      min-width: 0;
+    }
+
+    .note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .wide-card .card-header {
+      background: #f5f8ff;
+    }
+
+    .utility-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 760px) {
+      .app {
+        padding: 20px;
+      }
+
+      .summary {
+        margin: 0 -20px 20px;
+        padding: 14px 20px;
+      }
+
+      .summary-inner {
+        grid-template-columns: 1.5fr 1fr;
+        align-items: stretch;
+      }
+
+      .member-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .form-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .utility-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .target-field {
+        grid-template-columns: 1fr;
+      }
+
+      .toggle-row,
+      .special-row {
+        grid-template-columns: 30px minmax(0, 1fr);
+      }
+
+      .toggle-row .row-hit,
+      .special-row .row-hit,
+      .special-row .row-condition {
+        grid-column: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="summary" aria-live="polite">
+      <div class="summary-inner">
+        <div class="summary-main">
+          <div class="summary-numbers">
+            <div class="total"><span id="totalHits">0</span> hits</div>
+            <div class="target-readout">目標 <span id="targetReadout">66</span> hits</div>
+          </div>
+          <div class="judge-line">
+            <span id="judgeLabel" class="judge">未達</span>
+            <span id="diffLabel" class="diff">不足 66 hits</span>
+          </div>
+        </div>
+        <label class="target-field field">
+          <span>目標ヒット数</span>
+          <input id="targetHits" type="number" inputmode="numeric" min="0" step="1">
+        </label>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section id="members" class="member-grid" aria-label="メンバー別入力"></section>
+
+      <section class="utility-grid" aria-label="召喚石とその他補正">
+        <article class="card wide-card">
+          <header class="card-header">
+            <h2>召喚石</h2>
+            <div class="member-total"><span id="summonTotal">0</span> hits</div>
+          </header>
+          <div class="card-body">
+            <div id="summons" class="section"></div>
+          </div>
+        </article>
+
+        <article class="card wide-card">
+          <header class="card-header">
+            <h2>その他補正</h2>
+            <div class="member-total"><span id="adjustmentTotal">0</span> hits</div>
+          </header>
+          <div class="card-body">
+            <div id="adjustments" class="section"></div>
+          </div>
+        </article>
+      </section>
+
+      <p class="note">
+        このツールはヒット数の簡易確認用です。ゲーム内仕様を完全再現するものではないため、特殊な追撃、追加行動、自動発動アビリティ、召喚効果、ターン終了時ダメージなどは必要に応じて手動で補正してください。
+      </p>
+    </div>
+  </main>
+
+  <script>
+    const defaultPreset = {
+      targetHits: 66,
+      members: [
+        {
+          name: "主人公",
+          action: "TA",
+          baseHit: 1,
+          actionCount: 1,
+          echoCount: 0,
+          ougiHit: 1,
+          ougiCount: 1,
+          abilities: [
+            { name: "アビ1", hit: 0, enabled: false },
+            { name: "アビ2", hit: 0, enabled: false },
+            { name: "アビ3", hit: 0, enabled: false }
+          ],
+          specials: [
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+          ]
+        },
+        {
+          name: "さと",
+          action: "TA",
+          baseHit: 1,
+          actionCount: 1,
+          echoCount: 0,
+          ougiHit: 1,
+          ougiCount: 1,
+          abilities: [
+            { name: "アビ1", hit: 0, enabled: false },
+            { name: "アビ2", hit: 0, enabled: false },
+            { name: "アビ3", hit: 0, enabled: false }
+          ],
+          specials: [
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+          ]
+        },
+        {
+          name: "サンチラ",
+          action: "TA",
+          baseHit: 1,
+          actionCount: 1,
+          echoCount: 0,
+          ougiHit: 1,
+          ougiCount: 1,
+          abilities: [
+            { name: "アビ1", hit: 0, enabled: false },
+            { name: "アビ2", hit: 0, enabled: false },
+            { name: "アビ3", hit: 0, enabled: false }
+          ],
+          specials: [
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+          ]
+        },
+        {
+          name: "アトゥム（起動後）",
+          action: "TA",
+          baseHit: 1,
+          actionCount: 1,
+          echoCount: 0,
+          ougiHit: 1,
+          ougiCount: 1,
+          abilities: [
+            { name: "アビ1", hit: 0, enabled: false },
+            { name: "アビ2", hit: 0, enabled: false },
+            { name: "アビ3", hit: 0, enabled: false }
+          ],
+          specials: [
+            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false },
+            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false }
+          ]
+        }
+      ],
+      summons: [
+        { name: "召喚石1", hit: 0, enabled: false },
+        { name: "召喚石2", hit: 0, enabled: false },
+        { name: "召喚石3", hit: 0, enabled: false }
+      ],
+      adjustments: [
+        { name: "その他補正1", hit: 0, enabled: false },
+        { name: "その他補正2", hit: 0, enabled: false }
+      ]
+    };
+
+    const actionOptions = [
+      { value: "攻撃しない", label: "攻撃しない" },
+      { value: "SA", label: "SA" },
+      { value: "DA", label: "DA" },
+      { value: "TA", label: "TA" },
+      { value: "奥義", label: "奥義" }
+    ];
+
+    const specialConditions = ["常時", "通常攻撃時", "奥義時", "ターン終了時", "手動"];
+    const multiAttackCount = { SA: 1, DA: 2, TA: 3 };
+    const state = JSON.parse(JSON.stringify(defaultPreset));
+
+    const el = {
+      targetHits: document.getElementById("targetHits"),
+      targetReadout: document.getElementById("targetReadout"),
+      totalHits: document.getElementById("totalHits"),
+      judgeLabel: document.getElementById("judgeLabel"),
+      diffLabel: document.getElementById("diffLabel"),
+      members: document.getElementById("members"),
+      summons: document.getElementById("summons"),
+      adjustments: document.getElementById("adjustments"),
+      summonTotal: document.getElementById("summonTotal"),
+      adjustmentTotal: document.getElementById("adjustmentTotal")
+    };
+
+    function normalizeNumber(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number) || number < 0) {
+        return 0;
+      }
+      return Math.round(number);
+    }
+
+    function makeOptions(options, selectedValue) {
+      return options.map((option) => {
+        const value = typeof option === "string" ? option : option.value;
+        const label = typeof option === "string" ? option : option.label;
+        const selected = value === selectedValue ? " selected" : "";
+        return `<option value="${value}"${selected}>${label}</option>`;
+      }).join("");
+    }
+
+    function isNormalAttack(action) {
+      return action === "SA" || action === "DA" || action === "TA";
+    }
+
+    function calculateMainAction(member) {
+      if (isNormalAttack(member.action)) {
+        return normalizeNumber(member.baseHit)
+          * multiAttackCount[member.action]
+          * normalizeNumber(member.actionCount)
+          * (1 + normalizeNumber(member.echoCount));
+      }
+
+      if (member.action === "奥義") {
+        return normalizeNumber(member.ougiHit) * normalizeNumber(member.ougiCount || 1);
+      }
+
+      return 0;
+    }
+
+    function canAddSpecial(member, special) {
+      if (!special.enabled) {
+        return false;
+      }
+
+      if (special.condition === "通常攻撃時") {
+        return isNormalAttack(member.action);
+      }
+
+      if (special.condition === "奥義時") {
+        return member.action === "奥義";
+      }
+
+      return true;
+    }
+
+    function calculateMember(member) {
+      const main = calculateMainAction(member);
+      const abilities = member.abilities
+        .filter((ability) => ability.enabled)
+        .reduce((sum, ability) => sum + normalizeNumber(ability.hit), 0);
+      const specials = member.specials
+        .filter((special) => canAddSpecial(member, special))
+        .reduce((sum, special) => sum + normalizeNumber(special.hit), 0);
+
+      return { main, abilities, specials, total: main + abilities + specials };
+    }
+
+    function calculateToggleRows(rows) {
+      return rows
+        .filter((row) => row.enabled)
+        .reduce((sum, row) => sum + normalizeNumber(row.hit), 0);
+    }
+
+    function renderMembers() {
+      el.members.innerHTML = state.members.map((member, memberIndex) => `
+        <article class="card" data-member="${memberIndex}">
+          <header class="card-header">
+            <h2>${member.name}</h2>
+            <div class="member-total"><span data-member-total="${memberIndex}">0</span> hits</div>
+          </header>
+          <div class="card-body">
+            <div class="form-grid">
+              <label class="field">
+                <span>メンバー名</span>
+                <input type="text" value="${member.name}" data-path="members.${memberIndex}.name">
+              </label>
+              <label class="field">
+                <span>行動種別</span>
+                <select data-path="members.${memberIndex}.action">
+                  ${makeOptions(actionOptions, member.action)}
+                </select>
+              </label>
+              <label class="field">
+                <span>基礎ヒット数</span>
+                <input type="number" inputmode="numeric" min="0" step="1" value="${member.baseHit}" data-path="members.${memberIndex}.baseHit">
+              </label>
+              <label class="field">
+                <span>行動回数</span>
+                <input type="number" inputmode="numeric" min="0" step="1" value="${member.actionCount}" data-path="members.${memberIndex}.actionCount">
+              </label>
+              <label class="field">
+                <span>追撃種類数</span>
+                <input type="number" inputmode="numeric" min="0" step="1" value="${member.echoCount}" data-path="members.${memberIndex}.echoCount">
+              </label>
+              <label class="field">
+                <span>奥義ヒット数</span>
+                <input type="number" inputmode="numeric" min="0" step="1" value="${member.ougiHit}" data-path="members.${memberIndex}.ougiHit">
+              </label>
+            </div>
+
+            <section class="section">
+              <div class="section-head">
+                <h3 class="section-title">アビリティ</h3>
+                <div class="section-total"><span data-ability-total="${memberIndex}">0</span> hits</div>
+              </div>
+              ${member.abilities.map((ability, abilityIndex) => `
+                <label class="toggle-row">
+                  <input type="checkbox" ${ability.enabled ? "checked" : ""} data-path="members.${memberIndex}.abilities.${abilityIndex}.enabled">
+                  <span class="row-name">
+                    <span class="small-label">アビリティ名</span>
+                    <input type="text" value="${ability.name}" data-path="members.${memberIndex}.abilities.${abilityIndex}.name">
+                  </span>
+                  <span class="row-hit">
+                    <span class="small-label">ヒット数</span>
+                    <input type="number" inputmode="numeric" min="0" step="1" value="${ability.hit}" data-path="members.${memberIndex}.abilities.${abilityIndex}.hit">
+                  </span>
+                </label>
+              `).join("")}
+            </section>
+
+            <section class="section">
+              <div class="section-head">
+                <h3 class="section-title">特殊効果</h3>
+                <div class="section-total"><span data-special-total="${memberIndex}">0</span> hits</div>
+              </div>
+              ${member.specials.map((special, specialIndex) => `
+                <label class="toggle-row special-row">
+                  <input type="checkbox" ${special.enabled ? "checked" : ""} data-path="members.${memberIndex}.specials.${specialIndex}.enabled">
+                  <span class="row-name">
+                    <span class="small-label">効果名</span>
+                    <input type="text" value="${special.name}" data-path="members.${memberIndex}.specials.${specialIndex}.name">
+                  </span>
+                  <span class="row-condition">
+                    <span class="small-label">発動条件</span>
+                    <select data-path="members.${memberIndex}.specials.${specialIndex}.condition">
+                      ${makeOptions(specialConditions, special.condition)}
+                    </select>
+                  </span>
+                  <span class="row-hit">
+                    <span class="small-label">ヒット数</span>
+                    <input type="number" inputmode="numeric" min="0" step="1" value="${special.hit}" data-path="members.${memberIndex}.specials.${specialIndex}.hit">
+                  </span>
+                </label>
+              `).join("")}
+            </section>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderToggleList(container, rows, type) {
+      container.innerHTML = rows.map((row, rowIndex) => `
+        <label class="toggle-row">
+          <input type="checkbox" ${row.enabled ? "checked" : ""} data-path="${type}.${rowIndex}.enabled">
+          <span class="row-name">
+            <span class="small-label">${type === "summons" ? "召喚石名" : "補正名"}</span>
+            <input type="text" value="${row.name}" data-path="${type}.${rowIndex}.name">
+          </span>
+          <span class="row-hit">
+            <span class="small-label">ヒット数</span>
+            <input type="number" inputmode="numeric" min="0" step="1" value="${row.hit}" data-path="${type}.${rowIndex}.hit">
+          </span>
+        </label>
+      `).join("");
+    }
+
+    function setPathValue(path, value) {
+      const keys = path.split(".");
+      let target = state;
+      while (keys.length > 1) {
+        target = target[keys.shift()];
+      }
+      target[keys[0]] = value;
+    }
+
+    function handleInput(event) {
+      const control = event.target;
+      if (!control.dataset.path) {
+        return;
+      }
+
+      let value = control.type === "checkbox" ? control.checked : control.value;
+      if (control.type === "number") {
+        value = normalizeNumber(control.value);
+        control.value = value;
+      }
+
+      setPathValue(control.dataset.path, value);
+
+      if (control.dataset.path.endsWith(".name") && control.closest("[data-member]")) {
+        const memberIndex = Number(control.closest("[data-member]").dataset.member);
+        control.closest(".card").querySelector("h2").textContent = state.members[memberIndex].name;
+      }
+
+      calculateAndRender();
+    }
+
+    function calculateAndRender() {
+      state.targetHits = normalizeNumber(el.targetHits.value);
+      el.targetHits.value = state.targetHits;
+
+      const memberTotals = state.members.map(calculateMember);
+      const memberSum = memberTotals.reduce((sum, member) => sum + member.total, 0);
+      const summonTotal = calculateToggleRows(state.summons);
+      const adjustmentTotal = calculateToggleRows(state.adjustments);
+      const total = memberSum + summonTotal + adjustmentTotal;
+      const diff = total - state.targetHits;
+      const reached = diff >= 0;
+
+      memberTotals.forEach((member, index) => {
+        document.querySelector(`[data-member-total="${index}"]`).textContent = member.total;
+        document.querySelector(`[data-ability-total="${index}"]`).textContent = member.abilities;
+        document.querySelector(`[data-special-total="${index}"]`).textContent = member.specials;
+      });
+
+      el.summonTotal.textContent = summonTotal;
+      el.adjustmentTotal.textContent = adjustmentTotal;
+      el.totalHits.textContent = total;
+      el.targetReadout.textContent = state.targetHits;
+      el.judgeLabel.textContent = reached ? "達成" : "未達";
+      el.judgeLabel.classList.toggle("is-ok", reached);
+      el.diffLabel.textContent = reached ? `余剰 +${diff} hits` : `不足 ${Math.abs(diff)} hits`;
+      el.diffLabel.classList.toggle("is-ok", reached);
+    }
+
+    function init() {
+      el.targetHits.value = state.targetHits;
+      renderMembers();
+      renderToggleList(el.summons, state.summons, "summons");
+      renderToggleList(el.adjustments, state.adjustments, "adjustments");
+
+      document.body.addEventListener("input", handleInput);
+      document.body.addEventListener("change", handleInput);
+      calculateAndRender();
+    }
+
+    init();
+  </script>
+</body>
+</html>
