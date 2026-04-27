@@ -423,7 +423,7 @@
       members: [
         {
           name: "主人公",
-          action: "TA",
+          action: "奥義",
           baseHit: 1,
           actionCount: 1,
           echoCount: 0,
@@ -436,13 +436,13 @@
             { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false, oncePerTurn: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
+            { name: "晩蝉：OC時10hit", condition: "手動", hit: 10, enabled: false, oncePerTurn: true },
+            { name: "アトゥム：奥義時1hitアビ", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false }
           ]
         },
         {
           name: "さと",
-          action: "TA",
+          action: "奥義",
           baseHit: 1,
           actionCount: 1,
           echoCount: 0,
@@ -455,13 +455,14 @@
             { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false, oncePerTurn: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
+            { name: "火燐灯：奥義時6hit", condition: "奥義時", hit: 6, enabled: true, oncePerTurn: false },
+            { name: "火燐灯：ノーダメ時6hit", condition: "手動", hit: 6, enabled: false, oncePerTurn: true },
+            { name: "アトゥム：奥義時1hitアビ", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false }
           ]
         },
         {
           name: "サンチラ",
-          action: "TA",
+          action: "奥義",
           baseHit: 1,
           actionCount: 1,
           echoCount: 0,
@@ -474,14 +475,13 @@
             { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "晩蝉", condition: "OC時", hit: 10, enabled: true, oncePerTurn: false },
-            { name: "アトゥム", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
+            { name: "サポアビ：奥義時12hitアビ", condition: "奥義時", hit: 12, enabled: true, oncePerTurn: false },
+            { name: "アトゥム：奥義時1hitアビ", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false }
           ]
         },
         {
           name: "アトゥム（起動後）",
-          action: "TA",
+          action: "奥義",
           baseHit: 1,
           actionCount: 1,
           echoCount: 0,
@@ -494,8 +494,8 @@
             { name: "アビ3", hit: 0, enabled: false, oncePerTurn: false }
           ],
           specials: [
-            { name: "奥義後10ヒットアビダメ", condition: "奥義時", hit: 10, enabled: false, oncePerTurn: false },
-            { name: "ターン終了時追加ダメ", condition: "ターン終了時", hit: 0, enabled: false, oncePerTurn: false }
+            { name: "サポアビ：奥義時10hitアビ", condition: "奥義時", hit: 10, enabled: true, oncePerTurn: false },
+            { name: "フェネクス：ターン終了時1hitアビ", condition: "ターン終了時", hit: 1, enabled: true, oncePerTurn: true }
           ]
         }
       ],
