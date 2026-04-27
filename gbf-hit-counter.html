@@ -202,10 +202,39 @@
       background: #fff7f5;
     }
 
-    .card-header h2 {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.25;
+    .member-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .member-name {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 40px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .recast-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
+      flex: 0 0 auto;
     }
 
     .member-total {
@@ -340,6 +369,18 @@
     }
 
     @media (max-width: 520px) {
+      .card-header {
+        align-items: flex-start;
+      }
+
+      .member-header {
+        flex-wrap: wrap;
+      }
+
+      .member-name {
+        flex-basis: 100%;
+      }
+
       .target-field {
         grid-template-columns: 1fr;
       }
@@ -619,15 +660,17 @@
       el.members.innerHTML = state.members.map((member, memberIndex) => `
         <article class="card" data-member="${memberIndex}">
           <header class="card-header">
-            <h2>${member.name}</h2>
+            <div class="member-header">
+              <input class="member-name" type="text" value="${member.name}" aria-label="メンバー名" data-path="members.${memberIndex}.name">
+              <label class="recast-toggle">
+                <input type="checkbox" ${member.ougiRecast ? "checked" : ""} data-path="members.${memberIndex}.ougiRecast">
+                <span>奥義再発動</span>
+              </label>
+            </div>
             <div class="member-total"><span data-member-total="${memberIndex}">0</span> hits</div>
           </header>
           <div class="card-body">
             <div class="form-grid">
-              <label class="field">
-                <span>メンバー名</span>
-                <input type="text" value="${member.name}" data-path="members.${memberIndex}.name">
-              </label>
               <label class="field">
                 <span>行動種別</span>
                 <select data-path="members.${memberIndex}.action">
@@ -641,10 +684,6 @@
               <label class="field">
                 <span>追撃数</span>
                 <input type="number" inputmode="numeric" min="0" step="1" value="${member.echoCount}" data-path="members.${memberIndex}.echoCount">
-              </label>
-              <label class="mini-toggle">
-                <input type="checkbox" ${member.ougiRecast ? "checked" : ""} data-path="members.${memberIndex}.ougiRecast">
-                <span>奥義再発動</span>
               </label>
             </div>
 
@@ -740,11 +779,6 @@
       }
 
       setPathValue(control.dataset.path, value);
-
-      if (control.dataset.path.endsWith(".name") && control.closest("[data-member]")) {
-        const memberIndex = Number(control.closest("[data-member]").dataset.member);
-        control.closest(".card").querySelector("h2").textContent = state.members[memberIndex].name;
-      }
 
       calculateAndRender();
     }
