@@ -419,7 +419,7 @@
 
   <script>
     const defaultPreset = {
-      targetHits: 66,
+      targetHits: 120,
       members: [
         {
           name: "主人公",
@@ -487,7 +487,7 @@
           echoCount: 0,
           ougiHit: 1,
           ougiCount: 1,
-          ougiRecast: true,
+          ougiRecast: false,
           abilities: [
             { name: "アビ1", hit: 0, enabled: false, oncePerTurn: false },
             { name: "アビ2", hit: 0, enabled: false, oncePerTurn: false },
@@ -500,9 +500,9 @@
         }
       ],
       summons: [
-        { name: "召喚石1", hit: 0, enabled: false },
-        { name: "召喚石2", hit: 0, enabled: false },
-        { name: "召喚石3", hit: 0, enabled: false }
+        { name: "基本", hit: 1, enabled: false },
+        { name: "サン（TA×3,追撃1)", hit: 18, enabled: false },
+        { name: "トリプルゼロ表", hit: 6, enabled: false }
       ],
       adjustments: [
         { name: "その他補正1", hit: 0, enabled: false },
