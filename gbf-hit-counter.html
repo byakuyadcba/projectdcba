@@ -380,10 +380,10 @@
 
       <div class="section">
         <p class="note">
-          補足: 追撃数は、通常攻撃・奥義の両方に適用します。例: 追撃数2の場合、本体1hit + 追撃2hit = 合計3hitとして扱います。
+          補足: 追撃数と分割数は、通常攻撃・奥義の両方に適用します。例: 追撃数2,分割数2の場合、本体1hit + 追撃2hit = 合計3hit*2=6Hitとして扱います。
         </p>
         <p class="note">
-          このツールはヒット数の簡易確認用です。ゲーム内仕様を完全再現するものではないため、特殊な追撃、追加行動、自動発動アビリティ、召喚効果、ターン終了時ダメージなどは必要に応じて手動で補正してください。
+          このツールはヒット数の簡易確認用です。ゲーム内仕様を完全再現するものではないため、適宜補正してください。　特に再行動と黒麒麟はどう実装しようか迷っています
         </p>
       </div>
     </div>
@@ -406,7 +406,7 @@
           ],
           specials: [
             { name: "晩蝉：OC時10hit", condition: "手動", hit: 10, enabled: true, oncePerTurn: true },
-            { name: "1アビ:奥義時1hit", condition: "手動", hit: 1, enabled: false, oncePerTurn: true },
+            { name: "1アビ:奥義時1hit", condition: "手動", hit: 1, enabled: false, oncePerTurn: false },
             { name: "アトゥム：奥義時1hitアビ", condition: "奥義時", hit: 1, enabled: true, oncePerTurn: false }
           ]
         },
@@ -463,6 +463,7 @@
       ],
       adjustments: [
         { name: "FC", hit: 1, enabled: false },
+        { name: "DC", hit: 64, enabled: false },
         { name: "調整用", hit: 0, enabled: false }
       ]
     };
