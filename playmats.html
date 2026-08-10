@@ -22,7 +22,7 @@
         <a href="index.html">ホーム</a>
         <a href="about.html">サークルについて</a>
         <a href="playmats.html" aria-current="page">プレイマット紹介</a>
-        <a href="https://p-dcba.booth.pm/items" data-track="playmats_nav_booth">BOOTH通販</a>
+        <a href="https://p-dcba.booth.pm/items" data-track="playmats_nav_booth" data-track-position="navigation">BOOTH通販</a>
         <a href="https://x.com/project_DCBA" data-track="playmats_nav_x">X（旧Twitter）</a>
         <a href="https://www.instagram.com/project_dcba" data-track="playmats_nav_instagram">Instagram</a>
     </nav>
@@ -36,7 +36,7 @@
         当サークルでは描き下ろしイラストを採用し、実用性と美しさを両立した<strong>オリジナルプレイマット</strong>を制作しています。
       </p>
       <p>
-        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer" data-track="playmats_lead_booth">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
+        イベント頒布に加えて <a href="https://p-dcba.booth.pm/items" target="_blank" rel="noopener noreferrer" data-track="playmats_lead_booth" data-track-position="lead">BOOTH通販</a> でも販売中。イベント会場では持参していない商品も、通販ではご用意しています。
       </p>
     </div>
 
@@ -60,7 +60,7 @@
           <p id="modal-desc"></p>
           <ul id="modal-points" class="modal-points"></ul>
           <div class="modal-actions">
-            <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer">BOOTHで詳しく見る</a>
+            <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track-position="product_modal">BOOTHで詳しく見る</a>
             <a href="#top" class="btn btn-ghost" data-close>トップへ戻る</a>
           </div>
         </div>
@@ -153,7 +153,7 @@
           <div class="tags"><span class="tag">プレイマット</span></div>
           <div class="card-actions">
             <button class="btn btn-primary" data-id="${item.id}">詳細をみる</button>
-            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer" data-track="playmats_card_booth_${item.id}">BOOTH</a>
+            <a class="btn btn-ghost" href="${item.link}" target="_blank" rel="noopener noreferrer" data-track="playmats_card_booth_${item.id}" data-track-position="product_card">BOOTH</a>
           </div>
         </div>
       `;

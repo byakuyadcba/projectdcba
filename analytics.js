@@ -9,10 +9,20 @@
   document.addEventListener("click", (event) => {
     const link = event.target.closest("a[data-track]");
     if (!link) return;
+
     window.trackEvent("outbound_click", {
       event_category: "engagement",
       event_label: link.dataset.track,
       destination: link.href,
+    });
+
+    if (link.hostname.toLowerCase() !== "p-dcba.booth.pm") return;
+
+    window.trackEvent("booth_click", {
+      link_id: link.dataset.track,
+      link_position: link.dataset.trackPosition || "unspecified",
+      source_page_path: window.location.pathname,
+      destination_path: link.pathname,
     });
   });
 })();
