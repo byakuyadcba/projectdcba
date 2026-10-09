@@ -136,7 +136,8 @@
         const scale = Math.min(cardWidth / image.naturalWidth, imageHeight / image.naturalHeight);
         const width = image.naturalWidth * scale;
         const height = image.naturalHeight * scale;
-        ctx.fillStyle = '#e8e8df';
+        // 画像の縦横比による余白を用紙背景と同色にし、枠として見せない。
+        ctx.fillStyle = '#fffefa';
         ctx.fillRect(x, y, cardWidth, imageHeight);
         ctx.drawImage(image, x + (cardWidth - width) / 2, y + (imageHeight - height) / 2, width, height);
         drawText(ctx, `No. ${product.number}`, x, y + imageHeight + 13, 27, '#69746b', 650);
