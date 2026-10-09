@@ -140,7 +140,7 @@
       drawText(ctx, '最新の一覧：https://project-dcba.com/event-playmats.html', margin, 3322, 28, '#69746b');
       drawText(ctx, '© Project-D.C.B.A', margin, 3390, 26, '#69746b');
       const stamp = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
-      drawText(ctx, `出力日：${stamp}`, canvas.width - margin - 370, 3390, 26, '#69746b');
+      drawText(ctx, `作成日：${stamp}`, canvas.width - margin - 370, 3390, 26, '#69746b');
       const raw = await new Promise((resolve, reject) => {
         canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNGの生成に失敗しました。')), 'image/png');
       });
