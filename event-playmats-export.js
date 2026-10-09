@@ -6,6 +6,7 @@
   const preview = document.getElementById('export-preview');
   const download = document.getElementById('export-download');
   const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Meiryo, sans-serif';
+  const paperColor = '#fbfbfb';
   let imageUrl = null;
 
   const trackExport = (name, params = {}) => {
@@ -105,7 +106,7 @@
       canvas.height = 3508;
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('このブラウザでは画像を生成できません。');
-      ctx.fillStyle = '#fffefa';
+      ctx.fillStyle = paperColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.textBaseline = 'top';
       const margin = 120;
@@ -133,13 +134,25 @@
         const image = await loadImage(product.code);
         const x = margin + (index % columns) * (cardWidth + gap);
         const y = gridTop + Math.floor(index / columns) * (cardHeight + rowGap);
-        const scale = Math.min(cardWidth / image.naturalWidth, imageHeight / image.naturalHeight);
+        // TG65PMの元画像末尾に含まれる細いグレー線だけを、印刷用出力では除外する。
+        const sourceHeight = image.naturalHeight - (product.code === 'TG65PM' ? 3 : 0);
+        const scale = Math.min(cardWidth / image.naturalWidth, imageHeight / sourceHeight);
         const width = image.naturalWidth * scale;
-        const height = image.naturalHeight * scale;
+        const height = sourceHeight * scale;
         // 画像の縦横比による余白を用紙背景と同色にし、枠として見せない。
-        ctx.fillStyle = '#fffefa';
+        ctx.fillStyle = paperColor;
         ctx.fillRect(x, y, cardWidth, imageHeight);
-        ctx.drawImage(image, x + (cardWidth - width) / 2, y + (imageHeight - height) / 2, width, height);
+        ctx.drawImage(
+          image,
+          0,
+          0,
+          image.naturalWidth,
+          sourceHeight,
+          x + (cardWidth - width) / 2,
+          y + (imageHeight - height) / 2,
+          width,
+          height
+        );
         drawText(ctx, `No. ${product.number}`, x, y + imageHeight + 13, 27, '#69746b', 650);
         drawText(ctx, product.name, x + 105, y + imageHeight + 10, 32, '#203c34', 600, cardWidth - 105);
         if (product.consignment) drawText(ctx, product.consignment, x, y + imageHeight + 58, 27, '#69746b', 500);
