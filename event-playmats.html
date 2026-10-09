@@ -43,9 +43,9 @@
 <body>
 <header><div class="masthead"><span class="brand">Project-D.C.B.A</span><span class="edition">EVENT CATALOG</span></div></header>
 <main>
-<section class="intro"><div><p class="eyebrow">PLAYMAT COLLECTION</p><h1>プレイマットのお品書き</h1><p>絵柄をタップすると、拡大してご覧いただけます。<br><br>気になる絵柄がございましたら、「＋」で選択し、画面下の「選んだ柄を見せる」ボタンを押して、スタッフにお見せください。<br>在庫状況を確認し、在庫がある場合は実物をご覧いただけます。</p></div><span class="catalog-mark">全 <b id="total-count">14</b> 柄</span></section>
+<section class="intro"><div><p class="eyebrow">PLAYMAT COLLECTION</p><h1>プレイマットのお品書き</h1><p>絵柄をタップすると、拡大してご覧いただけます。<br><br>気になる絵柄がございましたら、「＋」で選択し、画面下の「選んだ柄を見せる」ボタンを押して、スタッフにお見せください。<br>在庫状況を確認し、在庫がある場合は実物をご覧いただけます。</p></div><span class="catalog-mark">全 <b id="total-count">15</b> 柄</span></section>
 <aside class="stock-notice"><strong>売り切れの際はご容赦ください。</strong><br>掲載されている絵柄でも、当日の在庫状況によりご用意できない場合がございます。</aside>
-<div class="toolbar"><div class="tabs" aria-label="表示する絵柄"><button class="tab" id="all-tab" aria-pressed="true">すべて</button><button class="tab" id="picked-tab" aria-pressed="false">選んだ柄 <span id="picked-count">0</span></button></div><span class="count" id="visible-count" aria-live="polite">14柄を表示</span></div>
+<div class="toolbar"><div class="tabs" aria-label="表示する絵柄"><button class="tab" id="all-tab" aria-pressed="true">すべて</button><button class="tab" id="picked-tab" aria-pressed="false">選んだ柄 <span id="picked-count">0</span></button></div><span class="count" id="visible-count" aria-live="polite">15柄を表示</span></div>
 <div class="grid" id="grid"></div>
 <p class="empty" id="empty" hidden>気になる柄の「＋」をタップすると、<br>ここにまとめて表示できます。</p>
 <aside class="notice"><span class="notice-icon" aria-hidden="true">↗</span><p><strong>ご注文は、売り場のスタッフへ。</strong><br>拡大した絵柄や選んだ柄の画面をお見せください。<br>頒布状況・価格はスタッフにご確認ください。</p></aside>
@@ -76,7 +76,8 @@ const products=[
  {code:'TH57PM',number:'11',name:'魂魄妖夢',booth:null,consignment:'Omni-tell委託',width:1000,height:608},
  {code:'TH58PM',number:'12',name:'十六夜咲夜＆紅美鈴',booth:null,consignment:'Omni-tell委託',width:1000,height:608},
  {code:'TH59PM',number:'13',name:'プリズムリバー三姉妹',booth:null,consignment:'Omni-tell委託',width:1000,height:608},
- {code:'TH60PM',number:'14',name:'西行寺幽々子',booth:null,consignment:'Omni-tell委託',width:1000,height:608}
+ {code:'TH60PM',number:'14',name:'西行寺幽々子',booth:null,consignment:'Omni-tell委託',width:1000,height:608},
+ {code:'TG65PM',number:'15',name:'ゆっくり霊夢＆魔理沙',booth:null,miniExt:'png',width:1000,height:597}
 ];
 const $=id=>document.getElementById(id),viewer=$('viewer');
 let picked=new Set(),selectedOnly=false,current=0,returnFocus=null;
@@ -87,7 +88,7 @@ function render(){
  $('grid').replaceChildren();const visible=products.filter(p=>!selectedOnly||picked.has(p.code));
  for(const p of visible){const card=document.createElement('article');card.className='card';
  const open=document.createElement('button');open.className='open-card';open.dataset.code=p.code;open.setAttribute('aria-label',`No. ${p.number} ${p.name}の絵柄を拡大`);
- const wrap=document.createElement('div');wrap.className='image-wrap';const img=document.createElement('img');img.src=`images/items/${p.code}_mini.jpg`;img.alt=`${p.name} プレイマット`;img.width=p.width;img.height=p.height;img.loading=products.indexOf(p)<4?'eager':'lazy';img.decoding='async';wrap.append(img);
+ const wrap=document.createElement('div');wrap.className='image-wrap';const img=document.createElement('img');img.src=`images/items/${p.code}_mini.${p.miniExt||'jpg'}`;img.alt=`${p.name} プレイマット`;img.width=p.width;img.height=p.height;img.loading=products.indexOf(p)<4?'eager':'lazy';img.decoding='async';wrap.append(img);
  const caption=document.createElement('div');caption.className='card-caption';const number=document.createElement('span');number.className='number';number.textContent=`No. ${p.number}`;const name=document.createElement('span');name.className='name';name.textContent=p.name;caption.append(number,name);open.append(wrap,caption);if(p.consignment){const label=document.createElement('span');label.className='consignment';label.textContent=p.consignment;open.append(label);}open.addEventListener('click',()=>openViewer(products.indexOf(p),open));
  const pick=document.createElement('button');pick.className='pick';pick.dataset.pick=p.code;pick.setAttribute('aria-label',`No. ${p.number} ${p.name}を${picked.has(p.code)?'選択から外す':'選ぶ'}`);pick.setAttribute('aria-pressed',picked.has(p.code));pick.textContent=picked.has(p.code)?'✓':'＋';pick.addEventListener('click',()=>{togglePick(p.code);const newButton=document.querySelector(`[data-pick="${p.code}"]`);(newButton||$('picked-tab')).focus({preventScroll:true})});card.append(open,pick);$('grid').append(card);
  }
