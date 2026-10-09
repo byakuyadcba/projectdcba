@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TH5Z74SLX"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments)}
+gtag('js',new Date());
+gtag('config','G-6TH5Z74SLX');
+</script>
 <meta name="description" content="Project-D.C.B.Aのイベント用プレイマットお品書き。絵柄を拡大・選択して、売り場のスタッフにお見せいただけます。">
 <link rel="canonical" href="https://project-dcba.com/event-playmats.html">
 <meta name="theme-color" content="#f5f3ec">
@@ -50,7 +58,7 @@
 <p class="empty" id="empty" hidden>気になる柄の「＋」をタップすると、<br>ここにまとめて表示できます。</p>
 <aside class="notice"><span class="notice-icon" aria-hidden="true">↗</span><p><strong>ご注文は、売り場のスタッフへ。</strong><br>拡大した絵柄や選んだ柄の画面をお見せください。<br>頒布状況・価格はスタッフにご確認ください。</p></aside>
 </main>
-<footer><div class="footer-row"><span>© Project-D.C.B.A</span><a href="index.html">本サイトへ ↗</a></div>
+<footer><div class="footer-row"><span>© Project-D.C.B.A</span><a href="index.html" data-track="event_catalog_home" data-track-position="footer">本サイトへ ↗</a></div>
 <section class="catalog-export" aria-label="一覧の画像出力">
 <button class="export-button" id="export-catalog">一覧を画像出力</button>
 <p class="export-help">掲載中の全柄を、A4縦サイズのPNGにまとめます。告知や印刷にご利用いただけます。</p>
@@ -81,6 +89,7 @@ const products=[
 ];
 const $=id=>document.getElementById(id),viewer=$('viewer');
 let picked=new Set(),selectedOnly=false,current=0,returnFocus=null;
+function trackCatalogEvent(name,params={}){if(typeof window.trackEvent==='function')window.trackEvent(name,{event_category:'event_catalog',...params})}
 try{const stored=JSON.parse(sessionStorage.getItem('event-playmats-v1-picks')||'[]');if(Array.isArray(stored))picked=new Set(stored.filter(code=>products.some(p=>p.code===code)))}catch{}
 function save(){try{sessionStorage.setItem('event-playmats-v1-picks',JSON.stringify([...picked]))}catch{}}
 function updateCounts(){$('total-count').textContent=products.length;for(const id of ['picked-count','bar-count'])$(id).textContent=picked.size;$('show-selection').disabled=!picked.size;}
@@ -94,13 +103,14 @@ function render(){
  }
  $('empty').hidden=!!visible.length;$('visible-count').textContent=`${visible.length}柄を表示`;$('all-tab').setAttribute('aria-pressed',!selectedOnly);$('picked-tab').setAttribute('aria-pressed',selectedOnly);updateCounts();
 }
-function togglePick(code){picked.has(code)?picked.delete(code):picked.add(code);save();render();if(viewer.open)updateViewer();}
-function updateViewer(){const p=products[current];$('modal-image').src=`images/items/${p.code}.png`;$('modal-image').alt=`${p.name} プレイマットの全体図`;$('modal-number').textContent=`No. ${p.number}`;$('modal-title').textContent=p.name;$('modal-consignment').hidden=!p.consignment;$('modal-consignment').textContent=p.consignment||'';$('booth').hidden=!!p.consignment;$('position').textContent=`${current+1} / ${products.length}`;$('modal-pick').setAttribute('aria-pressed',picked.has(p.code));$('modal-pick').textContent=picked.has(p.code)?'✓ 選んでいます · タップで外す':'＋ この柄を選ぶ';$('booth').href=p.booth?`https://p-dcba.booth.pm/items/${p.booth}`:'https://p-dcba.booth.pm/items';$('booth').textContent=p.booth?'BOOTHで見る ↗':'BOOTHのショップを見る ↗';}
-function openViewer(index,opener){current=index;returnFocus=opener.dataset.code;updateViewer();viewer.showModal();$('close').focus({preventScroll:true});}
+function togglePick(code){const selected=!picked.has(code);selected?picked.add(code):picked.delete(code);save();render();if(viewer.open)updateViewer();const p=products.find(item=>item.code===code);trackCatalogEvent('event_catalog_pick',{item_id:code,item_number:p?.number||'',selection_state:selected?'selected':'removed',selection_count:picked.size});}
+function updateViewer(){const p=products[current];$('modal-image').src=`images/items/${p.code}.png`;$('modal-image').alt=`${p.name} プレイマットの全体図`;$('modal-number').textContent=`No. ${p.number}`;$('modal-title').textContent=p.name;$('modal-consignment').hidden=!p.consignment;$('modal-consignment').textContent=p.consignment||'';$('booth').hidden=!!p.consignment;$('position').textContent=`${current+1} / ${products.length}`;$('modal-pick').setAttribute('aria-pressed',picked.has(p.code));$('modal-pick').textContent=picked.has(p.code)?'✓ 選んでいます · タップで外す':'＋ この柄を選ぶ';$('booth').href=p.booth?`https://p-dcba.booth.pm/items/${p.booth}`:'https://p-dcba.booth.pm/items';$('booth').textContent=p.booth?'BOOTHで見る ↗':'BOOTHのショップを見る ↗';$('booth').dataset.track=`event_catalog_booth_${p.code}`;$('booth').dataset.trackPosition='product_modal';}
+function openViewer(index,opener){current=index;returnFocus=opener.dataset.code;updateViewer();viewer.showModal();$('close').focus({preventScroll:true});const p=products[current];trackCatalogEvent('event_catalog_open_item',{item_id:p.code,item_number:p.number});}
 function move(step){current=(current+step+products.length)%products.length;updateViewer();}
-function filter(only,scroll=false){selectedOnly=only;render();if(scroll){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('picked-tab').focus({preventScroll:true});}}
- $('all-tab').addEventListener('click',()=>filter(false));$('picked-tab').addEventListener('click',()=>filter(true));$('show-selection').addEventListener('click',()=>filter(true,true));$('close').addEventListener('click',()=>viewer.close());viewer.addEventListener('click',e=>{if(e.target===viewer){const r=viewer.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)viewer.close();}});viewer.addEventListener('close',()=>{const button=document.querySelector(`[data-code="${returnFocus}"]`);(button||$('picked-tab')).focus({preventScroll:true});});$('modal-pick').addEventListener('click',()=>togglePick(products[current].code));$('previous').addEventListener('click',()=>move(-1));$('next').addEventListener('click',()=>move(1));viewer.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}if(e.key==='ArrowRight'){e.preventDefault();move(1)}});render();
+function filter(only,scroll=false,source='tab'){selectedOnly=only;render();trackCatalogEvent('event_catalog_filter',{filter_view:only?'selected':'all',filter_source:source,selection_count:picked.size});if(scroll){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('picked-tab').focus({preventScroll:true});}}
+ $('all-tab').addEventListener('click',()=>filter(false));$('picked-tab').addEventListener('click',()=>filter(true));$('show-selection').addEventListener('click',()=>filter(true,true,'selection_bar'));$('close').addEventListener('click',()=>viewer.close());viewer.addEventListener('click',e=>{if(e.target===viewer){const r=viewer.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)viewer.close();}});viewer.addEventListener('close',()=>{const button=document.querySelector(`[data-code="${returnFocus}"]`);(button||$('picked-tab')).focus({preventScroll:true});});$('modal-pick').addEventListener('click',()=>togglePick(products[current].code));$('previous').addEventListener('click',()=>move(-1));$('next').addEventListener('click',()=>move(1));viewer.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}if(e.key==='ArrowRight'){e.preventDefault();move(1)}});render();
 </script>
+<script src="analytics.js"></script>
 <script src="event-playmats-export.js"></script>
 </body>
 </html>

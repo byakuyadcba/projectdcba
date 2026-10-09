@@ -8,6 +8,16 @@
   const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Meiryo, sans-serif';
   let imageUrl = null;
 
+  const trackExport = (name, params = {}) => {
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent(name, { event_category: 'event_catalog', ...params });
+    }
+  };
+
+  download.addEventListener('click', () => {
+    trackExport('event_catalog_export_download', { item_count: products.length });
+  });
+
   function loadImage(code) {
     return new Promise((resolve, reject) => {
       const image = new Image();
@@ -83,6 +93,7 @@
 
   button.addEventListener('click', async () => {
     if (button.disabled) return;
+    trackExport('event_catalog_export_start', { item_count: products.length });
     button.disabled = true;
     button.setAttribute('aria-busy', 'true');
     result.hidden = true;
@@ -159,9 +170,11 @@
       download.download = `playmats-A4-${stamp}.png`;
       result.hidden = false;
       status.textContent = `全${products.length}柄のPNGを生成しました。「PNGを保存」から保存できます。`;
+      trackExport('event_catalog_export_complete', { item_count: products.length });
       download.focus({ preventScroll: true });
     } catch (error) {
       status.textContent = `${error.message || '画像を生成できませんでした。'} 通信状況を確認して、もう一度お試しください。`;
+      trackExport('event_catalog_export_error', { item_count: products.length });
     } finally {
       canvas.width = canvas.height = 1;
       button.disabled = false;

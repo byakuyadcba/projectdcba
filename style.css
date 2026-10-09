@@ -427,6 +427,40 @@ a {
   margin-bottom: 1.1rem;
 }
 
+.page-playmats .event-catalog-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.page-playmats .event-catalog-link p {
+  margin: 0;
+}
+
+.page-playmats .event-catalog-link span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .page-playmats .event-catalog-link {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .page-playmats .event-catalog-link .btn {
+    text-align: center;
+  }
+}
+
 .page-playmats .toc {
   background: var(--surface);
   border: 1px solid var(--border);
