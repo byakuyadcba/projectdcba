@@ -29,6 +29,15 @@
   .bar-caption small{display:none}
   footer{padding-bottom:80px}
 }
+
+.catalog-export{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}
+.export-button,.export-download{display:inline-block;border:1px solid var(--line);border-radius:5px;background:var(--white);color:var(--ink);min-height:44px;padding:12px 16px;font-size:12px;text-decoration:none}
+.export-button:disabled{opacity:.55;cursor:wait}
+.export-help,#export-status{font-size:11px;line-height:1.8;margin:8px 0}
+#export-status:empty{display:none}
+#export-result[hidden]{display:none}
+#export-preview{display:block;max-width:260px;width:100%;height:auto;margin:14px 0;border:1px solid var(--line)}
+.export-download{background:var(--ink);color:white;border-color:var(--ink)}
 </style>
 </head>
 <body>
@@ -41,7 +50,13 @@
 <p class="empty" id="empty" hidden>気になる柄の「＋」をタップすると、<br>ここにまとめて表示できます。</p>
 <aside class="notice"><span class="notice-icon" aria-hidden="true">↗</span><p><strong>ご注文は、売り場のスタッフへ。</strong><br>拡大した絵柄や選んだ柄の画面をお見せください。<br>頒布状況・価格はスタッフにご確認ください。</p></aside>
 </main>
-<footer><div class="footer-row"><span>© Project-D.C.B.A</span><a href="index.html">本サイトへ ↗</a></div></footer>
+<footer><div class="footer-row"><span>© Project-D.C.B.A</span><a href="index.html">本サイトへ ↗</a></div>
+<section class="catalog-export" aria-label="一覧の画像出力">
+<button class="export-button" id="export-catalog">一覧を画像出力</button>
+<p class="export-help">掲載中の全柄を、A4縦サイズのPNGにまとめます。告知や印刷にご利用いただけます。</p>
+<p id="export-status" role="status" aria-live="polite"></p>
+<div id="export-result" hidden><a class="export-download" id="export-download">PNGを保存</a><img id="export-preview" alt="生成した全プレイマットのお品書き"><p class="export-help">保存できない場合は、画像を長押しして保存してください。印刷時はA4・縦向きを指定してください。</p></div>
+</section></footer>
 <div class="selection-bar"><div class="bar-inner"><div class="bar-caption" aria-live="polite">選んだ柄 <span id="bar-count">0</span> 点<small>気になる絵柄をまとめて、スタッフへ。</small></div><button class="show-selection" id="show-selection" disabled>選んだ柄を見せる</button></div></div>
 <dialog id="viewer" aria-labelledby="modal-title"><div class="modal-top"><span>PLAYMAT / 絵柄の拡大</span><button class="close" id="close" aria-label="拡大を閉じる">×</button></div><div class="art-stage"><img id="modal-image" alt=""></div><div class="modal-info"><div class="modal-heading"><span class="order-number" id="modal-number"></span><h2 id="modal-title"></h2></div><span class="consignment" id="modal-consignment" hidden>Omni-tell委託</span><p class="order-hint">この画面をスタッフにお見せください。<br>頒布状況・価格は売り場でご確認ください。<br>売り切れの際はご容赦ください。</p></div><div class="modal-actions"><button class="modal-pick" id="modal-pick" aria-pressed="false">＋ この柄を選ぶ</button><div class="modal-navigation"><button id="previous" aria-label="前の絵柄">← 前の柄</button><span class="position" id="position"></span><button id="next" aria-label="次の絵柄">次の柄 →</button></div><a class="booth" id="booth" target="_blank" rel="noopener noreferrer">BOOTHで見る ↗</a></div></dialog>
 <script>
@@ -85,5 +100,6 @@ function move(step){current=(current+step+products.length)%products.length;updat
 function filter(only,scroll=false){selectedOnly=only;render();if(scroll){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('picked-tab').focus({preventScroll:true});}}
  $('all-tab').addEventListener('click',()=>filter(false));$('picked-tab').addEventListener('click',()=>filter(true));$('show-selection').addEventListener('click',()=>filter(true,true));$('close').addEventListener('click',()=>viewer.close());viewer.addEventListener('click',e=>{if(e.target===viewer){const r=viewer.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)viewer.close();}});viewer.addEventListener('close',()=>{const button=document.querySelector(`[data-code="${returnFocus}"]`);(button||$('picked-tab')).focus({preventScroll:true});});$('modal-pick').addEventListener('click',()=>togglePick(products[current].code));$('previous').addEventListener('click',()=>move(-1));$('next').addEventListener('click',()=>move(1));viewer.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}if(e.key==='ArrowRight'){e.preventDefault();move(1)}});render();
 </script>
+<script src="event-playmats-export.js"></script>
 </body>
 </html>
