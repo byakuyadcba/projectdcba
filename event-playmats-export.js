@@ -134,8 +134,8 @@
         const image = await loadImage(product.code);
         const x = margin + (index % columns) * (cardWidth + gap);
         const y = gridTop + Math.floor(index / columns) * (cardHeight + rowGap);
-        // TG65PMの元画像末尾に含まれる細いグレー線だけを、印刷用出力では除外する。
-        const sourceHeight = image.naturalHeight - (product.code === 'TG65PM' ? 3 : 0);
+        // TH66PMの元画像末尾に含まれる細いグレー線だけを、印刷用出力では除外する。
+        const sourceHeight = image.naturalHeight - (product.code === 'TH66PM' ? 3 : 0);
         const scale = Math.min(cardWidth / image.naturalWidth, imageHeight / sourceHeight);
         const width = image.naturalWidth * scale;
         const height = sourceHeight * scale;
