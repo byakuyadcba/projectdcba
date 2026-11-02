@@ -81,10 +81,10 @@
           <p id="modal-desc"></p>
           <ul id="modal-points" class="modal-points"></ul>
           <div class="modal-actions">
-            <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track-position="product_modal">BOOTHで詳しく見る</a>
-            <span id="koishi-detail-action" hidden><a href="playmat-koishi.html" class="btn btn-ghost">こいしの絵柄・サイズを見る</a></span>
-            <a href="#top" class="btn btn-ghost" data-close>トップへ戻る</a>
+            <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track-position="product_modal">BOOTHで詳しく見る<small>価格・在庫・配送方法</small></a>
+            <a id="koishi-detail-action" class="btn btn-ghost" href="playmat-koishi.html" hidden>HPで詳しく見る<small>こいしの表情を大きな絵柄で</small></a>
           </div>
+          <button type="button" class="modal-back" data-close>一覧に戻る</button>
         </div>
       </div>
     </div>
@@ -204,6 +204,7 @@
       });
     };
 
+    let modalOpener = null;
     const openModal = (id) => {
       const item = products.find((p) => p.id === id);
       if (!item) return;
@@ -219,14 +220,19 @@
       document.getElementById('koishi-detail-action').hidden = id !== 'koishi';
       modalLink.href = item.link;
       modalLink.dataset.track = `playmats_modal_booth_${item.id}`;
+      modalOpener = document.getElementById(id).querySelector('button');
       modal.classList.add('is-open');
+      modal.querySelector('.modal-close').focus({ preventScroll: true });
+      modal.querySelector('.modal-body').scrollTop = 0;
       document.body.style.overflow = 'hidden';
       trackModalOpen(item.id);
     };
 
     const closeModal = () => {
+      if (!modal.classList.contains('is-open')) return;
       modal.classList.remove('is-open');
       document.body.style.overflow = '';
+      modalOpener?.focus({ preventScroll: true });
     };
 
     document.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closeModal));

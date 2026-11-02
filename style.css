@@ -560,8 +560,7 @@ a {
   padding: 0.24rem 0.6rem;
 }
 
-.page-playmats .card-actions,
-.page-playmats .modal-actions {
+.page-playmats .card-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
@@ -692,7 +691,10 @@ a {
   border-radius: 16px;
   box-shadow: 0 26px 68px rgba(0, 0, 0, 0.28);
   width: min(760px, 92vw);
-  overflow: hidden;
+  max-height: calc(100vh - 1.5rem);
+  max-height: calc(100dvh - 1.5rem);
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 #product-modal .modal-grid {
@@ -710,6 +712,46 @@ a {
 
 #product-modal .modal-content {
   padding: 1.1rem 1.2rem 1.2rem;
+}
+
+#product-modal .modal-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .55rem;
+}
+
+#product-modal .modal-actions .btn:not([hidden]) {
+  display: grid;
+  align-content: center;
+  min-height: 3.75rem;
+  text-align: center;
+}
+
+#product-modal [hidden] { display: none; }
+
+#product-modal .modal-actions small {
+  font-size: .82rem;
+  font-weight: 400;
+}
+
+#product-modal .modal-back {
+  display: block;
+  margin: .25rem auto 0;
+  padding: .7rem 1rem;
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#product-modal .modal-content h3 { padding-right: 2rem; }
+
+@media (max-width: 600px) {
+  #product-modal .modal-grid { grid-template-columns: minmax(0, 1fr); }
+  #product-modal .modal-img { min-height: 0; height: min(48vw, 28vh); }
 }
 
 #product-modal .modal-close {
