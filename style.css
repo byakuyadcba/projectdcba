@@ -723,16 +723,11 @@ a {
 #product-modal .modal-actions .btn:not([hidden]) {
   display: grid;
   align-content: center;
-  min-height: 3.75rem;
+  min-height: 44px;
   text-align: center;
 }
 
 #product-modal [hidden] { display: none; }
-
-#product-modal .modal-actions small {
-  font-size: .82rem;
-  font-weight: 400;
-}
 
 #product-modal .modal-back {
   display: block;
