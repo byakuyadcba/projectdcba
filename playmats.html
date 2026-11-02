@@ -54,7 +54,20 @@
     </div>
 
     <h2>ラインナップ</h2>
-    <div class="product-grid" id="product-grid"></div>
+    <div class="product-grid" id="product-grid">
+      <article class="product-card" id="koishi">
+        <div class="thumb" style="background-image:url('images/items/TH55PM.png')"></div>
+        <div class="card-body">
+          <h3 class="card-title"><a href="playmat-koishi.html">古明地こいし プレイマット</a></h3>
+          <p class="card-desc">「カワイイ × ゴシック」がテーマ。可愛さとダークさを両立した、こいしファン必見のデザイン。</p>
+          <div class="tags"><span class="tag">プレイマット</span></div>
+          <div class="card-actions">
+            <button type="button" hidden data-id="koishi">詳細をみる</button>
+            <a class="btn btn-ghost" href="https://p-dcba.booth.pm/items/7812241" target="_blank" rel="noopener noreferrer" data-track="playmats_card_booth_koishi" data-track-position="product_card">BOOTH</a>
+          </div>
+        </div>
+      </article>
+    </div>
   </main>
 
   <div id="product-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -69,6 +82,7 @@
           <ul id="modal-points" class="modal-points"></ul>
           <div class="modal-actions">
             <a id="modal-link" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-track-position="product_modal">BOOTHで詳しく見る</a>
+            <span id="koishi-detail-action" hidden><a href="playmat-koishi.html" class="btn btn-ghost">こいしの絵柄・サイズを見る</a></span>
             <a href="#top" class="btn btn-ghost" data-close>トップへ戻る</a>
           </div>
         </div>
@@ -81,6 +95,7 @@
   </footer>
 
   <script>
+    const koishiCard = document.getElementById('koishi');
     const products = [
       {
         id: 'allchara',
@@ -92,11 +107,11 @@
       },
       {
         id: 'koishi',
-        title: '古明地こいし プレイマット',
-        desc: '「カワイイ × ゴシック」がテーマ。可愛さとダークさを両立した、こいしファン必見のデザイン。',
+        title: koishiCard.querySelector('.card-title').textContent,
+        desc: koishiCard.querySelector('.card-desc').textContent,
         points: ['ゴシック寄りの色使いで雰囲気重視', 'カードもデスクも映えるビジュアル'],
         image: 'images/items/TH55PM.png',
-        link: 'https://p-dcba.booth.pm/items/7812241',
+        link: koishiCard.querySelector('[data-track]').href,
       },
       {
         id: 'sanae',
@@ -177,7 +192,15 @@
         tocItem.innerHTML = `<a href="${'#' + item.id}">${item.title}</a>`;
         tocList.appendChild(tocItem);
 
-        productGrid.appendChild(buildCard(item));
+        if (item.id === 'koishi') {
+          const quickView = koishiCard.querySelector('button');
+          quickView.className = 'btn btn-primary';
+          quickView.hidden = false;
+          quickView.onclick = () => openModal(item.id);
+          productGrid.appendChild(koishiCard);
+        } else {
+          productGrid.appendChild(buildCard(item));
+        }
       });
     };
 
@@ -193,6 +216,7 @@
         modalPoints.appendChild(li);
       });
       modalImg.style.backgroundImage = `url('${item.image}')`;
+      document.getElementById('koishi-detail-action').hidden = id !== 'koishi';
       modalLink.href = item.link;
       modalLink.dataset.track = `playmats_modal_booth_${item.id}`;
       modal.classList.add('is-open');
